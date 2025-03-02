@@ -8,11 +8,10 @@
 
 -Fixed major video spacing issue, should no longer be buggy on page reload
 
-
 # Bugs that need fixing:
 - Video Zindex
 
-
-
 CONTENT LOGS FUTURE:
--???????????
+- make video uploads more seamless
+
+
