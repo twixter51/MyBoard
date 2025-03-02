@@ -151,6 +151,7 @@ async function Create(event,file,files,main,currRemoveButs){
 
                 //spacing
                 let lastDiv = main.lastElementChild?.firstElementChild; // Check if theres a DIV
+                console.warn(lastDiv);
                 if (lastDiv) {
                     
                     const lastRect = lastDiv.getBoundingClientRect();

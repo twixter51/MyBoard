@@ -240,14 +240,82 @@
                 main.appendChild(profElement);
             }
             else if(item.type == "file"){
+                
+               
                 let newprofElement = document.createElement("div");
                 newprofElement.classList.add("container");
                 newprofElement.classList.add("userProf");
 
+
                 if (item.key == "video"){
                     //FINISH VIDEO STORAGE
-                    console.warn("Hello! The system is currently under maintenance, your videos will not appear yet unfortunetly, feel free to upload them in the mean time!")
+                    console.warn("Hello! The system is currently under maintenance, If you see bugs let me know! your videos are now being displayed!")
 
+
+                    let SrcTest= item.content
+                    
+                
+                    await new Promise(resolve => {
+                        let fileShow = document.createElement("video")
+                        fileShow.controls = true;
+                        fileShow.className = "image-container";
+                        
+                        fileShow.id = "vid1" + Date.now();
+                        fileShow.src = SrcTest;
+                        fileShow.style.borderRadius = 8 + "px";
+                        fileShow.style.backgroundSize = "contain";
+                        fileShow.style.backgroundRepeat = "no-repeat";
+                        fileShow.style.backgroundPosition = "center";
+                        fileShow.style.backgroundColor = "transparent"; 
+                        
+                        
+                        fileShow.addEventListener('loadedmetadata', function() {
+                            //natural dimensions
+                            let maxWidth = 800;
+                            if (fileShow.videoWidth > maxWidth) {
+                                const ratio = fileShow.videoHeight / fileShow.videoWidth;
+                                fileShow.width = maxWidth;
+                                fileShow.height = maxWidth * ratio;
+                            } else {
+                                fileShow.width = fileShow.videoWidth;
+                                fileShow.height = fileShow.videoHeight;
+
+                            }
+                            resolve();
+                        });
+
+                        newprofElement.appendChild(fileShow); //append our image with above styles
+
+                        let lastDiv = main.lastElementChild?.firstElementChild; // Check if theres a DIV
+                        console.warn(lastDiv);
+                        if (lastDiv) {
+                            
+                            const lastRect = lastDiv.getBoundingClientRect();
+                            console.log(lastDiv.getBoundingClientRect())
+                            let heightPos = lastRect.height;
+                            
+                            //check again just in case
+                            lastDiv = main.lastElementChild?.firstElementChild; // Check if theres a DIV
+
+                            if (heightPos){
+                                newprofElement.style.marginTop = (heightPos) + "px"; // Add some spacing
+                                console.log("Here is the new margin: " + newprofElement.style.marginTop);
+                                newprofElement.style.display = "block";   // Ensure block display
+                            }
+                            console.log("SPACED")
+                        
+                        }
+
+                        //end of if video/image block
+                        
+                        
+
+                    });
+                    
+    
+                 
+                    
+    
                 }else if(item.key == "image"){
 
                     await new Promise(resolve =>  {
@@ -267,38 +335,23 @@
                             fileShow.style.backgroundPosition = "center";
                             fileShow.style.backgroundColor = "transparent"; 
                             fileShow.style.boxShadow = "none";
-                            
-                            newprofElement.appendChild(fileShow); //append our image with above styles
-                            
-    
-                            
-                            let lastDiv = main.lastElementChild?.firstElementChild; // Check if theres a DIV
-                            if (lastDiv) {
-                                
-                                const lastRect = lastDiv.getBoundingClientRect();
-                                console.log(lastDiv.getBoundingClientRect())
-                                let heightPos = lastRect.height;
-                               
-                                if (heightPos){
-                                    newprofElement.style.marginTop = (heightPos) + "px"; // Add some spacing
-                                    console.log("Here is the new margin: " + newprofElement.style.marginTop);
-                                    newprofElement.style.display = "block";   // Ensure block display
-                                }
-                                console.log("SPACED") 
-                            }
-                            main.appendChild(newprofElement);
-                            resolve();
+            
                     
                         };
+                       
+                        newprofElement.appendChild(fileShow); //append our image with above styles
                         uploadedImg.src = item.content;
+                        resolve();   
+
+
                     })
-                    //end of else image
-
-
+                   
                 }
+                
+                main.appendChild(newprofElement);  
 
-               
-
+                
+              
             }
 
 
