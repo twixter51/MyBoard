@@ -1,0 +1,311 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1"  />
+    <title>HomePage</title>
+    <link rel="stylesheet" href="{'../css/styles.css' %}">
+   
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+
+
+
+<div class="box-element center" style="width: 95%; height: 92%;  outline: none; cursor: default;  -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;">
+    
+    <div class="container" id="MainView" style="width: 100%; height: 100%; max-width: 1000px; padding: 10px; justify-content: flex-start; overflow-y: auto;  flex-direction: column; align-items: flex-start; gap: 20px;">
+           
+      
+
+       
+    </div>
+
+  
+  
+</div>
+
+<div class="" style=" bottom: 0; left: 0; position: absolute; width: 100%; ">
+    
+   <!--finish image holder!-->
+    <div style="max-width: 1000px; margin: 0 auto; width: 100%; display: flex; align-items: center; gap: 10px; padding: 5px; height: 100%; -webkit-user-select: none; ">
+        {% csrf_token %}
+        
+        <div class="container hidden" id="imageHolder"style="position: absolute; margin-bottom: 190px; height: 100px; margin-left: 8px; width: 100%; justify-content: flex-start; overflow-x: auto;  flex-direction: row; align-items: flex-start; gap: 20px;   display: flex; overflow-y: hidden;"> 
+
+        </div>
+       
+        <input type="text" id="Enter1" class="form-control" placeholder="Try typing here......" style="padding: 10px; width: 70%; padding: 10px; margin-left: 10px; z-index: 1;">
+        <button type="button" class="upldbt" id="uploadb" style="margin-top: 0px;"> + </button>
+        <input hidden="hidden" type="file" id="imginp" name="image" accept="image/jpg, image/png, video/mp4, video/webm, video/ogg">
+        <span id="filetext">No file chosen</span>
+    </div>
+ 
+   
+</div>
+
+
+
+{% comment %} <div class="container textview" style="margin-left: 25px; margin-top: 10px">
+
+
+</div>  {% endcomment %}
+
+
+<script type="text/javascript"> 
+
+ 
+    document.addEventListener("DOMContentLoaded", function () {
+
+    
+
+
+
+        // **************** NOTEEEE*******************
+        // so this is basically set of functions/quick ways i did things to have the user upload stuff etc. I will refactor this later for learning purposes
+        // but for now just look at this mess, and this is only 25% of the entire code on the main project too
+        // hopefully you learn something, my very first take on implementing a real world problem! storing media to transfer!
+        // I intentionally removed a LOT of things because you'd probably get lost, 500+ lines of code. 
+        
+        // Give me some time, I'll refactor/document stuff and open source my main source code so we can all learn together
+
+
+
+
+
+
+        //main variables
+        main = document.getElementById("MainView");
+        mainProfile = document.getElementById("userMainLoader");
+        textEnter1 = document.getElementById("Enter1");  
+        uploadBut = document.getElementById("uploadb");
+        fileInp = document.getElementById("imginp");
+        fileText = document.getElementById("filetext");
+        uploadHold = document.getElementById("imageHolder");
+
+     
+        // Create observer so we can see animations.
+        //////////////////////////////***********************************
+        const observer = new MutationObserver(function(mutations) {
+            let holderCheck = Array.from(uploadHold.children);
+            
+            if (holderCheck.length > 0) {
+                appearanceHolder();
+            } else {
+                hiddenHolder();
+            }
+        });
+
+        // Start observing (THIS IS FOR UPLOADING IMAGES/ VIDEOS SO ANIMS CAN PLAY)
+        observer.observe(uploadHold, {
+            childList: true  // watch if child is added to our observer
+        });
+       
+
+    
+        console.log("Welcome to main:"); // Should work now
+        
+    
+        if (!main || !textEnter1) {
+            console.error("Main error, please reload or try again later");
+            return;
+        }
+        
+       
+
+        // **************** MAIN EVENT FOR IMAGE/TEXT PLACEMENT*******************
+        textEnter1.addEventListener("keypress", async (event) => {
+            if (event.key === "Enter") {
+                //create and remove
+                //function goes here basically         
+            }
+
+        });
+
+
+        //temporary till i find a better way to add button handling
+        uploadBut.addEventListener("click",  function() {
+            fileInp.click();
+        });
+
+        //listen and wait to remove buttons and wait for file to be populated
+        let currRemoveButs = [];
+        let file = false;
+        let files = [];
+        let containedImg = false;
+        let containedVideo = false;
+        let playBut = false;
+        let appender = false;
+
+        fileInp.addEventListener("change", function(){
+            if (fileInp.value){
+                fileText.innerHTML = fileInp.value;
+
+                file = fileInp.files[0];
+            
+                if(file.type.startsWith("image")){
+                    //do images
+                   
+
+
+                   
+                }else if (file.type.startsWith("video")){
+                    //do videos    
+
+                }
+
+                console.warn(file.type);
+        
+               // Create container for image and remove button
+               const imageWrapper = document.createElement("div");
+               imageWrapper.style.position = "relative";
+               imageWrapper.style.display = "inline-block";
+
+               //remove button
+               const removeBut = document.createElement("button");
+               removeBut.classList.add("remove-btn");
+               removeBut.innerText = "X";
+
+               imageWrapper.append(removeBut);
+
+               if(containedImg){
+                    imageWrapper.append(containedImg);
+
+                    containedImg = false;
+               }else{
+                    imageWrapper.append(appender);
+                  
+                    containedVideo = false;
+               } //basically appending a video OR image to our wrapper so it shows up on our little pop up....
+               
+
+               //and uploadHold is our little pop up, where it all is!
+               uploadHold.append(imageWrapper);
+
+               //clear input after file uploads
+               event.target.value = '';
+
+                //remove stuff once remove button is clicked
+                currRemoveButs.push(removeBut);
+                removeBut.addEventListener("click", function(){
+                    removeBut.parentElement.remove();
+                       
+                });
+
+
+            }
+            
+        });
+       
+        
+    });
+    
+
+
+   //say you wanted to load data from a data base, do it here!
+   window.addEventListener('load', function() {
+       //data HERE!
+      
+    });
+
+
+
+    //Animations from our previous observer!
+    function appearanceHolder(){
+        if(uploadHold.classList.contains("visible")){
+            return;
+        }
+        else{
+            uploadHold.classList.add("visible");
+            uploadHold.classList.remove("hidden");
+           
+        } 
+    }
+
+    function hiddenHolder(){
+        if(uploadHold.classList.contains("hidden")){
+            return;
+        }
+        else{
+            uploadHold.classList.remove("visible");
+            uploadHold.classList.add("hidden");
+           
+            //clear out our upload paths
+            fileText.innerHTML = "No file chosen";
+      
+            
+        } 
+    }
+
+    //grab and download image (This is not complete and it SHOULD not work yet for something not loaded from the data store)
+    function grabImage(){
+        setTimeout(() => {
+            if(main.hasChildNodes()){
+                let elements = main.children;
+                let downloadDiv = document.createElement("div");
+                console.log(elements.length);
+                for(let i = 1; i < elements.length; ++i){
+                   if(elements[i].firstElementChild.classList.contains("image-container")){
+                        elements[i].firstElementChild.addEventListener("mouseenter", () => {
+                                
+                                downloadDiv.classList.add("container");
+                                elements[i].firstElementChild.appendChild(downloadDiv);
+
+                                downloadDiv.style.position = "fixed";
+                                downloadDiv.style.pointerEvents = "none";
+                                downloadDiv.style.transform = "translate(-50%, -50%)";
+                                downloadDiv.style.opacity = "0.3";
+
+                                document.addEventListener('mousemove', (event) => {
+                                    
+                                    downloadDiv.style.left = event.clientX + "px" ;
+                                    downloadDiv.style.top = event.clientY + "px" ;
+                                    
+                                });
+
+                        });
+                        elements[i].firstElementChild.addEventListener("mouseleave", () => {
+                            downloadDiv.remove()
+                        });
+
+
+                        elements[i].firstElementChild.addEventListener("click", () => {
+                            //we will download here...next time..
+                            downloadDiv.remove()
+                        });
+                   }
+                }
+            }
+        }, 1000);
+      
+    }
+
+
+
+    //spacing this is how i calculate spacing between divs that are uploaded
+    let lastDiv = main.lastElementChild?.firstElementChild; // Check if theres a DIV
+    if (lastDiv) {
+        
+        const lastRect = lastDiv.getBoundingClientRect();
+        console.log(lastDiv.getBoundingClientRect())
+        let heightPos = lastRect.height;
+        
+        //check again just in case
+        lastDiv = main.lastElementChild?.firstElementChild; // Check if theres a DIV
+
+        if (heightPos){
+            newprofElement.style.marginTop = (heightPos) + "px"; // Add some spacing
+            console.log("Here is the new margin: " + newprofElement.style.marginTop);
+            newprofElement.style.display = "block";   // Ensure block display
+        }    
+        
+    }
+
+    //////////////////////////////***********************************
+
+
+</script>
+
+

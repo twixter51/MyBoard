@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1"  />
+    <title>gg</title>
+    <link rel="stylesheet" href="{'../css/styles.css' %}">
+</head>
+
+
+
+<!--This is the top page of the Entire Website (Includes Navigation bar)-->
+<div class="image-box">
+    <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'home' %}">News</a></li>
+        <li><a href="{% url 'home' %}">Contact</a></li>
+        <li style="float:right"><a class="active" href="{% url 'index' %}">Log-In</a></li>
+    </ul>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+</div>
+
+
+
+<!--This is basically the entry form div where users can input information login centered box-->
+<div class="box-element center">
+    
+    <div class="container" style="align-center">
+
+        <div class="container" style="width:50%">
+            <h1>Sign-Up</h1>
+        </div>
+
+        <br>
+        <br>
+        <br>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+           
+
+            <div class="form-group">
+                <label for="username">Create User: </label>
+                <input type="text" id="username" name="username" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="password">Create Password: </label>
+                <input type="password" id="password" name="password" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="email">Email: </label>
+                <input type="text" id="email" name="email" class="form-control">
+            </div>
+            <br>
+            <button type="submit" id = "submit-id" onclick="hideButton()">Sign Up</button>
+        </form>
+
+        {% if success %}
+            <div id="success-message" style="background-color: #d4edda; color: #155724; padding: 10px; border: 1px solid #c3e6cb; margin-bottom: 15px;">
+                Your submission was successful!
+            </div>
+        {% endif %}
+
+        {% if error %}
+            <div id="error-message" style="background-color: #FF0000; color: ##FF0000; padding: 10px; border: 1px solid #FF0000; margin-bottom: 15px;">
+                Error Fields Are Empty
+            </div>
+        {% endif %}
+        
+    </div>
+
+</div>
+
+
+
+<!--Go back a page-->
+<div class="container2" style="width: 97%; display: inline-block; background-color: transparent; margin-top: 20px;  box-shadow:rgb(255, 255, 255)">
+    <button type="button" class="button" onclick="window.location.href='{% url 'index' %}'" style="width:200px; height: 70px; font-size: 18px;">Go Back </button>
+</div>
+
+
+
+<div class="" style=" display: flex; justify-content: center; align-items: center; height: 10vh">
+
+    <div class="container" style="width:200px; height: 40px; justify-content: center;">
+        <h2 style="color: #07ce07;">You are already logged in!</h2>
+    </div>
+</div>
+
+
+
+<!--JavScript-->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const successMessage = document.getElementById("success-message");
+       
+        if (successMessage) {
+            document.getElementById("submit-id").style.display = "none";
+            setTimeout(() => {
+                successMessage.style.display = "none";
+                window.location.href = "{% url 'index' %}"; 
+            }, 3000); // Hides the message after 3 seconds
+        }
+      
+    });
+
+   
+</script>

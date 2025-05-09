@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1"  />
+    <title>gg</title>
+    <link rel="stylesheet" href="{'../css/styles.css' %}">
+</head>
+
+
+
+
+<!--This is the top page of the Entire Website (Includes Navigation bar)-->
+<div class="image-box">
+    <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'home' %}">News</a></li>
+        <li><a href="{% url 'home' %}">Contact</a></li>
+        {% if user.is_authenticated %}
+            <li id="logout" style="float:right; cursor: pointer;"><a class="active" >Log-Out</a></li>
+        {%else%}
+            <li style="float:right"><a class="active" href="{% url 'index' %}">Log-In</a></li>
+        {% endif %}
+    </ul>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+</div>
+
+
+<!--logout-button-pop-up-->
+<div class="" id="overlay" style="">
+
+    <div class="popup container  " id="popup" style=" flex-direction: row; justify-content: space-between; background-color: transparent; align-items: end;   box-shadow: 0 0 0px rgb(0, 0, 0);  padding: 40px; border: 0px; ">
+        <div class="popup container " id="popup" style="">
+            <h1 style="color:rgb(26, 26, 26); text-shadow: 15px 8px 23px">Are You Sure?</h1>
+        </div>
+        <h1 class = "exits" style="cursor: pointer;  text-shadow: 15px 8px 23px">Yes</h1>
+        <h1 class = "exits" id="exit" style="cursor: pointer; text-shadow: 15px 8px 23px">No</h1>
+    </div>
+</div>
+
+
+<!--This is basically the entry form div where users can input information login centered box-->
+
+{% if not user.is_authenticated %}
+<div class="box-element center">
+    
+    <div class="container" style="align-center">
+
+        <div class="container" style="width:50%">
+            <h1>MyBoard</h1>
+        </div>
+
+        <br>
+        <br>
+        <br>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" class="form-control">
+            </div>
+            <div class="form-group">
+                <input type="checkbox" id="remember" name="remember">
+                <label for="remember">Remember me</label>
+            </div>
+            <button type="submit">Log In</button>
+            <br>
+            <button type="button" onclick="window.location.href='{% url 'signup' %}'">Sign Up</button>
+        </form>
+        {% if error %}
+            <div id="error-message" style="background-color: #FF0000; color: ##FF0000; padding: 10px; border: 1px solid #FF0000; margin-bottom: 15px;">
+                Error Wrong PASSWORD OR USERNAME
+            </div>
+        {% endif %}
+    </div>
+
+</div>
+{% else %}
+
+<div class="box-element center">
+    
+    <div class="container" style="align-center">
+
+
+
+
+       
+                
+            <div class="container" style="width:50%">
+                <h1>MyBoard</h1>
+            </div>
+
+            <br>
+            <br>
+            <br>
+
+            <div class="container" style="width:50%">
+                <h1 id="loggedin">hello</h1>
+            </div>
+
+
+       
+
+        
+
+       
+    </div>
+    
+    
+   
+</div>
+
+<div class="" style=" display: flex; justify-content: center; align-items: center; height: 10vh">
+
+    <div class="container" style="width:200px; height: 40px; justify-content: center;">
+        <h2 style="color: #07ce07;">You are already logged in!</h2>
+    </div>
+</div>
+
+{% endif %}
+<!--Go back a page-->
+<br>
+<br>
+<div class="container2" style="width:98%; display: inline-block; background-color: transparent; margin-top: px;  box-shadow:rgb(255, 255, 255)">
+    <button type="button" class="button" onclick="window.location.href='{% url 'home' %}'" style="width:200px; height: 50px; font-size: 18px;">Go Back </button>
+</div>
+
+
+
+<script type="text/javascript">
+
+    const name = "{{user}}"
+    var user = '{{request.user}}'
+
+    if (user != 'AnonymousUser'){
+        logged1 = document.getElementById("loggedin")
+        logged1.textContent = "Welcome, " + name
+    }
+
+
+</script>
+
+
+
+<script type="text/javascript">
+
+    var button = document.getElementById("logout")
+    var logoutref = "{% url 'logout' %}"
+
+
+    if (button != null){
+        button.addEventListener("click", function() {
+
+            console.log("CLICKED")
+            LogoutButton();
+           
+        });
+    }
+   
+   
+   
+
+</script>
+
+
+<script  src="{% static 'JS/Close.js' %}"> </script>
