@@ -3,9 +3,7 @@
 async function Create(event,file,files,main,currRemoveButs){
 
     var input = event.target.value 
-    console.warn(file);
-             
-   
+ 
     if (input) {
 
         const formData = new FormData();
@@ -26,9 +24,11 @@ async function Create(event,file,files,main,currRemoveButs){
 
             if (data.success) {
                 
+                profElement = createText(input, main); // call function from Static/Js/CreateText
                
-                profElement = createText(input, main);
+                profElement.dataset.id = data.id;
                 main.appendChild(profElement);
+
                 event.target.value = ""; // Clear the input field
                 
             }else{
@@ -42,37 +42,44 @@ async function Create(event,file,files,main,currRemoveButs){
     
     }
 
-     //exit if no file chosen
-    console.log(files.length)
+    //exit if no file chosen
+    console.log("Length of waiting files: " + files.length)
     if(!file){
         console.warn("Texting...");
-        return;
-
+    
     }
 
     //*************WARN**************************************************
-    console.warn("NOW UPLOADING FILE. If code fails please exit this point");
+    console.warn("Trying to upload files if there are any");
     //***********************************************************
     const waitingImages = document.querySelectorAll(".waitingImages");
     console.warn("TEST IMAGES: " + waitingImages.length);
+    const storeFile = Array.from(document.querySelectorAll(".waitingImages"));
 
     if (waitingImages.length > 0){
-       
+
         
+
         //Upload images first
         for(let i = 0; i < files.length; ++i){
+
+           
+
+           
+           console.log(files[i].name);        
             
             const formData = new FormData();
             
             if(files[i].type.startsWith("image/")){
                 formData.append("image", files[i]);
                 
-                //prompt user
+            //prompt user
                
             }else if(files[i].type == "video/mp4"){
                 formData.append("video", files[i]);
                
             }
+            
              fileText.innerHTML = "Uploading....";
              formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);   
             try {
@@ -83,7 +90,16 @@ async function Create(event,file,files,main,currRemoveButs){
                 const data = await response.json();
                 console.log(data);
                 if (data.success) {
-                   
+                    
+              
+                    let add = false; // are we going to remove or add data
+                    Calculate_UserStorage(data.size, add); // call to update user storage
+                    
+                    //match id's so later We can delete em 
+                    const matchingEl = storeFile[i];
+                    if (matchingEl) {
+                        matchingEl.dataset.id = data.id;   
+                    }
                     // Update the UI to show upload success
                     currRemoveButs.forEach(button => {  //now lets remove our waiting images
                         button.click();
@@ -101,144 +117,39 @@ async function Create(event,file,files,main,currRemoveButs){
             
         //lets display to our user then will combine later
         imagesToUpld = Array.from(waitingImages);
+
+        console.log(imagesToUpld.length)
+        console.log(files.length)
         console.warn(imagesToUpld + " IS THE IMAGES ");
 
+            
+
         for(let i = 0; i < imagesToUpld.length; ++i) {
-            console.log("we are going to put this image now: " + imagesToUpld[i]);
-            //throw(new Error("STOP TO TEST"));
-
-                
-            if (imagesToUpld[i] instanceof HTMLVideoElement) {
-                //video stuff here later
-
-                console.warn("Uploading Video");
-
-                let SrcTest= imagesToUpld[i].src;
-                
-                let newprofElement = document.createElement("div");
-                newprofElement.classList.add("container");
-                newprofElement.classList.add("userProf");
-
-                let fileShow = document.createElement("video")
-                fileShow.controls = true;
-                fileShow.className = "image-container";
-              
-                fileShow.id = "vid1" + Date.now();
-                fileShow.src = SrcTest;
-                fileShow.style.borderRadius = 8 + "px";
-                fileShow.style.backgroundSize = "contain";
-                fileShow.style.backgroundRepeat = "no-repeat";
-                fileShow.style.backgroundPosition = "center";
-                fileShow.style.backgroundColor = "transparent"; 
-                
-                
-
-                fileShow.addEventListener('loadedmetadata', function() {
-                    //natural dimensions
-                    const maxWidth = 800;
-                    if (fileShow.videoWidth > maxWidth) {
-                        const ratio = fileShow.videoHeight / fileShow.videoWidth;
-                        fileShow.width = maxWidth;
-                        fileShow.height = maxWidth * ratio;
-                    } else {
-                        fileShow.width = fileShow.videoWidth;
-                        fileShow.height = fileShow.videoHeight;
-
-                    }
-                });
-
-                newprofElement.appendChild(fileShow);
-
-                //spacing
-                let lastDiv = main.lastElementChild?.firstElementChild; // Check if theres a DIV
-                console.warn(lastDiv);
-                if (lastDiv) {
-                    
-                    const lastRect = lastDiv.getBoundingClientRect();
-                    console.log(lastDiv.getBoundingClientRect())
-                    let heightPos = lastRect.height;
-                    
-                    //check again just in case
-                    lastDiv = main.lastElementChild?.firstElementChild; // Check if theres a DIV
-
-                    if (heightPos){
-                        newprofElement.style.marginTop = (heightPos) + "px"; // Add some spacing
-                        console.log("Here is the new margin: " + newprofElement.style.marginTop);
-                        newprofElement.style.display = "block";   // Ensure block display
-                    }
-                    console.log("SPACED")
-                    
-                }
-                main.appendChild(newprofElement);
+            console.log("we are displaying: " + imagesToUpld[i]);
+            let file = await createDom(imagesToUpld[i], main);
             
-                
-            } else {
-                 
-                let currentImageSrc = imagesToUpld[i].src;
-                //create profile
-                let newprofElement = document.createElement("div");
-                newprofElement.classList.add("container");
-                newprofElement.classList.add("userProf");
-
-                
-                const uploadedImg = new Image(); //our new image
-
-
-
-                let fileShow = document.createElement("div")
-                fileShow.className = "container image-container";
-                fileShow.id = "img1" + Date.now();
-
-                uploadedImg.onload = function() {
-                    fileShow.style.width = this.naturalWidth + "px";
-                    fileShow.style.height = this.naturalHeight + "px";
-                    fileShow.style.backgroundImage = `url(${currentImageSrc})`;
-                    fileShow.style.backgroundSize = "contain";
-                    fileShow.style.backgroundRepeat = "no-repeat";
-                    fileShow.style.backgroundPosition = "center";
-                    fileShow.style.backgroundColor = "transparent"; 
-                    fileShow.style.boxShadow = "none";
-                    fileShow.style.borderRadius = 8 + "px";
-                    
-                    newprofElement.appendChild(fileShow); //append our image with above styles
-                    
-
-                    
-                    let lastDiv = main.lastElementChild?.firstElementChild; // Check if theres a DIV
-                    if (lastDiv) {
-                        
-                        const lastRect = lastDiv.getBoundingClientRect();
-                        console.log(lastDiv.getBoundingClientRect())
-                        let heightPos = lastRect.height;
-                        
-                    
-                        //check again just in case
-                        lastDiv = main.lastElementChild?.firstElementChild; // Check if theres a DIV
-
-                        
-                        if (heightPos){
-                            newprofElement.style.marginTop = (heightPos) + "px"; // Add some spacing
-                            console.log("Here is the new margin: " + newprofElement.style.marginTop);
-                            newprofElement.style.display = "block";   // Ensure block display
-                        }
-                        console.log("SPACED")
-
-                        
-                    }
-            
-            
-                
-                    main.appendChild(newprofElement);
-                }
-
-                uploadedImg.src = currentImageSrc;
-
-            }
+            main.appendChild(file);
+          
         }
-
 
     }
 
+    main.scrollTo({
+        top: main.scrollHeight,
+        behavior: 'smooth'
+    });
+
+
+    let elements
+    let downloadDiv = false
+    let downloadMenu
+    let downloadBut1
+    let removeBut1
+    const isOwner = document.getElementById('is_owner').textContent;
+
+    setTimeout(function() {
+        grabImage(elements, downloadDiv, downloadMenu, downloadBut1, removeBut1, isOwner);
+    }, 1000);
 
 
 }

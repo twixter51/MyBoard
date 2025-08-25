@@ -11,10 +11,22 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
-from pathlib import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+
+
+# Add these (use your test keys from dashboard.stripe.com/test/apikeys)
+STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY", "")
+STRIPE_PUBLISHABLE_KEY = os.getenv("STRIPE_PUBLISHABLE_KEY", "")
+
+# Optional: fallback URLs (works in dev)
+STRIPE_SUCCESS_URL = os.getenv("STRIPE_SUCCESS_URL", "http://127.0.0.1:8000/success/")
+STRIPE_CANCEL_URL  = os.getenv("STRIPE_CANCEL_URL",  "http://127.0.0.1:8000/cancel/")
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -78,12 +90,26 @@ WSGI_APPLICATION = 'MyBoard.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'Base',
+        'USER': 'postgres',
+        'PASSWORD': 'learntocode',
+        'PORT': '5432',
+        'HOST': 'localhost'
     }
 }
+
 
 
 # Password validation
@@ -120,17 +146,22 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles' 
 
+
+
+
+# Static files (CSS, JS, site images you ship with the app)
+STATIC_URL = '/static/'   # note the leading & trailing slashes
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
+    Path(__file__).resolve().parent / 'static',
 ]
 
+# Media files (user uploads, not part of source code)
+MEDIA_URL = '/media/'     # URL prefix for uploaded files
+MEDIA_ROOT = BASE_DIR / 'media'  # actual folder on disk for uploads
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 

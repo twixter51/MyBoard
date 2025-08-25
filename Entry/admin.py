@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from .models import userUploads, userMedia, userTexts
+from .models import users, userMedia, userTexts
 
 # This class shows images in a table format inside the user's profile page in admin
 class userImagesInline(admin.TabularInline):
@@ -19,15 +19,12 @@ class userImagesInline(admin.TabularInline):
     image_preview.short_description = 'Preview'  # Label for the preview column
 
 # This sets up how the user uploads page looks in admin
-@admin.register(userUploads)
-class userUploadsAdmin(admin.ModelAdmin):
+@admin.register(users)
+class usersAdmin(admin.ModelAdmin):
     # Show these columns: username, when uploaded, how many images
     list_display = ('user', 'uploaded_at', 'get_image_count')
     search_fields = ('user__username',)  # Let admin search by username
-    inlines = [userImagesInline]  # Show the user's images below their info
-
-
-
+   
     # Count how many images this user has
     def get_image_count(self, obj):
         return obj.files.count()
@@ -53,7 +50,7 @@ class userMediaAdmin(admin.ModelAdmin):
     def file_preview_small(self, obj):
         if obj.content_type == "image":
             # Show a small 50x50 preview
-            return format_html('<img src="{}" width="50" height="50" style="object-fit: cover;" />', obj.image.url)
+            return format_html('<img src="{}" width="50" height="50" style="object-fit: cover;" />', obj.file.url)
         elif obj.content_type == "video":
             return "VIDEO"
         return "Neither Video Or Image"

@@ -7,7 +7,7 @@ console.log("Creating TEXT");
 function createText(text, main){
 
 
-    console.log("THESE IS THE TEXT IN C TEXT " + text);
+    console.log("THESE IS THE TEXT IN C TEXT: " + text.content);
 
 
     //handle some checks because we are getting either a string or object input
@@ -37,22 +37,18 @@ function createText(text, main){
     profElement.appendChild(textElement);
 
 
-    let lastDiv = main.lastElementChild?.firstElementChild; // Check if theres a DIV
+    let lastDiv = main.lastElementChild?.firstElementChild || main.lastElementChild; // Check if theres a DIV
 
-    console.log(lastDiv);
-
-    // if so lets go through with adding height
+    // if so lets go through with adding spacing
     if (lastDiv){
         let lastRectTemp = lastDiv.getBoundingClientRect();
        
         //get height 
         heightPos = lastRectTemp.height;
         
-        
-        //IF the last div is image then we space accordingly
-        if (heightPos != 0){
-        
-            profElement.style.marginTop = (heightPos + 10) + "px";
+        if (heightPos){
+            profElement.style.marginTop = (heightPos) + "px";
+            profElement.style.display = "block";   // Ensure block display
         }
     }
 

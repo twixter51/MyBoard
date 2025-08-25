@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1"  />
+    <title>HomePage</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+   
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+
+
+<!--Haven't Found real alternative for the images shown on the websites pages but will figure it out this is just a small portion of what i actually envision-->
+
+<body>
+  <ul class="navigationMain">
+    <nav class="navigation">
+      <li><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="{% url 'home' %}#FAQ">FAQ</a></li>
+      <li><a href="{% url 'home' %}#Monetize">Pricing</a></li>
+      <li><a href="{% url 'index' %}">Get Started</a></li>
+      <li style="margin-left:100px;"><a href="{% url 'index' %}">Log-In</a></li>
+    </nav>
+  </ul>
+
+  <div class="logoHolder"></div>
+
+  <img src="{% static 'images/My.png' %}" class="logo" alt="MyBoard logo">
+
+  <div class="Headline">
+    <h2 style="font-size:52px; opacity:.5;">How would you like to start?</h2>
+  </div>
+
+
+  <h2 style="font-size:52px; margin-top:-84px;">How would you like to start?</h2>
+
+  
+
+
+  <div class="lp-pitch">
+    <h2 class="pitch-line">
+        <span class="icon">⚡</span>
+        <strong class="accent">Try the Demo</strong>
+        <span class="pill">24-hour</span>
+        <span class="pill">25&nbsp;GB</span>
+        <span class="muted">no email required</span>
+
+        <hr>
+           <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'create_guest' %}'"> Try Demo </button>
+    </h2>
+
+    <div class="or-divider" aria-hidden="true"><span>or</span></div>
+
+    <h2 class="pitch-line">
+        <span class="icon">∞</span>
+        <strong class="accent">Go Unlimited</strong>
+        <span class="pill pill--light">free account</span>
+        <span class="muted">keep boards forever</span>
+
+        <hr>
+        <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'signup' %}'"> SignUp </button>
+    </h2>
+
+  
+ 
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+

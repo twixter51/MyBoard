@@ -14,14 +14,12 @@
 
 
 
+
 <div class="box-element center" style="width: 95%; height: 92%;  outline: none; cursor: default;  -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;">
-    
-    <div class="container" id="MainView" style="width: 100%; height: 100%; max-width: 1000px; padding: 10px; justify-content: flex-start; overflow-y: auto;  flex-direction: column; align-items: flex-start; gap: 20px; ">
+
+    <div class="container" id="MainView" style="width: 100%; height: 100%; max-width: 1000px; padding: 10px; justify-content: flex-start; overflow-y: auto;  flex-direction: column; align-items: flex-start; gap: 20px;">
            
-       <div class="container userProf" id="userMainLoader">
-
-
-        </div>
+      
 
        
     </div>
@@ -30,29 +28,67 @@
   
 </div>
 
+
+{% if is_guest %}
+<div class="app-banner" id="appBanner" role="status" aria-live="polite">
+  <div class="app-banner__inner">
+    <div class="app-banner__text" id="appBanner_Text">
+      <strong>Hello Guest!</strong> · Files auto-delete in {{ time_left.hours }}h  {{ time_left.minutes }}m  {{ time_left.seconds }}s You have <strong>25</strong> gb left&nbsp;
+     
+      <a href="{% url 'signup' %}" class="app-banner__link">Create an account </a>
+      to keep everything.
+    </div>
+    <div class="app-banner__notify blink" id="appBanner_notify">
+      <strong>!</strong> 
+    </div>
+  </div>
+</div>
+{% endif %}
+
+
+
 <div class="" style=" bottom: 0; left: 0; position: absolute; width: 100%; ">
     
    <!--finish image holder!-->
-    <div style="max-width: 1000px; margin: 0 auto; width: 100%; display: flex; align-items: center; gap: 10px; padding: 5px; border: 1px solid red; height: 100%; -webkit-user-select: none; ">
+    <div style="max-width: 1000px; margin: 0 auto; width: 100%; display: flex; align-items: center; gap: 10px; padding: 5px; height: 100%; -webkit-user-select: none; ">
         {% csrf_token %}
         
-        <div class="container hidden" id="imageHolder"style="position: absolute; margin-bottom: 190px; height: 100px; margin-left: 100px; width: 100%; justify-content: flex-start; overflow-x: auto;  flex-direction: row; align-items: flex-start; gap: 20px;   display: flex; overflow-y: hidden;"> 
+        <div class="container hidden" id="imageHolder"style="position: absolute; margin-bottom: 190px; height: 100px; margin-left: 8px; width: 100%; justify-content: flex-start; overflow-x: auto;  flex-direction: row; align-items: flex-start; gap: 20px;   display: flex; overflow-y: hidden;"> 
 
         </div>
        
-        <label style=" font-family: Raleway;  sans-serif; text-shadow: 42px 8px 23px rgb(0, 0, 0); font-size: 30px; color: #080808; position: relative; padding: 0; margin: 0;"> Enter: </label>
         <input type="text" id="Enter1" class="form-control" placeholder="Try typing here......" style="padding: 10px; width: 70%; padding: 10px; margin-left: 10px; z-index: 1;">
-        <button type="button" class="" id="uploadb" style="margin-top: 0px;"> + </button>
+        <button type="button" class="upldbt" id="uploadb" style="margin-top: 0px;"> + </button>
         <input hidden="hidden" type="file" id="imginp" name="image" accept="image/jpg, image/png, video/mp4, video/webm, video/ogg">
         <span id="filetext">No file chosen</span>
+
+        <a class = "hidden" id="downloadevent" href="path_to_file" download="proposed_file_name">Download</a>
     </div>
  
    
 </div>
 
+<div class="contentwrapper"
+    style="max-width:800px;margin:15px 0 40px 0;padding:0 16px;text-align:left;">
+    <p style="font-size:16px;color:#3484ca;text-align:left;" id="userstorage_viewer">
+        Loading...
+    </p>
+  <div role="progressbar"  id="userstorage_bar2"
+       aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ storage_left|default:0}}"
+       style="width:420px;height:12px;border-radius:999px;overflow:hidden;background:#e6f1fb;border:1px solid #cfe6ff;box-shadow:inset 0 1px 2px rgba(0,0,0,.06);">
+    <div id="userstorage_bar"
+         style="height:100%;width: {{ storage_left|default:0 }}%;background:#3484ca;border-radius:inherit;transition:width .3s ease;"></div>
+  </div>
+  
+</div>
 
 {{ storedTexts|json_script:"texts-data" }}
 {{ storedFiles|json_script:"files-data" }}
+{{ is_owner|json_script:"is_owner"}}
+{{ storage_left|json_script:"storage_left" }}
+{{ is_premium|json_script:"is_premium" }}
+
+
 {% comment %} <div class="container textview" style="margin-left: 25px; margin-top: 10px">
 
 
@@ -64,15 +100,16 @@
  
     document.addEventListener("DOMContentLoaded", function () {
 
-
-        var main = document.getElementById("MainView");
-        let mainProfile = document.getElementById("userMainLoader");
-      
-        //upload videos/pics variables
+        //main variables
+        main = document.getElementById("MainView");
+        mainProfile = document.getElementById("userMainLoader");
+        textEnter1 = document.getElementById("Enter1");  
         uploadBut = document.getElementById("uploadb");
         fileInp = document.getElementById("imginp");
         fileText = document.getElementById("filetext");
         uploadHold = document.getElementById("imageHolder");
+
+     
 
         // Create observer so we can see animations.
         //////////////////////////////***********************************
@@ -96,6 +133,7 @@
             mainProfile = document.createElement("div");
             mainProfile.classList.add("container");
             mainProfile.classList.add("userProf");
+           
             main.appendChild(mainProfile);
             console.warn("Started, had to create mainP, PT: Did not Load/Did not exist");
         }else{
@@ -103,22 +141,20 @@
         }
         
         console.log("Welcome to main:"); // Should work now
-        textEnter1 = document.getElementById("Enter1");
+        
     
         if (!main || !textEnter1) {
             console.error("Main error, please reload or try again later");
             return;
         }
         
-
-        //for image spacing and text spacing
-        var existingImages = document.querySelectorAll('nonexistent-element');
-        var heightPos = 0;
+   
+       
 
         // **************** MAIN EVENT FOR IMAGE/TEXT PLACEMENT*******************
         textEnter1.addEventListener("keypress", async (event) => {
             if (event.key === "Enter") {
-                //create and remove
+                //create and remove this handles all back end REST API 
                 Create(event,file,files, main, currRemoveButs);          
             }
 
@@ -136,6 +172,8 @@
         let files = [];
         let containedImg = false;
         let containedVideo = false;
+        let playBut = false;
+        let appender = false;
 
         fileInp.addEventListener("change", function(){
             if (fileInp.value){
@@ -166,7 +204,17 @@
                     const videoURL = URL.createObjectURL(file);
                     files.push(fileInp.files[0]);
 
+                    appender = document.createElement("div");
+                    playBut = document.createElement("img");
+                    appender.width = 100;
+                    appender.height = 100;
+                 
+                
+                    appender.style.display = "grid";
+                    appender.style.placeItems = "center";
+
                     containedVideo = document.createElement("video");
+                    
                     containedVideo.src = videoURL;
                     containedVideo.width = 100;
                     containedVideo.height = 100;
@@ -176,14 +224,30 @@
 
                     containedVideo.classList.add("waitingImages");
 
+                    // playButton
+                    playBut.width = 50;
+                    playBut.height = 50;
+                    playBut.style.objectFit = "cover";
+                    playBut.style.zIndex = 2;
+                    playBut.style.position = "absolute";
+                    playBut.style.Padding = "20px";
+                    playBut.src = "{% static 'images/playIcon.png' %}";
+                    playBut.style.background = "rgba(255, 255, 255, 0.5)";
+                    playBut.style.filter = "drop-shadow(0px 0px 6px white)";
+                    playBut.style.borderRadius = "45%"; // Make it circular
+
+
+
+
+                    appender.append(playBut);
+                    appender.append(containedVideo);
+
+                
 
                 }
 
-
                 console.warn(file.type);
-            
-            
-
+        
                // Create container for image and remove button
                const imageWrapper = document.createElement("div");
                imageWrapper.style.position = "relative";
@@ -196,16 +260,20 @@
 
                imageWrapper.append(removeBut);
 
+               // append our image or video whichever one we had
                if(containedImg){
                     imageWrapper.append(containedImg);
+
                     containedImg = false;
                }else{
-                    imageWrapper.append(containedVideo);
+                    imageWrapper.append(appender);
+                  
                     containedVideo = false;
                }
                
                uploadHold.append(imageWrapper);
-               console.log("This many files held:  " + uploadHold.children); //log children of console to see how many images are held
+
+               //clear our input after processing file...
                event.target.value = '';
 
                 //make it so if remove button clicked remove current images
@@ -237,130 +305,36 @@
 
             if(item.type == "text"){
                 let profElement = createText(item.content, main);
+                console.log(item.id)
+                profElement.dataset.id = item.id
                 main.appendChild(profElement);
             }
             else if(item.type == "file"){
-                let newprofElement = document.createElement("div");
-                newprofElement.classList.add("container");
-                newprofElement.classList.add("userProf");
+                
+                let file = await createDom(item, main);
 
-                if (item.key == "video"){
-                    //FINISH VIDEO STORAGE
-                    console.warn("Hello! The system is currently under maintenance, your videos will not appear yet unfortunetly, feel free to upload them in the mean time!")
-
-                }else if(item.key == "image"){
-
-                    await new Promise(resolve =>  {
-                  
-                        const uploadedImg = new Image(); //our new image
-    
-                        let fileShow = document.createElement("div")
-                        fileShow.className = "container image-container";
-                        fileShow.id = "img1" + Date.now();
-    
-                        uploadedImg.onload = function() {
-                            fileShow.style.width = this.naturalWidth + "px";
-                            fileShow.style.height = this.naturalHeight + "px";
-                            fileShow.style.backgroundImage = `url(${item.content})`;
-                            fileShow.style.backgroundSize = "contain";
-                            fileShow.style.backgroundRepeat = "no-repeat";
-                            fileShow.style.backgroundPosition = "center";
-                            fileShow.style.backgroundColor = "transparent"; 
-                            fileShow.style.boxShadow = "none";
-                            
-                            newprofElement.appendChild(fileShow); //append our image with above styles
-                            
-    
-                            
-                            let lastDiv = main.lastElementChild?.firstElementChild; // Check if theres a DIV
-                            if (lastDiv) {
-                                
-                                const lastRect = lastDiv.getBoundingClientRect();
-                                console.log(lastDiv.getBoundingClientRect())
-                                let heightPos = lastRect.height;
-                               
-                                if (heightPos){
-                                    newprofElement.style.marginTop = (heightPos) + "px"; // Add some spacing
-                                    console.log("Here is the new margin: " + newprofElement.style.marginTop);
-                                    newprofElement.style.display = "block";   // Ensure block display
-                                }
-                                console.log("SPACED") 
-                            }
-                            main.appendChild(newprofElement);
-                            resolve();
-                    
-                        };
-                        uploadedImg.src = item.content;
-                    })
-                    //end of else image
-
-
-                }
-
-               
-
+                main.appendChild(file)
             }
 
-
+            main.scrollTo({
+                top: main.scrollHeight,
+                behavior: 'smooth'
+            });
+           
         }
 
+        
 
     }
 
-   // all loads here
+   // all data loads here
    window.addEventListener('load', function() {
         //*************WARN**************************************************
-        console.warn("Warning buggy data store, some things might not work as intended wait for release");
+        console.warn("Welcome, data store seems to work fine");
         //****
-        // Get the element by ID first
-        const textsDataElement = document.getElementById('texts-data');
-        const fileDataElement = document.getElementById('files-data');
-        const main = document.getElementById("MainView");
-        let dataStore = []; // we will use this to grab our data from database
 
-        if (textsDataElement) {
-            console.log("TEXT data:", textsDataElement.textContent);
-           
-            const textsData = JSON.parse(textsDataElement.textContent); 
-            console.log("Parsed text Data:", textsData);  
-           
-            textsData.forEach(text => {
-
-                dataStore.push({
-                    type: 'text',
-                    content: text,
-                    timestamp: text.timestamp
-                });
-                
-            });
-        }
-
-        if(fileDataElement){
-            console.log("File Data:", fileDataElement.textContent);
-            const fileData = JSON.parse(fileDataElement.textContent);
-           
-            fileData.forEach(file => {
-                dataStore.push({
-                    type: 'file',
-                    key: file.key,
-                    content: file.content,
-                    timestamp: file.timestamp
-                });
-
-            });
-
-        } 
-
-        dataStore.sort((a,b) =>{
-            const time1 = new Date(a.timestamp);
-            const time2 = new Date(b.timestamp);
-            return time1 - time2;
-        });
-        
-        console.log(dataStore);
-        displayInOrder(dataStore);
-        //Datastore ends here
-      
+        let client  = false; // client is false, server loaded.    
+        loadData(client);
     });
 
 
@@ -373,7 +347,7 @@
         else{
             uploadHold.classList.add("visible");
             uploadHold.classList.remove("hidden");
-            uploadHold.style.zIndex = "2";
+           
         } 
     }
 
@@ -384,12 +358,304 @@
         else{
             uploadHold.classList.remove("visible");
             uploadHold.classList.add("hidden");
-            uploadHold.style.zIndex = "0";
+           
             //clear out our upload paths
             fileText.innerHTML = "No file chosen";
       
             
         } 
+    }
+
+
+  
+
+    function grabImage(elements, downloadDiv, downloadMenu, downloadBut1, removeBut1, isOwner){
+        //grab and download image
+       
+        if(main.hasChildNodes()){
+
+            elements = Array.from(main.children);
+
+            
+            for(let i = 1; i < elements.length; ++i){
+                const element = elements[i]
+                
+                let isVideo = false;
+                if(element.firstElementChild.firstElementChild){
+                    isVideo = element.firstElementChild.firstElementChild;
+                   
+                }
+
+                
+                //don't worry since video dom elements want to be annoying I need some way to make sure it all works
+                if(isVideo){
+                    if (isVideo.tagName == "VIDEO"){
+                        console.warn("GOOD");
+                    }else{
+                        isVideo = null;
+                        console.warn("bad");
+                    }
+                }
+
+                const isText = element.firstElementChild.classList.contains("textView")
+                const positioning = []
+                if(element.firstElementChild.nodeName == "DIV" || element.firstElementChild.nodeName == "a" ){
+                        
+                    let mouseEnter =  () => {
+                        
+                        downloadDiv = document.createElement("div");
+                        downloadMenu = false
+                        downloadBut1 = document.createElement("button")
+                        removeBut1 = document.createElement("button")
+                        downloadDiv.classList.add("container");
+                        downloadDiv.classList.add("remove");
+
+                       
+
+                       
+                        main.appendChild(downloadDiv)
+
+                        downloadDiv.style.position = "fixed";
+                        downloadDiv.style.pointerEvents = "none";
+                        downloadDiv.style.transform = "translate(-50%, -50%)";
+                        downloadDiv.style.opacity = "0.5";
+                        
+
+
+                        let mouseMove = () => {
+                            if(!downloadDiv) return
+                            downloadDiv.style.left = event.clientX + "px" ;
+                            downloadDiv.style.top = event.clientY + "px" ;
+
+                            let currPosX = event.clientX + "px";
+                            let currPosY = event.clientY + "px";
+
+                            if (positioning.length != 2){
+                                positioning.push(currPosX);
+                                positioning.push(currPosY);
+                            }else{
+                                positioning[0] = currPosX;
+                                positioning[1] = currPosY;
+                            }
+                            
+
+                            
+                        };
+                        document.addEventListener('mousemove', mouseMove)
+
+
+                    };
+                    element.firstElementChild.addEventListener("mouseenter", mouseEnter)
+
+                    
+                    let mouseLeave = () => {
+                       
+                        if (downloadDiv){
+                            downloadDiv.remove()
+                            downloadDiv = null
+                        }
+                        
+
+                        if (downloadMenu) {
+                            downloadMenu.remove()
+                            downloadBut1.remove()
+                            removeBut1.remove()
+                            downloadMenu = null
+                            downloadBut1 = null 
+                            removeBut1 = null
+                        }
+
+                    };
+                    element.firstElementChild.addEventListener("mouseleave", mouseLeave)
+
+
+                    let mouseClick = () => {
+                        if (isOwner == "false"){
+                            console.warn("you don't own this page!")
+                            return
+                        }
+
+                        if (downloadMenu == false){
+
+                            event.preventDefault(); 
+
+                            downloadMenu = document.createElement("div");
+                    
+                      
+                            downloadMenu.classList.add("hidden")
+                        
+                            downloadMenu.classList.add("container");
+                            downloadMenu.style.opacity = "0";
+                            downloadMenu.style.transition = "all 0.4s ease";
+
+                            downloadMenu.style.width = 5 + "px"
+                            downloadMenu.style.height = 5 + "px"
+                            downloadMenu.style.transition = 'all 0.2s ease-in-out';
+
+                            
+                            //new version 4.2 videos can now be removed thank the lord 
+
+                           
+                            element.firstElementChild.appendChild(downloadMenu);
+                            let rec = downloadDiv.getBoundingClientRect();
+                            downloadMenu.style.position = "absolute";
+
+                            
+                            console.log(isVideo);
+                            if (isVideo){
+                               
+                                let parentRec = element.getBoundingClientRect();
+                                downloadMenu.style.left = (rec.left - parentRec.left) + "px";
+                                downloadMenu.style.top = (rec.top - parentRec.top) + "px"; 
+                            }else{
+                                console.log("EHH")
+                                downloadMenu.style.left = positioning[0]
+                                downloadMenu.style.top = positioning[1]
+                            }
+                        
+                        
+        
+                            //buttons
+                            
+                            downloadBut1.innerHTML = (isText) ? "Copy" : "Download"
+
+                            downloadBut1.style.width = "auto";
+                            downloadBut1.style.height = "auto";
+                            downloadBut1.style.justifyContent = "center"
+                            downloadBut1.style.marginBottom = "5px";
+
+                            removeBut1.innerHTML = "Remove"
+                            removeBut1.style.width = "auto";
+                            removeBut1.style.height = "auto";
+                            removeBut1.style.justifyContent = "center"
+                            
+
+
+                            downloadMenu.append(downloadBut1)
+                            downloadMenu.append(removeBut1)
+                            
+                            downloadMenu.style.zIndex = 1030;
+
+                            //animation
+                            setTimeout(() => {
+                                downloadMenu.classList.remove("hidden")
+                                downloadMenu.style.opacity = "1";
+                                downloadMenu.style.width = 100 + "px";
+                                downloadMenu.style.height = 100 + "px";
+                            }, 0);
+                    
+
+                            let downloadClick = () => {
+                               
+                                
+                              
+                                let downloader = document.getElementById("downloadevent")
+
+                                downloadDiv.remove()
+                                downloadMenu.remove()
+
+                                if(isText){
+                                    navigator.clipboard.writeText(element.firstElementChild.textContent)
+                                }
+                                if(isVideo){
+                                    downloader.href = element.firstElementChild.firstElementChild.src
+                                    downloader.click()
+                                }
+                                
+                                if(!isText && !isVideo){
+                                    downloader.href = element.firstElementChild.style.backgroundImage.slice(5, -2);
+                                    downloader.click()
+                                }
+
+                            
+                            };
+                            downloadBut1.addEventListener("click", downloadClick) 
+
+
+
+                            let removeClick = async () => {
+
+                                let formData = new FormData();
+                                if (isText){
+                                    formData.append("text",  element.dataset.id)
+                                }else{
+                                    formData.append("file",  element.dataset.id)
+                                }
+                                
+                                formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);  
+                                
+                                console.log(element.dataset.id)
+                                
+                                try{
+                                    let response = await fetch("/delete/", { method: 'POST', body: formData,});
+                                    const data = await response.json();
+
+                                    if (data.success){
+                                    
+                                       element.remove()
+                                       elements.splice(i, 1)
+
+                                        //update client storage view
+                                        updateStorageView(data.storage_left)
+                    
+
+                                        //loop through and reapply spacing
+                                        lastElement = false;
+                                        for (const element of elements){
+                                            if(!lastElement){
+                                                lastElement = element;
+                                            }else{
+                                                const lastRect = lastElement.getBoundingClientRect();
+                                                let heightPos = lastRect.height;
+
+                                                if (heightPos){
+                                                    element.style.marginTop = (heightPos) + "px"; // Add some spacing
+                                                    console.log("Here is the new margin: " + element.style.marginTop);
+                                                    element.style.display = "block";   // Ensure block display
+                                                }
+                                                
+                                                let video = element.firstElementChild.firstElementChild;
+
+                                                if(video){
+                                                    lastElement = notText
+                                                }else{
+                                                    lastElement = element.firstElementChild
+                                                } 
+                                               
+                                                
+                                            }
+                                        }
+
+
+                                    }else{
+                                        console.log("error file deletion failed")
+                                    }
+                                }catch(error){
+                                    console.error(error)
+                                }
+
+                                
+
+                            };
+                            removeBut1.addEventListener("click", removeClick) 
+                        
+                        
+                           
+                            downloadDiv.remove()
+
+                        }
+                    };
+                    element.firstElementChild.addEventListener("contextmenu", mouseClick)
+
+                
+                
+                }
+
+            }
+        }
+       
+    
+
     }
 
     //////////////////////////////***********************************
@@ -400,3 +666,7 @@
 {% comment %} extras {% endcomment %}
 <script  src="{% static 'JS/CreateText.js' %}"> </script>
 <script  src="{% static 'JS/MainC.js' %}"> </script>
+<script  src="{% static 'JS/Load.js' %}"> </script>
+<script  src="{% static 'JS/CreateDom.js' %}"> </script>
+<script  src="{% static 'JS/GuestFeatures.js' %}"> </script>
+<script  src="{% static 'JS/UserStorage.js' %}"> </script>

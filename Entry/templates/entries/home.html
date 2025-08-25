@@ -18,196 +18,299 @@
 
 <!--Haven't Found real alternative for the images shown on the websites pages but will figure it out this is just a small portion of what i actually envision-->
 
+<body>
 
+    <ul class="navigationMain" style="">
 
-<!--This is the top page of the Entire Website (Includes Navigation bar)-->
-<div class="image-box">
-    <ul>
-        <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'home' %}">News</a></li>
-        <li><a href="{% url 'home' %}">Contact</a></li>
-        {% if user.is_authenticated %}
-            <li id="logout" style="float:right; cursor: pointer;"><a class="active" >Log-Out</a></li>
-        {%else%}
-        <li style="float:right"><a class="active" href="{% url 'index' %}">Log-In</a></li>
-        {% endif %}
+       <nav class="navigation">   
+            <li> <a href="">Home</a> </li>
+            <li> <a href="#FAQ">FAQ</a> </li>
+            <li> <a href="#Monetize">Pricing</a> </li>
+            <li> <a href="{% url 'choice' %}">Get Started</a> </li>
+           
+            <li style="margin-left: 100px;"> <a href="">Log-In</a> </li>
+       </nav>
+
     </ul>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-</div>
-
-
-
-
-
-
-<!--The starting div where it will set off the entire first page-->
-
-<div class="container2" style="width: 97%; display: inline-block; background-color: transparent;">
--
-    <div class="container2" style= "box-shadow: 0 0 10px rgb(0, 0, 0);">
-        <h1 id="loggedin">Developer Version 0.6 (changed login system)</h1>
+ 
+    <div class="logoHolder"> 
+      
+    
     </div>
 
-</div>
-
-<div class="container2" style="width: 97%; display: inline-block; background-color: transparent;">
-
-    <div class="container2" style= "box-shadow: 0 0 10px rgb(0, 0, 0);">
-        <h1>What Is My Board?</h1>
-    </div>
-
-</div>
+    <img src = "{% static 'images/My.png' %}" class="logo">
 
 
 
-<!--logout-button-pop-up-->
-<div class="" id="overlay" style="">
-
-    <div class="popup container  " id="popup" style=" flex-direction: row; justify-content: space-between; background-color: transparent; align-items: end;   box-shadow: 0 0 0px rgb(0, 0, 0);  padding: 40px; border: 0px; ">
-        <div class="popup container " id="popup" style="">
-            <h1 style="color:rgb(26, 26, 26); text-shadow: 15px 8px 23px">Are You Sure?</h1>
-        </div>
-        <h1 class = "exits" style="cursor: pointer;  text-shadow: 15px 8px 23px">Yes</h1>
-        <h1 class = "exits" id="exit" style="cursor: pointer; text-shadow: 15px 8px 23px">No</h1>
-    </div>
-</div>
-
-
-
-
-
-<!--This is just the side numbered divs that contain useful information about MyBoard-->
-<div class="container3">
-
-  <div class="col-lg-4">
-        <div class="numbs">
-            
-            <div class="container" style="padding: 10px; background-color: #fff; width: 50%;">
-                <h1>1.</h1>
-            </div>
-            
-        </div>
-
-        <div class="container" style="padding: 10px; background-color: #fff; width: 99%;">
-            <h1>Safe-Keep Links, Videos, Pictures, Copy-Pastas YOU name it!</h1>
-        </div>
+    <div class="Headline" style=""> 
+        <h2 style="font-size: 52px; opacity: 0.5;">
+            Your links. Your media. Your rules. Move them how you want
+               
+        </h2>
+    
        
+    
+    </div>
+    <h2 style="font-size: 52px; margin-top: -145px;">
 
-        <div class="numbs">
-            
-            <div class="container" style="padding: 10px; background-color: #fff; width: 50%;">
-                <h1>2.</h1>
+        Your links. Your media. Your rules. Move them how you want
+       
+       
+    </h2>
+
+    <h2 style="font-size: 22px; margin-top: 50px;">
+        Instantly transfer links, videos, and images between your devices—effortlessly.
+
+    </h2>
+
+    <h2 style="font-size: 22px; margin-top: 15px; color: #3484ca;">
+        Customize your board to match your style or keep it private—your creativity, your rules.
+        
+    </h2>
+    <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;"onclick="window.location.href='{% url 'choice' %}'"> Get Started For Free </button>
+    <div class="or-divider" aria-hidden="true"><span>or</span></div>
+    <h2 style="font-size: 22px; margin-top: 15px; color: #3484ca;">
+        Already have an account with us?
+        
+    </h2>
+    <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'index' %}'"> Log-In </button>
+   
+
+   
+ 
+
+    <div class="showCont">
+        <div class="contentwrapper">
+            <div class="image-container">
+                <img src="{% static 'images/MyShowcase.png' %}" alt="Showcase">
+            </div>
+            <div class="text-content">
+                <h2 class="main-heading">Designed for You. Built for Speed. No Clutter, No Hassle.</h2>
+                <p class="sub-heading" style="margin-top: 25px;">With this simple design, everything you upload will appear full-size, no matter the size of the uploaded content. Your board will grow and you can effortlessly scroll through to find any piece of content.</p>
+                <button class="noSign lpbtn lpbtn-primary" style="margin: 0 auto; display: block; margin-top: 35px;"onclick="window.location.href='{% url 'choice' %}'">Try It Now – No Signup Required</button>
             </div>
             
         </div>
-        <div class="container" style="padding: 10px; background-color: #fff; width: 99%;">
-            <h1>Share YOUR memories with others through MyBoard!</h1>
-        </div>
-  </div>
+    </div>
+   
+
+ 
 
   
-    <div class="col-lg-4">
-            <div class="numbs">
-                <div class="container" style="padding: 10px; background-color: #fff; width: 50%;">
-                    <h1>3.</h1>
-                </div>
-            </div>
-       
-            <div class="container" style="padding: 10px; background-color: #fff; width: 99%;">
-                <h1> You are able to transfer links, videos, images to another platform without having to use external apps.</h1>
-            </div>
-          
-            <div class="numbs">
-                <div class="container" style="padding: 10px; background-color: #fff; width: 50%;">
-                    <h1>4.</h1>
-                </div>
-            </div>
-
-            <div class="container" style="padding: 10px; background-color: #fff; width: 99%;">
-                <h1>Share YOUR link to yourself or other people to grab your videos, links, images etc.</h1>
-            </div>
     
- 
-    </div>
+
+  <div class="lp-pitch" style="margin-top:300px;">
+    <h2 style="font-size:52px; margin:0; color: #3484ca;">Pricing</h2>
+    <p class="muted" style="font-size:18px; margin-top:6px;">
+      Basic gives you <span class="accent">25&nbsp;GB free</span>. Premium unlocks
+      <span class="accent">unlimited storage</span> and customization.
+    </p>
+  </div>
 
 
-</div>
+    <div id="Monetize" style="display: flex; width: 250px; margin-left: 0; margin-right: 0; margin-top: -367px;">
+      
+        <div class="showCont2" style="width:250px;">
 
+            <div class="container2" style="margin-top: -35px; background-color: rgba(35, 184, 80, 1);">
+                <h2 style="color:rgb(255, 255, 255); font-size: 25px;" >Owned</h2>
+            </div>
 
+            <h2 style="color:rgb(255, 255, 255);" > Basic ⭐ </h2>
+            <br>
+            <div class="container2" style="">
+                <h2 style="color:rgb(0, 0, 0); font-size: 15px;" > Free Limited Storage ✔ </h2>
+            </div>
 
-
-<!--giant right div that entices the user to use MyBoard-->
-<div class="container4" style="width: 30%;">
-    <h2>Why Choose MyBoard?</h2>
-    <p>Imagine a world where all your favorite links, videos, and images are just a click away, securely stored and easily shareable. With MyBoard, this dream becomes a reality. Our platform not only keeps your digital treasures safe but also allows you to share them effortlessly with friends and family. No more juggling between different apps or worrying about losing your precious memories. Join MyBoard today and experience the ultimate convenience and peace of mind. Your digital life, organized and simplified.</p>
-</div>
-
-
-<!--Similar to the first div this sets off the path to our button to go to the next page-->
-<div class="container2" style="width: 97%; display: inline-block; background-color: transparent; margin-top: 20px;  box-shadow:rgb(255, 255, 255)">
-    <div class="container2" style="box-shadow: 0 0 10px rgb(0, 0, 0);">
-        <h1>What are you waiting for? Lets share memories</h1>
-    </div>
-</div>
-
-
-
-<!--This basically sets it all off and now you can get started and go to the next page-->
-<div class="container2" style="width: 97%; display: inline-block; background-color: transparent; margin-top: 20px;  box-shadow:rgb(255, 255, 255)">
-    <button type="button" class="button" onclick="window.location.href='{% url 'index' %}'" style="width:200px; height: 70px; font-size: 18px;">Get Started</button>
-</div>
-
-
-
-
-<script type="text/javascript">
-
-    
-    var user = '{{request.user}}'
-
-    if (user != 'AnonymousUser'){
-        logged1 = document.getElementById("loggedin")
-
-        logged1.textContent = "Welcome, " + {{'user'}}
-    }
-
-
-</script>
-
-
-<script type="text/javascript">
-
-    var button = document.getElementById("logout")
-    var logoutref = "{% url 'logout' %}"
-
-
-    if (button != null){
-        button.addEventListener("click", function() {
-
-            console.log("CLICKED")
-            LogoutButton();
+            <br>
+            <div class="container2" style="margin-top: 250px; background-color: rgb(184, 144, 35);">
+                <h2 style="color:rgb(255, 255, 255); font-size: 25px;" > $0</h2>
+            </div>
             
-           
-        });
-    }
-   
-   
+        </div>
+        <div class="showCont2" style="width: 300px;">
+            <h2 style="color:rgb(255, 255, 255);"> Premium🌟</h2>
+
+            <br>
+            <div class="container2" style="margin-bottom 100px;">
+                <h2 style="color:rgb(0, 0, 0); font-size: 15px;" > Unlimited Storage ✔ </h2>
+            </div>
+
+            <br>
+            <div class="container2" style="margin-bottom 100px;">
+                <h2 style="color:rgb(0, 0, 0); font-size: 15px;"> More Soon ✔</h2>
+            </div>
+            <br>
+            <div class="container2" style="margin-bottom 100px;">
+                <h2 style="color:rgb(0, 0, 0); font-size: 15px;"> Customized Experience ✔</h2>
+            </div>
+
+            <div class="container2" style="margin-top: 180px; background-color: rgba(35, 184, 80, 1);">
+                <h2 style="color:rgb(255, 255, 255); font-size: 25px;" > $0.99</h2>
+
+            </div>
+            <button class="lpbtn lpbtn-primary highlight-loop"style="margin: 0 auto; display: flex; margin-top: -150px;" onclick="window.location.href='{% url 'premium_sale' %}'">🌟 Try Premium 🌟</button>
+        </div>
+
+      
+    </div> 
    
 
-</script>
+
+    
 
 
-<script  src="{% static 'JS/Close.js' %}"> </script>
+    <h2 id="FAQ" style="font-size: 52px; margin-top: 450px; margin-bottom: 70px; color: #3484ca;">
+
+  
+        FAQ
+        
+      
+    
+    
+    
+        <h2 style="font-size: 52px; margin-top: 60px;">
+
+            1. Whats the point?
+
+
+        
+        </h2>
+
+        <h2 style="font-size: 22px; margin-top: 60px;">
+
+            Personally, whenever I want to create and upload content I'd struggle transferring over 25 gb of videos to my deskstop for editing.
+
+
+
+
+        
+        </h2 >
+
+        <h2 style="font-size: 22px; margin-top: 25px;">
+
+            Issues would arise and every website I'd go to would require me to pay for anything over 25 gb, the free ones would take ages to upload.
+
+
+
+
+        
+        </h2 >
+
+        <h2 style="font-size: 22px; margin-top: 25px;">
+
+            This is why the basic feature includes a limit of 25 gb, because I just could not find a way to transfer 25 gb+ without using CMD (Command line Interface), and I believe that you should be
+            able to solve your problem without wasting time on learning how to transfer through other technical means. 
+
+
+
+        
+        </h2 >
+
+
+
+        <h2 style="font-size: 52px; margin-top: 60px;">
+
+            2. Privacy Concerns
+
+
+        
+        </h2>
+
+        <h2 style="font-size: 22px; margin-top: 60px;">
+
+            Your data is safe, your passwords are never saved so if you do forget them you'll have to reset it as we do not store passwords, your content
+            is also safe and is hashed inside our database so no one can see what that image, video, text is unless it's you on your board. 
+
+
+
+
+        
+        </h2 >
+
+        <h2 style="font-size: 22px; margin-top: 60px;">
+
+            Now obviously if you do make your board public anyone can see when they go to your link, although every board starts off as private, so you do
+            have that option later on to show off your content.
+
+
+
+  
+        </h2 >
+        
+
+
+        <h2 style="font-size: 52px; margin-top: 60px;">
+
+           3. Why Choose Us?
+
+
+        
+        </h2>
+
+        <h2 style="font-size: 22px; margin-top: 60px;">
+
+            You can upload almost anything, not just files. Most websites just have you limited on files to transfer, which is cool but we have expanded on that idea, and now
+            you are able to upload Links, Videos, Images, and Text (More to be added soon). Not only that you have a sense of personalization to YOUR board. 
+
+
+
+
+        
+        </h2 >
+
+
+        <h2 style="font-size: 52px; margin-top: 60px;">
+
+           4. How do I remove my account?
+
+
+        
+        </h2>
+
+
+    </h2>
+
+
+
+
+
+
+
+   
+
+    <div class="contentwrapper"
+        style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;max-width:1100px;margin:80px auto 40px;padding:0 16px;">
+
+        <div class="image-container"
+            style="flex:1 1 460px;max-width:520px;margin:0;">
+            <img src="{% static 'images/yeyaeyaya.png' %}" alt="Showcase"
+                style="position:static;width:100%;height:auto;margin:0;border-radius:8px;box-shadow:0 20px 50px rgba(0,0,0,.15);" />
+        </div>
+
+        <div class="text-content"
+            style="flex:1 1 440px;margin:0;text-align:left;">
+            <h3 style="margin:0 0 10px;font-size:28px;">Delete your account anytime</h3>
+            <p style="margin:0 0 12px;color:#3484ca;font-size:18px;">
+                Soon to be added, a button to quickly delete your account. Otherwise you can request a deletion.
+            </p>
+
+            <div style="display:flex;gap:2px;flex-wrap:wrap;">
+                <button class="lpbtn lpbtn-primary"style="">Manage Account</button>
+            </div>
+
+            <small style="display:block;margin-top:10px;color:#6fa4d3;">*Note: your files will be removed, your data is never saved once it's deleted</small>
+
+            
+
+        </div>
+    
+    </div>
+        
+
+</body>
+
+
+
+
+

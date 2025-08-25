@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+  <title>Checkout</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+{{ is_authenticated|json_script:"is_authenticated" }}
+
+<body>
+  <!-- NAV -->
+  <ul class="navigationMain">
+    <nav class="navigation">
+      <li><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="{% url 'home' %}#FAQ">FAQ</a></li>
+      <li><a href="{% url 'home' %}#Monetize">Pricing</a></li>
+      <li><a href="{% url 'index' %}">Get Started</a></li>
+      <li style="margin-left:100px;"><a href="{% url 'index' %}">Log-In</a></li>
+    </nav>
+  </ul>
+
+  <div class="logoHolder"></div>
+  <img src="{% static 'images/My.png' %}" class="logo" alt="MyBoard logo" />
+
+  <div class="container2" style="margin-top: 105px; margin-bottom: -165px;">
+      <h2 class="accent lpbtn lpbtn-primary">Unlimited Plan</h2>
+      <p class="accent lpbtn lpbtn-primary" ><strong style="font-size:2rem;">$0.99</strong> <span class="muted">per month</span></p>
+  </div>
+
+  <!-- KEEP THIS TOP SECTION -->
+
+
+
+  {% if is_authenticated %}
+
+
+    <div class="Headline">
+      <h2 style="font-size:52px; opacity:.5;">All your files, no limits.</h2>
+    </div>
+    <h2 style="font-size:52px; margin-top:-84px;">All your files, no limits.</h2>
+    <div class="container2" style="max-width:560px; margin-top:28px;">
+      <div class="box-element">
+      
+        <p style="font-size:16px; opacity:.7; margin-bottom:16px;">🔒 Payments are encrypted.</p>
+
+        <form id="payment-form" method="POST" action="{% url 'create_checkout_session' %}">
+          {% csrf_token %}
+
+          <div class="form-group">
+            <label for="full_name">Name</label>
+            <input id="full_name" name="full_name" type="text" autocomplete="cc-name" placeholder="Jane Doe" required />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="jane@example.com" required />
+           
+
+          </div>
+
+    
+       
+          <button type="submit" class="lpbtn lpbtn-primary" style="font-size:16px;   justify-content: center;">Continue to payment</button>
+
+
+          <div id="payment-feedback" class="hidden" role="alert" aria-live="polite" style="margin-top:12px; font-size:14px;"></div>
+        </form>
+      </div>
+    </div>
+ {%endif%}
+
+
+ {% if not is_authenticated %}
+    <h2 class= "lpbtn-secondary"style="font-size:52px; margin-top:350px;">Please Log-in or create an account to become a premium user :)</h2>
+    <h2 class="pitch-line">
+        <span class="pill pill--light">free account</span>
+        <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'signup' %}'"> SignUp </button>
+    </h2>
+ {%endif%}
+
+  <script>
+    // Light formatting helpers to keep inputs tidy
+    const onlyDigits = (v) => v.replace(/\D+/g, '');
+    const cardNumber = document.getElementById('card_number');
+    const exp = document.getElementById('exp_date');
+    const cvc = document.getElementById('cvc');
+    const zip = document.getElementById('zip');
+    const state = document.getElementById('state');
+    const form = document.getElementById('payment-form');
+    const feedback = document.getElementById('payment-feedback');
+
+    if(cardNumber){ cardNumber.addEventListener('input', () => {
+      const digits = onlyDigits(cardNumber.value).slice(0, 19);
+      const groups = digits.match(/.{1,4}/g) || [];
+      cardNumber.value = groups.join(' ');
+    }); }
+
+    if(exp){ exp.addEventListener('input', () => {
+      let v = onlyDigits(exp.value).slice(0, 4);
+      if(v.length >= 3){ v = v.slice(0,2) + '/' + v.slice(2); }
+      exp.value = v;
+    }); }
+
+    if(cvc){ cvc.addEventListener('input', () => { cvc.value = onlyDigits(cvc.value).slice(0, 4); }); }
+    if(zip){ zip.addEventListener('input', () => { zip.value = zip.value.replace(/[^0-9\-]/g, '').slice(0, 10); }); }
+    if(state){ state.addEventListener('input', () => { state.value = state.value.toUpperCase().replace(/[^A-Z]/g, '').slice(0,2); }); }
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      feedback.classList.remove('hidden');
+      feedback.classList.add('visible');
+      feedback.textContent = 'Submitted! Connect this to your Django view to create a payment intent (e.g., Stripe).';
+      const form = e.target;
+      const res  = await fetch(form.action, { method: 'POST', body: new FormData(form) });
+      if (!res.ok) {
+        alert(await res.text() || 'Checkout failed'); return;
+      }
+      const { url } = await res.json();
+      window.location = url; // Go to Stripe Checkout
+
+
+    });
+  </script>
+</body>
+</html>
