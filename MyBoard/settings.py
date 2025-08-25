@@ -19,8 +19,7 @@ import os
 
 
 # Add these (use your test keys from dashboard.stripe.com/test/apikeys)
-STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY", "")
-STRIPE_PUBLISHABLE_KEY = os.getenv("STRIPE_PUBLISHABLE_KEY", "")
+
 
 # Optional: fallback URLs (works in dev)
 STRIPE_SUCCESS_URL = os.getenv("STRIPE_SUCCESS_URL", "http://127.0.0.1:8000/success/")
