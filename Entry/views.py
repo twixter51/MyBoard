@@ -353,6 +353,10 @@ def create_checkout_session(request):
     Creates a Stripe Checkout Session and returns its URL as JSON.
     Post 'amount' in dollars (string or number). Ex: "0.99"
     """
+    username = request.POST.get("full_name")
+    email = request.POST.get("email")
+
+
     secret = settings.STRIPE_SECRET_KEY
     if not secret:
         return HttpResponseBadRequest("Stripe not configured (missing STRIPE_SECRET_KEY).")
@@ -369,8 +373,19 @@ def create_checkout_session(request):
     success_url = getattr(settings, "STRIPE_SUCCESS_URL", "http://127.0.0.1:8000/success/")
     cancel_url  = getattr(settings, "STRIPE_CANCEL_URL",  "http://127.0.0.1:8000/cancel/")
 
+
+    customer = stripe.Customer.create(
+        name=username or None,
+        email=email or None,
+        metadata={
+            "app_username": request.user.users if request.user.is_authenticated else request.POST.get("username", ""),
+        }
+    )
+
+
     session = stripe.checkout.Session.create(
         mode="payment",
+        customer=customer.id,
         payment_method_types=["card"],
         line_items=[{
             "price_data": {
@@ -382,9 +397,23 @@ def create_checkout_session(request):
         }],
         success_url=success_url + "?session_id={CHECKOUT_SESSION_ID}",
         cancel_url=cancel_url,
+       
+        metadata={
+            "username": username,
+            "email": email
+        },
+        payment_intent_data={
+            "metadata": {
+                "username": username,
+                "email": email
+            }
+        }
     )
     return JsonResponse({"url": session.url})
 
-# Simple pages (you can template these later)
-def checkout_success(request): return HttpResponse("✅ Success (test mode).")
+
+def checkout_success(request): 
+    #give the user their premium here when its all set up.
+    
+    return HttpResponse("✅ Success (test mode).")
 def checkout_cancel(request):  return HttpResponse("❌ Canceled.")

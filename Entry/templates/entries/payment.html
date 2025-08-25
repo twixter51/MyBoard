@@ -111,6 +111,10 @@
 
     form?.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+
+     
+
       feedback.classList.remove('hidden');
       feedback.classList.add('visible');
       feedback.textContent = 'Submitted! Connect this to your Django view to create a payment intent (e.g., Stripe).';

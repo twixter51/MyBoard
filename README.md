@@ -1,7 +1,7 @@
 
-# Update Logs(Development Build V.6.3)
+# Update Logs(Development Build V.6.4)
 
-# Hello! This is an old project being reworked, everything is under construction so no pull requests at this time.
+# Hello! This is an old project being reworked, everything is under construction so no pull requests at this time. (previous Commits 39+)
 
 # Recent update-logs
 
@@ -58,6 +58,10 @@ progress bar. Added QOL feature to where if you upload more than 99MB it display
 --(6.3) Removed extra junk files, stripe payment integrated, you can now test payments! changed how development was handled.
 
 --(6.3) This took me a few hours but realized this project had been pointing to an old build, the settings.py was never updated and never had postgreSQL being used I believe. Thankfully after debugging I fixed most if not all things that were causing underlying hidden issues that I would have never found out.
+
+--(6.4) Added auto-fill feature so now when the form at payment template is entered, the customers data will appear on checkout.
+
+
 
 
 # Bugs that need fixing / Things being worked on:
