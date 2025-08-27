@@ -322,12 +322,6 @@ def update_user(request):
             profile.storage = request.POST["update_storage"]
             profile.save(update_fields=["storage"])
             return JsonResponse({'success': True, 'storage_left':profile.storage})
-        if request.POST.get("premium_purchased"):
-            profile.is_premium = True
-            profile.save(update_fields=["is_premium"])
-            profile.storage = 1e9
-            profile.save(update_fields=["storage"])
-            return JsonResponse({'success': True, 'storage_left':profile.storage})
         return JsonResponse({"success": False, "error": "No value provided"})
 
     
@@ -413,7 +407,11 @@ def create_checkout_session(request):
 
 
 def checkout_success(request): 
-    #give the user their premium here when its all set up.
-    
+    profile = request.user.users
+    profile.is_premium = True
+    profile.save(update_fields=["is_premium"])
+    profile.storage = 1e9
+    profile.save(update_fields=["storage"])
+
     return HttpResponse("✅ Success (test mode).")
 def checkout_cancel(request):  return HttpResponse("❌ Canceled.")
