@@ -353,7 +353,7 @@ def create_checkout_session(request):
 
     secret = settings.STRIPE_SECRET_KEY
     if not secret:
-        return HttpResponseBadRequest("Stripe not configured (missing STRIPE_SECRET_KEY).")
+        return HttpResponseBadRequest("Stripe not configured")
     stripe.api_key = secret
 
     amount_str = request.POST.get("amount", "0.99")
@@ -412,6 +412,14 @@ def checkout_success(request):
     profile.save(update_fields=["is_premium"])
     profile.storage = 1e9
     profile.save(update_fields=["storage"])
+    template = loader.get_template("entries/payment.html")
+    print(profile.user.username)
+    context = {
+       'sale_complete': True,
+       'sale_name':profile.user.username 
+    }
 
-    return HttpResponse("✅ Success (test mode).")
-def checkout_cancel(request):  return HttpResponse("❌ Canceled.")
+    return HttpResponse(template.render(context, request))
+
+def checkout_cancel(request):  
+    return HttpResponse("❌ Canceled.")

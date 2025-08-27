@@ -1,5 +1,5 @@
 
-# Update Logs(Development Build V.6.45)
+# Update Logs(Development Build V.6.5)
 
 # Hello! This is an old project being reworked, everything is under construction so no pull requests at this time. (previous Commits 39+)
 
@@ -62,6 +62,8 @@ progress bar. Added QOL feature to where if you upload more than 99MB it display
 --(6.4) Added auto-fill feature so now when the form at payment template is entered, the customers data will appear on checkout.
 
 --(6.45) Quick update, once premium is paid for user should automatically gain the given benefits!
+
+--(6.5) Payment finalized! you can now test with fake cards!
 
 
 # Bugs that need fixing / Things being worked on:

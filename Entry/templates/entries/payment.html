@@ -73,6 +73,21 @@
     </div>
  {%endif%}
 
+ {% if sale_complete %}
+    <h2 class= "lpbtn-secondary"style="font-size:52px; margin-top:350px;">Thank you for your payment</h2>
+    <h2 class="pitch-line">
+        <span class="pill pill--light">Thank you for your payment, you can cancel anytime</span>
+        <span class="pill pill--light">You will be redirected soon...</span>
+    </h2>
+
+    <script>
+      const boardLink = "{{ sale_name }}"; // assuming you pass boardLink in context
+      const url = `/board/${boardLink}`;
+      setTimeout(() => {
+        window.location.href = url;
+      }, 3000); 
+    </script>
+ {%endif%}
 
  {% if not is_authenticated %}
     <h2 class= "lpbtn-secondary"style="font-size:52px; margin-top:350px;">Please Log-in or create an account to become a premium user :)</h2>
