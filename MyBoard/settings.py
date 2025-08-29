@@ -65,7 +65,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'Entry.middleware.EnsureDeviceIDMiddleware',
 ]
+
+# Use a real cache (Redis/Memcached) in production
+# CACHES = { ... }
 
 ROOT_URLCONF = 'MyBoard.urls'
 

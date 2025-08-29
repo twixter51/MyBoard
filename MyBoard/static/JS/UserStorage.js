@@ -48,6 +48,8 @@ function updateStorageView(storageLeft){
     let is_premium = JSON.parse(document.getElementById("is_premium").textContent);
     let size = "MB"
     let max = 25
+    let displaySize = ((25*1024) -  storageLeft).toFixed(2)
+    let displaySizeP = ((((25*1024) - storageLeft) / (25*1024)))
     //place holder for when user uploads more than 99MB
     if(usedStorage > 100){
         size = "GB"
@@ -59,9 +61,11 @@ function updateStorageView(storageLeft){
   
     if(is_premium){
         max = "Unlimited"
+        displaySize = ((1e9) -  storageLeft).toFixed(2)
+        displaySizeP = ((((1e9) - storageLeft) / (1e9))).toFixed(2)
     }
 
     //update storage
     updateBar1.style.width = storageLeft / (25*1024) + "%"
-    updateView1.innerHTML =  ((25*1024) -  storageLeft).toFixed(2) + " " + size + " of " + max +  " GB used (" + ((((25*1024) - storageLeft) / (25*1024))) + "%)";
+    updateView1.innerHTML =  displaySize + " " + size + " of " +  max +  " GB used (" + displaySizeP + "%)";
 }

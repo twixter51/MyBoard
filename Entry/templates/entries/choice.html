@@ -42,18 +42,35 @@
 
   
 
-
+  
   <div class="lp-pitch">
-    <h2 class="pitch-line">
+
+    {%if guest_cd <= 0 %}
+      <h2 class="pitch-line">
         <span class="icon">⚡</span>
         <strong class="accent">Try the Demo</strong>
         <span class="pill">24-hour</span>
         <span class="pill">25&nbsp;GB</span>
         <span class="muted">no email required</span>
 
-        <hr>
-           <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'create_guest' %}'"> Try Demo </button>
-    </h2>
+       
+        <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'create_guest' %}'"> Try Demo </button>
+      </h2>
+
+    {%endif%}
+
+    {%if guest_cd > 0 %}
+      <h2 class="pitch-line">
+        <span class="icon">⚡</span>
+        <strong class="accent">Please wait until your current guest session expires</strong>
+        <span class="pill">Current wait time: 2hrs </span>
+    
+        <span class="muted">come back later!</span>
+
+      </h2>
+
+    {%endif%}
+    
 
     <div class="or-divider" aria-hidden="true"><span>or</span></div>
 

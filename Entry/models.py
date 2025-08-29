@@ -34,6 +34,7 @@ class users(models.Model):
 
     guest_expires_at = models.DateTimeField(null=True, blank=True)
 
+
     def save(self, *args, **kwargs):
         if not self.uniLink:
             base = self.user.username or f"guest_{secrets.token_hex(3)}"

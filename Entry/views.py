@@ -14,6 +14,7 @@ from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 
 #test
+from .cd import createCD, getCD
 
 from django.contrib.auth.decorators import login_required
 from .models import users, userMedia, userTexts
@@ -242,13 +243,17 @@ def index(request):
 
 def create_guest(request):
     
+
     guestName =  f"guest_{secrets.token_hex(3)}"
     guestUser = User.objects.create_user(username=guestName, password=secrets.token_urlsafe(16))
 
     p = guestUser.users
 
     p.is_guest = True
-    p.guest_expires_at = timezone.now() + timedelta(days=1)
+
+    p.guest_expires_at = timezone.now() + timedelta(hours=2)
+
+    createCD(request, "guest_cd", p.guest_expires_at)
 
     # ensure their board slug is set (save calls slugify)
     if not p.uniLink:
@@ -300,7 +305,16 @@ def log_out_view(request):
 
 def choice_view(request):
     template = loader.get_template("entries/choice.html")
-    context = {}
+
+    userAuth = request.user.is_authenticated
+    guest_cd = 0
+    if userAuth:
+        guest_cd = getCD(request, "guest_cd")
+    print(guest_cd)
+    context = {
+        'is_authenticated': userAuth,
+        'guest_cd': guest_cd
+    }
     return HttpResponse(template.render(context, request))
 
 

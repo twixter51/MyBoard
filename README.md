@@ -1,5 +1,5 @@
 
-# Update Logs(Development Build V.6.5)
+# Update Logs(Development Build V.6.6)
 
 # Hello! This is an old project being reworked, everything is under construction so no pull requests at this time. (previous Commits 39+)
 
@@ -65,10 +65,15 @@ progress bar. Added QOL feature to where if you upload more than 99MB it display
 
 --(6.5) Payment finalized! you can now test with fake cards!
 
+--(6.6) Sorry for no updates yesterday, but today I implemented a guest creation cool down that expires only when that current guest session is removed. guest timer reduced to 2 hrs,
+to compensate I'll adjust everyones storage so guests keep 25 and everyone else will have 30. Instead of completely tanking guests storage back to 15 which is fine but I will keep up with my word, anyone can upload up to 25 gb because no other website allowed me to for free without paying/and or/ made it super slow
+
+--(6.6) Fixed small display bugs regarding user storage. 
+
 
 # Bugs that need fixing / Things being worked on:
 
-- add guest feature (99%) -need to delete guests, -cooldown on how many someone can create to not allow overfill
+- add guest feature (99.5%) 
 
 - finish user auth, add some customization, privacy safety, deploy (15%)
 
@@ -82,3 +87,15 @@ progress bar. Added QOL feature to where if you upload more than 99MB it display
 
 
 
+# URGENT
+- Next I'll focus on the front-end in terms of display issues, so i'll fix being able to create guest while you're logged in, and also make it so you can ONLY pay for premium if you do have an account and aren't a guest. I'll also make it so you can not log out if you have an guest account unless you create a new account and transfer over. I also gotta add a button to go to your board as well which is the MAIN part of my application.
+- also make it so if guest is expired REMOVE the account and deauth the user
+
+- create transfer feature so guests can transfer over and create a new account
+
+- finish payment subscriptions, if user does not pay by due date take away their benefits and have them repay to continue their subscription
+
+- make it so the payment time is a subscription and says (subscribe instead of pay now)
+
+
+^ my entire checklist that needs to get done after that we complete and bring back log in pages and log out pages and tie them into my current system. After that expand upon em and add profile pictures and such, along with some well needed updates on the board with the users name "Hello, username", as well as their profile picture showing up! (guests won't have these features)
