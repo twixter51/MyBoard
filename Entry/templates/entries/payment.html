@@ -35,7 +35,7 @@
 
 
 
-  {% if is_authenticated %}
+  {% if is_authenticated and not is_guest %}
 
 
     <div class="Headline">
@@ -89,8 +89,10 @@
     </script>
  {%endif%}
 
- {% if not is_authenticated %}
-    <h2 class= "lpbtn-secondary"style="font-size:52px; margin-top:350px;">Please Log-in or create an account to become a premium user :)</h2>
+ {% if not is_authenticated or is_guest %}
+    <h2 class= "lpbtn-secondary accent"style="font-size:52px; margin-top:350px;">Please Log-in or create an account to become a premium user :)</h2>
+
+    
     <h2 class="pitch-line">
         <span class="pill pill--light">free account</span>
         <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'signup' %}'"> SignUp </button>

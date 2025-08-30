@@ -308,12 +308,18 @@ def choice_view(request):
 
     userAuth = request.user.is_authenticated
     guest_cd = 0
+    is_guest = False
+    username = "Anon"
     if userAuth:
         guest_cd = getCD(request, "guest_cd")
+        is_guest = request.user.users.is_guest
+        username = request.user.users.user.username
     print(guest_cd)
     context = {
         'is_authenticated': userAuth,
-        'guest_cd': guest_cd
+        'guest_cd': guest_cd,
+        'is_guest': is_guest,
+        'username': username
     }
     return HttpResponse(template.render(context, request))
 
@@ -347,9 +353,12 @@ def update_user(request):
 def premium_sale(request):
     template = loader.get_template("entries/payment.html")
     userAuth = request.user.is_authenticated and not request.user.users.is_guest
-  
+
+    is_guest = request.user.users.is_guest
+
     context = {
-        'is_authenticated': userAuth
+        'is_authenticated': userAuth,
+        'is_guest': is_guest,
     }
     return HttpResponse(template.render(context, request))
 

@@ -45,7 +45,7 @@
   
   <div class="lp-pitch">
 
-    {%if guest_cd <= 0 %}
+    {%if guest_cd <= 0  and not is_authenticated %}
       <h2 class="pitch-line">
         <span class="icon">⚡</span>
         <strong class="accent">Try the Demo</strong>
@@ -70,19 +70,40 @@
       </h2>
 
     {%endif%}
+
+    {% if is_authenticated and not is_guest %}
+      <h2 class="pitch-line">
+        <span class="icon">⚡</span>
+        <strong class="accent">You are already a user! redirecting to your board..</strong>
+        
+      </h2>
+      <script>
+
+        const boardLink = "{{ username }}"; // assuming you pass boardLink in context
+        const url = `/board/${boardLink}`;
+        setTimeout(() => {
+          window.location.href = url;
+        }, 1500); 
+
+      </script>
+    {%endif%}
     
 
-    <div class="or-divider" aria-hidden="true"><span>or</span></div>
+    {% if is_guest or not is_authenticated %}
+    
+      <div class="or-divider" aria-hidden="true"><span>or</span></div>
 
-    <h2 class="pitch-line">
-        <span class="icon">∞</span>
-        <strong class="accent">Go Unlimited</strong>
-        <span class="pill pill--light">free account</span>
-        <span class="muted">keep boards forever</span>
+      <h2 class="pitch-line">
+          <span class="icon">∞</span>
+          <strong class="accent">Go Unlimited</strong>
+          <span class="pill pill--light">free account</span>
+          <span class="muted">keep boards forever</span>
 
-        <hr>
-        <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'signup' %}'"> SignUp </button>
-    </h2>
+          <hr>
+          <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'signup' %}'"> SignUp </button>
+      </h2>
+
+    {%endif%}
 
   
  
