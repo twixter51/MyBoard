@@ -436,7 +436,7 @@ body {
     display: inline-table;
     margin-left: 200px;
     text-align: center;
-      
+
 }
 
 
@@ -489,7 +489,7 @@ h1 {
 #overlay{
     position:fixed;
 
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(241, 241, 241, 0.5);
     pointer-events: none;
     transition: 200ms ease-in-out;
     opacity: 0;
@@ -505,6 +505,10 @@ h1 {
     z-index: 10;
     opacity: 1;
     pointer-events:  all;
+
+    display: flex;
+    justify-content: center;
+    align-items: center; 
 }
 
 .popup{

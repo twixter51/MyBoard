@@ -11,8 +11,29 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 
+{% if is_expired %}
+
+ 
+    <!-- Overlay -->
+    <div id="overlay" class="active">
+    <!-- Modal -->
+        <div id="popup" class="container4" style="margin-left: -100px;" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+           
+            <div class="header">
+                <h1 id="popup-title">Your guest session has expired</h1>
+            </div>
+
+            <p>Your temporary account will be removed.</p>
+
+            <div class="choice-buttons" style="">
+                <button id="keep-data" class="lpbtn lpbtn-ghost exits">Keep Data</button>
+                <button id="remove-all" class="lpbtn lpbtn-primary exits">Remove Everything</button>
+            </div>
+        </div>
+    </div>
 
 
+{% endif %}
 
 
 <div class="box-element center" style="width: 95%; height: 92%;  outline: none; cursor: default;  -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;">

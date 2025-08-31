@@ -160,7 +160,8 @@ def Main(request, boardLink):
     )
     is_guest =  request.user.is_authenticated and owner_profile.is_guest
     is_premium = owner_profile.is_premium
-   
+    session_is_expired = owner_profile.is_expired
+
     files = userMedia.objects.filter(profile=owner_profile).order_by('uploaded_at')
     texts = userTexts.objects.filter(profile=owner_profile).order_by('uploaded_at')
 
@@ -209,6 +210,7 @@ def Main(request, boardLink):
         'time_left': time_left,
         'storage_left': owner_profile.storage,
         'is_premium': is_premium,
+        'is_expired': session_is_expired,
     }
     
     template = loader.get_template("main/creation.html")    
