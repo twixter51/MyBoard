@@ -1,5 +1,5 @@
 
-# Update Logs(Development Build V.6.8)
+# Update Logs(Development Build V.6.9)
 
 # Hello! This is an old project being reworked, everything is under construction so no pull requests at this time. (previous Commits 39+)
 
@@ -74,6 +74,8 @@ to compensate I'll adjust everyones storage so guests keep 25 and everyone else 
 
 --(6.8) Guests can no longer use their boards if their session expires (will be adding force deletion if they do not make a choice to keep or remove data)
 
+-(6.9) Expanded on yesterdays changes and now guests are deleted upon logging out, and as well as user is prompted on the homepage as well if his session expires (currently only homepage has this more pages will have it soon)
+
 
 # Bugs that need fixing / Things being worked on:
 
@@ -96,7 +98,7 @@ to compensate I'll adjust everyones storage so guests keep 25 and everyone else 
 
 - I'll also make it so you can not log out if you have an guest account unless you create a new account and transfer over. I also gotta add a button to go to your board as well which is the MAIN part of my application. (finish when log in pages are back)
 
-- also make it so if guest is expired REMOVE the account and deauth the user (25% done)
+- also make it so if guest is expired REMOVE the account and deauth the user (65% done just need to add force deletion and expand upon other pages for consistency)
 
 - create transfer feature so guests can transfer over and create a new account
 

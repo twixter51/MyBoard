@@ -491,7 +491,7 @@ h1 {
 
     background-color: rgba(241, 241, 241, 0.5);
     pointer-events: none;
-    transition: 200ms ease-in-out;
+    
     opacity: 0;
     top: 0;
     left: 0;
@@ -505,7 +505,7 @@ h1 {
     z-index: 10;
     opacity: 1;
     pointer-events:  all;
-
+    transition: 200ms ease-in-out;
     display: flex;
     justify-content: center;
     align-items: center; 

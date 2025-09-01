@@ -300,6 +300,10 @@ def signup(request):
 
 def log_out_view(request):
    
+    profile = request.user.users
+
+    if profile.is_guest:
+        profile.delete()
     logout(request)
     return redirect('home')
 
@@ -328,8 +332,18 @@ def choice_view(request):
 
      
 def home(request):
+    context = {
+        
+    }
+
+    if request.user.is_authenticated:
+        profile = request.user.users
+
+        if profile.is_expired and profile.is_guest:
+            context["is_expired"] = profile.is_expired
+
     template = loader.get_template("entries/home.html")
-    context = {}
+
     return HttpResponse(template.render(context, request))
 
 

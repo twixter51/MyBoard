@@ -12,27 +12,25 @@
 </head>
 
 {% if is_expired %}
+  <div id="overlay" class="active">
+        <!-- Modal -->
+        <div id="popup" class="container4" style="margin-left: 5px;" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+            
+                <div class="header">
+                    <h1 id="popup-title">Your guest session has expired</h1>
+                </div>
 
- 
-    <!-- Overlay -->
-    <div id="overlay" class="active">
-    <!-- Modal -->
-        <div id="popup" class="container4" style="margin-left: -100px;" role="dialog" aria-modal="true" aria-labelledby="popup-title">
-           
-            <div class="header">
-                <h1 id="popup-title">Your guest session has expired</h1>
+                <p>Your temporary account will be removed.</p>
+
+                <div class="choice-buttons" style="">
+                    <button id="keep-data" class="lpbtn lpbtn-ghost exits">Keep Data</button>
+                    <button id="remove-all" class="lpbtn lpbtn-primary exits" onclick="window.location.href='{% url 'logout' %}'">Delete Data</button>
+                
+                </div>
             </div>
 
-            <p>Your temporary account will be removed.</p>
-
-            <div class="choice-buttons" style="">
-                <button id="keep-data" class="lpbtn lpbtn-ghost exits">Keep Data</button>
-                <button id="remove-all" class="lpbtn lpbtn-primary exits">Remove Everything</button>
-            </div>
         </div>
     </div>
-
-
 {% endif %}
 
 

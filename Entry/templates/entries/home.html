@@ -19,7 +19,26 @@
 <!--Haven't Found real alternative for the images shown on the websites pages but will figure it out this is just a small portion of what i actually envision-->
 
 <body>
+    {% if is_expired %}
+        <div id="overlay" class="active">
+        <!-- Modal -->
+            <div id="popup" class="container4" style="margin-left: 5px;" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+            
+                <div class="header">
+                    <h1 id="popup-title">Your guest session has expired</h1>
+                </div>
 
+                <p>Your temporary account will be removed.</p>
+
+                <div class="choice-buttons" style="">
+                    <button id="keep-data" class="lpbtn lpbtn-ghost exits">Keep Data</button>
+                    <button id="remove-all" class="lpbtn lpbtn-primary exits" onclick="window.location.href='{% url 'logout' %}'">Delete Data</button>
+                
+                </div>
+            </div>
+
+        </div>
+    {%endif%}
     <ul class="navigationMain" style="">
 
        <nav class="navigation">   
@@ -29,7 +48,6 @@
             <li> <a href="{% url 'choice' %}">Get Started</a> </li>
             {% if user.is_authenticated %}
                 <li id="logout" style="float:right; cursor: pointer; margin-left:100px;"><a>Log-Out</a></li>
-              
             {%else%}
                 <li style="margin-left:100px;"><a href="{% url 'index' %}">Log-In</a></li>
             {% endif %}
@@ -44,7 +62,39 @@
 
     <img src = "{% static 'images/My.png' %}" class="logo">
 
+    <!-- Overlay -->
+    <div id="overlay" class="">
+    <!-- Modal -->
+        <div id="popup" class="container4" style="margin-left: 5px;" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+           
+            <div class="header">
+                <h1 id="popup-title">If you log-out while you are a guest your account will be deleted!</h1>
+            </div>
 
+            <p>Your temporary account will be removed.</p>
+
+            <div class="choice-buttons" style="">
+                <button id="keep-data" class="lpbtn lpbtn-ghost exits">Nevermind</button>
+                <button id="remove-all" class="lpbtn lpbtn-primary exits" onclick="window.location.href='{% url 'logout' %}'">Log-out anyways</button>
+               
+            </div>
+        </div>
+
+        
+        <script>
+            let log_out = document.getElementById("logout");
+            let overlay = document.getElementById("overlay");
+            let close = document.getElementById("keep-data");
+            let click = () => {
+                overlay.classList.add("active")
+
+                close.addEventListener("click", function () {
+                    overlay.classList.remove("active")
+                });
+            };
+            log_out.addEventListener("click", click)
+        </script>
+    </div>
 
     <div class="Headline" style=""> 
         <h2 style="font-size: 52px; opacity: 0.5;">
