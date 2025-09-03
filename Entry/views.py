@@ -159,8 +159,16 @@ def Main(request, boardLink):
         and request.user.id == owner_profile.user_id
     )
     is_guest =  request.user.is_authenticated and owner_profile.is_guest
+
+   
+    
+
+
     is_premium = owner_profile.is_premium
-    session_is_expired = owner_profile.is_expired
+    if viewer_profile:
+        session_is_expired = viewer_profile.is_expired
+    else:
+        session_is_expired = False
 
     files = userMedia.objects.filter(profile=owner_profile).order_by('uploaded_at')
     texts = userTexts.objects.filter(profile=owner_profile).order_by('uploaded_at')
@@ -253,7 +261,7 @@ def create_guest(request):
 
     p.is_guest = True
 
-    p.guest_expires_at = timezone.now() + timedelta(hours=2)
+    p.guest_expires_at = timezone.now() + timedelta(seconds=5)
 
     createCD(request, "guest_cd", p.guest_expires_at)
 
@@ -316,16 +324,19 @@ def choice_view(request):
     guest_cd = 0
     is_guest = False
     username = "Anon"
+    is_expired = False
     if userAuth:
         guest_cd = getCD(request, "guest_cd")
         is_guest = request.user.users.is_guest
         username = request.user.users.user.username
+        is_expired = is_guest and request.user.users.is_expired
     print(guest_cd)
     context = {
         'is_authenticated': userAuth,
         'guest_cd': guest_cd,
         'is_guest': is_guest,
-        'username': username
+        'username': username,
+        'is_expired': is_expired,
     }
     return HttpResponse(template.render(context, request))
 
@@ -368,9 +379,14 @@ def update_user(request):
 
 def premium_sale(request):
     template = loader.get_template("entries/payment.html")
-    userAuth = request.user.is_authenticated and not request.user.users.is_guest
+    userAuth = False
+    is_guest = False
 
-    is_guest = request.user.users.is_guest
+    if request.user.is_authenticated:
+
+        userAuth = request.user.is_authenticated and not request.user.users.is_guest
+
+        is_guest = request.user.users.is_guest
 
     context = {
         'is_authenticated': userAuth,

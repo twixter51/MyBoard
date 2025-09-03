@@ -93,12 +93,16 @@ to compensate I'll adjust everyones storage so guests keep 25 and everyone else 
 
 
 
+
+
 # URGENT
 - N̶e̶x̶t̶ ̶I̶'̶l̶l̶ ̶f̶o̶c̶u̶s̶ ̶o̶n̶ ̶t̶h̶e̶ ̶f̶r̶o̶n̶t̶-̶e̶n̶d̶ ̶i̶n̶ ̶t̶e̶r̶m̶s̶ ̶o̶f̶ ̶d̶i̶s̶p̶l̶a̶y̶ ̶i̶s̶s̶u̶e̶s̶,̶ ̶s̶o̶ ̶i̶'̶l̶l̶ ̶f̶i̶x̶ ̶b̶e̶i̶n̶g̶ ̶a̶b̶l̶e̶ ̶t̶o̶ ̶c̶r̶e̶a̶t̶e̶ ̶g̶u̶e̶s̶t̶ ̶w̶h̶i̶l̶e̶ ̶y̶o̶u̶'̶r̶e̶ ̶l̶o̶g̶g̶e̶d̶ ̶i̶n̶,̶ ̶a̶n̶d̶ ̶a̶l̶s̶o̶ ̶m̶a̶k̶e̶ ̶i̶t̶ ̶s̶o̶ ̶y̶o̶u̶ ̶c̶a̶n̶ ̶O̶N̶L̶Y̶ ̶p̶a̶y̶ ̶f̶o̶r̶ ̶p̶r̶e̶m̶i̶u̶m̶ ̶i̶f̶ ̶y̶o̶u̶ ̶d̶o̶ ̶h̶a̶v̶e̶ ̶a̶n̶ ̶a̶c̶c̶o̶u̶n̶t̶ ̶a̶n̶d̶ ̶a̶r̶e̶n̶'̶t̶ ̶a̶ ̶g̶u̶e̶s̶t̶. 
 
+- fix users backing on pages and still being able to interact with the page...
+
 - I'll also make it so you can not log out if you have an guest account unless you create a new account and transfer over. I also gotta add a button to go to your board as well which is the MAIN part of my application. (finish when log in pages are back)
 
-- also make it so if guest is expired REMOVE the account and deauth the user (65% done just need to add force deletion and expand upon other pages for consistency)
+-  ̶a̶l̶s̶o̶ ̶m̶a̶k̶e̶ ̶i̶t̶ ̶s̶o̶ ̶i̶f̶ ̶g̶u̶e̶s̶t̶ ̶i̶s̶ ̶e̶x̶p̶i̶r̶e̶d̶ ̶R̶E̶M̶O̶V̶E̶ ̶t̶h̶e̶ ̶a̶c̶c̶o̶u̶n̶t̶ ̶a̶n̶d̶ ̶d̶e̶a̶u̶t̶h̶ ̶t̶h̶e̶ ̶u̶s̶e̶r̶
 
 - create transfer feature so guests can transfer over and create a new account
 

@@ -19,10 +19,10 @@
 <!--Haven't Found real alternative for the images shown on the websites pages but will figure it out this is just a small portion of what i actually envision-->
 
 <body>
-    {% if is_expired %}
-        <div id="overlay" class="active">
+  {% if is_expired %}
+    <div id="overlay" class="active">
         <!-- Modal -->
-            <div id="popup" class="container4" style="margin-left: 5px;" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+        <div id="popup" class="container4" style="margin-left: 5px;" role="dialog" aria-modal="true" aria-labelledby="popup-title">
             
                 <div class="header">
                     <h1 id="popup-title">Your guest session has expired</h1>
@@ -31,14 +31,15 @@
                 <p>Your temporary account will be removed.</p>
 
                 <div class="choice-buttons" style="">
-                    <button id="keep-data" class="lpbtn lpbtn-ghost exits">Keep Data</button>
+                    <button id="keep-data" class="lpbtn lpbtn-ghost exits">Create an account</button>
                     <button id="remove-all" class="lpbtn lpbtn-primary exits" onclick="window.location.href='{% url 'logout' %}'">Delete Data</button>
                 
                 </div>
             </div>
 
         </div>
-    {%endif%}
+    </div>
+{% endif %}
     <ul class="navigationMain" style="">
 
        <nav class="navigation">   
@@ -75,7 +76,7 @@
 
             <div class="choice-buttons" style="">
                 <button id="keep-data" class="lpbtn lpbtn-ghost exits">Nevermind</button>
-                <button id="remove-all" class="lpbtn lpbtn-primary exits" onclick="window.location.href='{% url 'logout' %}'">Log-out anyways</button>
+                <button id="remove-all" class="lpbtn lpbtn-primary exits" onclick="window.location.href='{% url 'logout' %}'">Delete Data</button>
                
             </div>
         </div>

@@ -19,6 +19,27 @@
 <!--Haven't Found real alternative for the images shown on the websites pages but will figure it out this is just a small portion of what i actually envision-->
 
 <body>
+  {% if is_expired %}
+    <div id="overlay" class="active">
+          <!-- Modal -->
+          <div id="popup" class="container4" style="margin-left: 5px;" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+              
+                  <div class="header">
+                      <h1 id="popup-title">Your guest session has expired</h1>
+                  </div>
+
+                  <p>Your temporary account will be removed.</p>
+
+                  <div class="choice-buttons" style="">
+                      <button id="keep-data" class="lpbtn lpbtn-ghost exits">Create an account</button>
+                      <button id="remove-all" class="lpbtn lpbtn-primary exits" onclick="window.location.href='{% url 'logout' %}'">Delete Data</button>
+                  
+                  </div>
+              </div>
+
+          </div>
+      </div>
+  {% endif %}
   <ul class="navigationMain">
     <nav class="navigation">
       <li><a href="{% url 'home' %}">Home</a></li>
@@ -63,8 +84,7 @@
       <h2 class="pitch-line">
         <span class="icon">⚡</span>
         <strong class="accent">Please wait until your current guest session expires</strong>
-        <span class="pill">Current wait time: 2hrs </span>
-    
+        <br>
         <span class="muted">come back later!</span>
 
       </h2>
