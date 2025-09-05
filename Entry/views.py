@@ -23,7 +23,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 from django.template import loader
-
+from django.views.decorators.cache import never_cache
 
 #FIX
 
@@ -316,7 +316,7 @@ def log_out_view(request):
     return redirect('home')
 
 
-
+@never_cache
 def choice_view(request):
     template = loader.get_template("entries/choice.html")
 
