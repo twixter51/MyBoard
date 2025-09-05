@@ -292,9 +292,16 @@ def signup(request):
             return render(request, 'entries/signup.html', context)
         
         createduser = User.objects.create_user(username = username, email = email, password = password)
-
-        createduser.save()
-        return redirect('/Signup/?success=1')
+        if request.user.is_authenticated:
+            if request.user.users.is_guest:
+                guest_user  = request.user
+                userMedia.objects.filter(profile=request.user.users).update(profile=createduser.users)
+    
+                userTexts.objects.filter(profile=request.user.users).update(profile=createduser.users)
+                login(request, createduser)
+                guest_user.delete()
+   
+        return redirect('/signup/?success=1')
         
     # In theory, we are getting the success paramater from our url, this way if it does exist pass it through context so html can read it and show us basically our success message
     # leverages the query paramater aka the words after ? in url
@@ -303,6 +310,7 @@ def signup(request):
         context['success'] = success
 
     return HttpResponse(template.render(context, request))
+
 
     
 

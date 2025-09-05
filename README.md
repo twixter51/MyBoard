@@ -1,5 +1,5 @@
 
-# Update Logs(Development Build V.7)
+# Update Logs(Development Build V.7.1)
 
 # Hello! This is an old project being reworked, everything is under construction so no pull requests at this time. (previous Commits 39+)
 
@@ -78,6 +78,7 @@ to compensate I'll adjust everyones storage so guests keep 25 and everyone else 
 
 --(7.0) Fixed page backtracking being cached causing infinite guest sign-ups
 
+--(7.1) Added guest transferring functionality, about 50% done. You can now create a new account while being a guest and it will transfer your data. I just need to do some crucial checks and make sure storage is updated accordingly.
 
 # Bugs that need fixing / Things being worked on:
 
@@ -102,12 +103,13 @@ to compensate I'll adjust everyones storage so guests keep 25 and everyone else 
 
 -  ̶a̶l̶s̶o̶ ̶m̶a̶k̶e̶ ̶i̶t̶ ̶s̶o̶ ̶i̶f̶ ̶g̶u̶e̶s̶t̶ ̶i̶s̶ ̶e̶x̶p̶i̶r̶e̶d̶ ̶R̶E̶M̶O̶V̶E̶ ̶t̶h̶e̶ ̶a̶c̶c̶o̶u̶n̶t̶ ̶a̶n̶d̶ ̶d̶e̶a̶u̶t̶h̶ ̶t̶h̶e̶ ̶u̶s̶e̶r̶
 
-- create transfer feature so guests can transfer over and create a new account
+- create transfer feature so guests can transfer over and create a new account (50%)
 
 - finish payment subscriptions, if user does not pay by due date take away their benefits and have them repay to continue their subscription
 
 - make it so the payment time is a subscription and says (subscribe instead of pay now)
 
+- when guest page expires force reload
 
 # Board Updates (Coming Soon)
 
