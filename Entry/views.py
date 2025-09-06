@@ -296,8 +296,11 @@ def signup(request):
             if request.user.users.is_guest:
                 guest_user  = request.user
                 userMedia.objects.filter(profile=request.user.users).update(profile=createduser.users)
-    
+
                 userTexts.objects.filter(profile=request.user.users).update(profile=createduser.users)
+
+                createduser.users.storage = request.user.users.storage
+                
                 login(request, createduser)
                 guest_user.delete()
    

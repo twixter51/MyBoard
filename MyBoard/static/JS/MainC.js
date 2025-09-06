@@ -64,8 +64,6 @@ async function Create(event,file,files,main,currRemoveButs){
         for(let i = 0; i < files.length; ++i){
 
            
-
-           
            console.log(files[i].name);        
             
             const formData = new FormData();

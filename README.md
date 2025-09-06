@@ -80,6 +80,8 @@ to compensate I'll adjust everyones storage so guests keep 25 and everyone else 
 
 --(7.1) Added guest transferring functionality, about 50% done. You can now create a new account while being a guest and it will transfer your data. I just need to do some crucial checks and make sure storage is updated accordingly.
 
+--(7.1) Fixed User Storage not being updated accordingly. Also cleaned up unused code statements.
+
 # Bugs that need fixing / Things being worked on:
 
 - add guest feature (100%) 
@@ -103,13 +105,15 @@ to compensate I'll adjust everyones storage so guests keep 25 and everyone else 
 
 -  ̶a̶l̶s̶o̶ ̶m̶a̶k̶e̶ ̶i̶t̶ ̶s̶o̶ ̶i̶f̶ ̶g̶u̶e̶s̶t̶ ̶i̶s̶ ̶e̶x̶p̶i̶r̶e̶d̶ ̶R̶E̶M̶O̶V̶E̶ ̶t̶h̶e̶ ̶a̶c̶c̶o̶u̶n̶t̶ ̶a̶n̶d̶ ̶d̶e̶a̶u̶t̶h̶ ̶t̶h̶e̶ ̶u̶s̶e̶r̶
 
-- create transfer feature so guests can transfer over and create a new account (50%)
+- c̶r̶e̶a̶t̶e̶ ̶t̶r̶a̶n̶s̶f̶e̶r̶ ̶f̶e̶a̶t̶u̶r̶e̶ ̶s̶o̶ ̶g̶u̶e̶s̶t̶s̶ ̶c̶a̶n̶ ̶t̶r̶a̶n̶s̶f̶e̶r̶ ̶o̶v̶e̶r̶ ̶a̶n̶d̶ ̶c̶r̶e̶a̶t̶e̶ ̶a̶ ̶n̶e̶w̶ ̶a̶c̶c̶o̶u̶n̶t̶ ̶
 
 - finish payment subscriptions, if user does not pay by due date take away their benefits and have them repay to continue their subscription
 
 - make it so the payment time is a subscription and says (subscribe instead of pay now)
 
 - when guest page expires force reload
+
+- fix log out button on home page, still require
 
 # Board Updates (Coming Soon)
 

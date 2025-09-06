@@ -50,6 +50,7 @@ function updateStorageView(storageLeft){
     let max = 25
     let displaySize = ((25*1024) -  storageLeft).toFixed(2)
     let displaySizeP = ((((25*1024) - storageLeft) / (25*1024)))
+
     //place holder for when user uploads more than 99MB
     if(usedStorage > 100){
         size = "GB"

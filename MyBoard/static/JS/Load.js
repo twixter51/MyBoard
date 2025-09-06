@@ -1,5 +1,5 @@
 
-function loadData(client){
+function loadData(){
     const isOwner = document.getElementById('is_owner').textContent;
 
     const textsDataElement = document.getElementById('texts-data');
@@ -59,9 +59,7 @@ function loadData(client){
     
     console.log("DATA STORE RUNNING: " + dataStore);
 
-    if(client){
-        return dataStore // let the client take care of some data so they can apply id's
-    }
+
     displayInOrder(dataStore);
     //Datastore ends here
     

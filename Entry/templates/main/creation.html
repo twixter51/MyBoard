@@ -255,12 +255,8 @@
                     playBut.style.borderRadius = "45%"; // Make it circular
 
 
-
-
                     appender.append(playBut);
                     appender.append(containedVideo);
-
-                
 
                 }
 
@@ -315,6 +311,7 @@
 
    //load data here
 
+
     //Display Function
     async function displayInOrder(items){
         let main = document.getElementById("MainView");
@@ -345,16 +342,15 @@
 
     }
 
+
    // all data loads here
    window.addEventListener('load', function() {
-        //*************WARN**************************************************
+        loadData();
+
+        
         console.warn("Welcome, data store seems to work fine");
-        //****
-
-        let client  = false; // client is false, server loaded.    
-        loadData(client);
+      
     });
-
 
 
     //Animation handling
@@ -534,7 +530,7 @@
                         
         
                             //buttons
-                            
+                        
                             downloadBut1.innerHTML = (isText) ? "Copy" : "Download"
 
                             downloadBut1.style.width = "auto";
@@ -547,7 +543,6 @@
                             removeBut1.style.height = "auto";
                             removeBut1.style.justifyContent = "center"
                             
-
 
                             downloadMenu.append(downloadBut1)
                             downloadMenu.append(removeBut1)
