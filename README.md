@@ -82,6 +82,8 @@ to compensate I'll adjust everyones storage so guests keep 25 and everyone else 
 
 --(7.1) Fixed User Storage not being updated accordingly. Also cleaned up unused code statements.
 
+--(7.1) Small update, payment subscription finalized, all I need to do is update fields now and add indicators
+
 # Bugs that need fixing / Things being worked on:
 
 - add guest feature (100%) 
@@ -107,13 +109,17 @@ to compensate I'll adjust everyones storage so guests keep 25 and everyone else 
 
 - c̶r̶e̶a̶t̶e̶ ̶t̶r̶a̶n̶s̶f̶e̶r̶ ̶f̶e̶a̶t̶u̶r̶e̶ ̶s̶o̶ ̶g̶u̶e̶s̶t̶s̶ ̶c̶a̶n̶ ̶t̶r̶a̶n̶s̶f̶e̶r̶ ̶o̶v̶e̶r̶ ̶a̶n̶d̶ ̶c̶r̶e̶a̶t̶e̶ ̶a̶ ̶n̶e̶w̶ ̶a̶c̶c̶o̶u̶n̶t̶ ̶
 
-- finish payment subscriptions, if user does not pay by due date take away their benefits and have them repay to continue their subscription
+- finish payment subscriptions, if user does not pay by due date take away their benefits and have them repay to continue their subscription (70%, finish up payment field updates)
+
+- Make sure there is indication that user is premium so they can not resubscribe!
 
 - make it so the payment time is a subscription and says (subscribe instead of pay now)
 
 - when guest page expires force reload
 
-- fix log out button on home page, still require
+- fix log out button on home page. Still makes u delete account even if you're not guest
+
+- finish updating cache, so user timer doesn't reset.
 
 # Board Updates (Coming Soon)
 

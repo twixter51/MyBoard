@@ -28,7 +28,7 @@
 
   <div class="container2" style="margin-top: 105px; margin-bottom: -165px;">
       <h2 class="accent lpbtn lpbtn-primary">Unlimited Plan</h2>
-      <p class="accent lpbtn lpbtn-primary" ><strong style="font-size:2rem;">$0.99</strong> <span class="muted">per month</span></p>
+      <p class="accent lpbtn lpbtn-primary" ><strong style="font-size:2rem;">$2.06</strong> <span class="muted">per month</span></p>
   </div>
 
   <!-- KEEP THIS TOP SECTION -->
@@ -140,6 +140,7 @@
         alert(await res.text() || 'Checkout failed'); return;
       }
       const { url } = await res.json();
+
       window.location = url; // Go to Stripe Checkout
 
 

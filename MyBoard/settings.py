@@ -14,9 +14,6 @@ from pathlib import Path
 import os
 
 
-# STRIPE_SECRET_KEY = "sk_test_51RzmoLJJVQIXKbuJKWjzgrI2QqwitjkiE020IPZkSFDk2LpxcaZmCMCjW1hS5mvd3YwQGag7GV0c8TGy3flvIOdA00pzr724ID"
-# STRIPE_PUB_KEY = "pk_test_51RzmoLJJVQIXKbuJ9fL098sUTXQVXxkKyoc4ZcHW9ble0PuVKLTfxdyoHi5eGNmf8O8zib4WSU09fFVc9wKRpoTh000B2icFvq"
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
 

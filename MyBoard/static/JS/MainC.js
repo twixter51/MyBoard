@@ -79,7 +79,12 @@ async function Create(event,file,files,main,currRemoveButs){
             }
             
              fileText.innerHTML = "Uploading....";
-             formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);   
+             formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);  
+             
+            // IF user doesn't have enough storage
+            // stop them here
+
+            
             try {
                 const response = await fetch('/upload/', {
                     method: 'POST',
@@ -89,7 +94,7 @@ async function Create(event,file,files,main,currRemoveButs){
                 console.log(data);
                 if (data.success) {
                     
-              
+
                     let add = false; // are we going to remove or add data
                     Calculate_UserStorage(data.size, add); // call to update user storage
                     

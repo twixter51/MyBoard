@@ -16,6 +16,8 @@ from django.views.decorators.csrf import csrf_exempt
 #test
 from .cd import createCD, getCD
 
+from urllib.parse import urlencode
+
 from django.contrib.auth.decorators import login_required
 from .models import users, userMedia, userTexts
 from django.views.decorators.csrf import csrf_exempt
@@ -413,63 +415,25 @@ def create_checkout_session(request):
     Creates a Stripe Checkout Session and returns its URL as JSON.
     Post 'amount' in dollars (string or number). Ex: "0.99"
     """
-    username = request.POST.get("full_name")
-    email = request.POST.get("email")
+    username = request.POST.get("full_name").strip()
+    email = request.POST.get("email").strip()
+
+  
+
+    # Build query params safely
+    params = {}
+    if email:
+        params["prefilled_email"] = email                 # prefill email on Stripe page
+    # Pass something you can match on success/webhook:
+    if request.user.is_authenticated:
+        params["client_reference_id"] = username
+   
+    url = "https://buy.stripe.com/test_7sYaEY7Ilh1daWF2OueIw01" + ("?" + urlencode(params) if params else "")
 
 
-    secret = settings.STRIPE_SECRET_KEY
-    if not secret:
-        return HttpResponseBadRequest("Stripe not configured")
-    stripe.api_key = secret
 
-    amount_str = request.POST.get("amount", "0.99")
-    try:
-        amount_cents = int(round(float(amount_str) * 100))
-        if amount_cents < 50:  # optional: minimum 50¢
-            return HttpResponseBadRequest("Amount too low.")
-    except ValueError:
-        return HttpResponseBadRequest("Invalid amount.")
-
-    success_url = getattr(settings, "STRIPE_SUCCESS_URL", "http://127.0.0.1:8000/success/")
-    cancel_url  = getattr(settings, "STRIPE_CANCEL_URL",  "http://127.0.0.1:8000/cancel/")
-
-
-    customer = stripe.Customer.create(
-        name=username or None,
-        email=email or None,
-        metadata={
-            "app_username": request.user.users if request.user.is_authenticated else request.POST.get("username", ""),
-        }
-    )
-
-
-    session = stripe.checkout.Session.create(
-        mode="payment",
-        customer=customer.id,
-        payment_method_types=["card"],
-        line_items=[{
-            "price_data": {
-                "currency": "usd",
-                "product_data": {"name": "MyBoard Premium"},
-                "unit_amount": amount_cents
-            },
-            "quantity": 1
-        }],
-        success_url=success_url + "?session_id={CHECKOUT_SESSION_ID}",
-        cancel_url=cancel_url,
-       
-        metadata={
-            "username": username,
-            "email": email
-        },
-        payment_intent_data={
-            "metadata": {
-                "username": username,
-                "email": email
-            }
-        }
-    )
-    return JsonResponse({"url": session.url})
+  
+    return JsonResponse({"url": url})
 
 
 def checkout_success(request): 
