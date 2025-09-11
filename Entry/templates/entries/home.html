@@ -170,10 +170,12 @@
       
         <div class="showCont2" style="width:250px;">
 
-            <div class="container2" style="margin-top: -35px; background-color: rgba(35, 184, 80, 1);">
-                <h2 style="color:rgb(255, 255, 255); font-size: 25px;" >Owned</h2>
-            </div>
-
+            {%if not is_premium %}
+                 <div class="container2" style="margin-top: -35px; background-color: rgba(35, 184, 80, 1);">
+                    <h2 style="color:rgb(255, 255, 255); font-size: 25px;" >Owned</h2>
+                </div>
+            {%endif%}
+            
             <h2 style="color:rgb(255, 255, 255);" > Basic ⭐ </h2>
             <br>
             <div class="container2" style="">
@@ -187,6 +189,12 @@
             
         </div>
         <div class="showCont2" style="width: 300px;">
+
+            {%if is_premium %}
+                 <div class="container2" style="margin-top: -35px; background-color: rgba(35, 184, 80, 1);">
+                    <h2 style="color:rgb(255, 255, 255); font-size: 25px;" >Owned</h2>
+                </div>
+            {%endif%}
             <h2 style="color:rgb(255, 255, 255);"> Premium🌟</h2>
 
             <br>

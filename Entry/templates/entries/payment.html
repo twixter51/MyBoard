@@ -35,7 +35,7 @@
 
 
 
-  {% if is_authenticated and not is_guest %}
+  {% if is_authenticated and not is_guest and not is_premium %}
 
 
     <div class="Headline">
@@ -50,11 +50,7 @@
         <form id="payment-form" method="POST" action="{% url 'create_checkout_session' %}">
           {% csrf_token %}
 
-          <div class="form-group">
-            <label for="full_name">Name</label>
-            <input id="full_name" name="full_name" type="text" autocomplete="cc-name" placeholder="Jane Doe" required />
-          </div>
-
+    
           <div class="form-group">
             <label for="email">Email</label>
             <input id="email" name="email" type="email" autocomplete="email" placeholder="jane@example.com" required />
@@ -96,6 +92,17 @@
     <h2 class="pitch-line">
         <span class="pill pill--light">free account</span>
         <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'signup' %}'"> SignUp </button>
+    </h2>
+ {%endif%}
+
+
+ {% if is_premium %}
+    <h2 class= "lpbtn-secondary accent"style="font-size:52px; margin-top:350px;">You are already premium!</h2>
+
+    
+    <h2 class="pitch-line">
+        <span class="pill pill--light">You Have x days left</span>
+       
     </h2>
  {%endif%}
 

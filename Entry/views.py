@@ -362,10 +362,11 @@ def home(request):
 
     if request.user.is_authenticated:
         profile = request.user.users
-
+        
         if profile.is_expired and profile.is_guest:
             context["is_expired"] = profile.is_expired
 
+        context["is_premium"] = profile.is_premium
     template = loader.get_template("entries/home.html")
 
     return HttpResponse(template.render(context, request))
@@ -394,16 +395,19 @@ def premium_sale(request):
     template = loader.get_template("entries/payment.html")
     userAuth = False
     is_guest = False
-
+    is_premium = False
     if request.user.is_authenticated:
 
         userAuth = request.user.is_authenticated and not request.user.users.is_guest
 
         is_guest = request.user.users.is_guest
 
+        is_premium = request.user.users.is_premium
+
     context = {
         'is_authenticated': userAuth,
         'is_guest': is_guest,
+        'is_premium': is_premium,
     }
     return HttpResponse(template.render(context, request))
 
@@ -415,19 +419,13 @@ def create_checkout_session(request):
     Creates a Stripe Checkout Session and returns its URL as JSON.
     Post 'amount' in dollars (string or number). Ex: "0.99"
     """
-    username = request.POST.get("full_name").strip()
+   
     email = request.POST.get("email").strip()
 
-  
-
-    # Build query params safely
+   
     params = {}
     if email:
-        params["prefilled_email"] = email                 # prefill email on Stripe page
-    # Pass something you can match on success/webhook:
-    if request.user.is_authenticated:
-        params["client_reference_id"] = username
-   
+        params["prefilled_email"] = email # prefill email on Stripe page  
     url = "https://buy.stripe.com/test_7sYaEY7Ilh1daWF2OueIw01" + ("?" + urlencode(params) if params else "")
 
 

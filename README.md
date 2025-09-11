@@ -1,5 +1,5 @@
 
-# Update Logs(Development Build V.7.1)
+# Update Logs(Development Build V.7.2)
 
 # Hello! This is an old project being reworked, everything is under construction so no pull requests at this time. (previous Commits 39+)
 
@@ -84,6 +84,9 @@ to compensate I'll adjust everyones storage so guests keep 25 and everyone else 
 
 --(7.1) Small update, payment subscription finalized, all I need to do is update fields now and add indicators
 
+--(7.2) Finalized payment system, Subscription editing page soon (along with manage account page). 
+
+
 # Bugs that need fixing / Things being worked on:
 
 - add guest feature (100%) 
@@ -109,11 +112,7 @@ to compensate I'll adjust everyones storage so guests keep 25 and everyone else 
 
 - c̶r̶e̶a̶t̶e̶ ̶t̶r̶a̶n̶s̶f̶e̶r̶ ̶f̶e̶a̶t̶u̶r̶e̶ ̶s̶o̶ ̶g̶u̶e̶s̶t̶s̶ ̶c̶a̶n̶ ̶t̶r̶a̶n̶s̶f̶e̶r̶ ̶o̶v̶e̶r̶ ̶a̶n̶d̶ ̶c̶r̶e̶a̶t̶e̶ ̶a̶ ̶n̶e̶w̶ ̶a̶c̶c̶o̶u̶n̶t̶ ̶
 
-- finish payment subscriptions, if user does not pay by due date take away their benefits and have them repay to continue their subscription (70%, finish up payment field updates)
-
-- Make sure there is indication that user is premium so they can not resubscribe!
-
-- make it so the payment time is a subscription and says (subscribe instead of pay now)
+- finish payment subscriptions, if user does not pay by due date take away their benefits and have them repay to continue their subscription (95%, finish subscription editing/cancellation)
 
 - when guest page expires force reload
 
