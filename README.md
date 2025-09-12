@@ -86,6 +86,8 @@ to compensate I'll adjust everyones storage so guests keep 25 and everyone else 
 
 --(7.2) Finalized payment system, Subscription editing page soon (along with manage account page). 
 
+--(7.2) Quick Visual Changes to let user know they are already premium, will adopt on all pages soon.
+
 
 # Bugs that need fixing / Things being worked on:
 
@@ -119,6 +121,8 @@ to compensate I'll adjust everyones storage so guests keep 25 and everyone else 
 - fix log out button on home page. Still makes u delete account even if you're not guest
 
 - finish updating cache, so user timer doesn't reset.
+
+- instead of having a manage account button, I'll create a profile dropdown menu for all users so they can edit avatars, manage subscriptions, customize etc. 
 
 # Board Updates (Coming Soon)
 

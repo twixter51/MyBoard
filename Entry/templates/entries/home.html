@@ -40,6 +40,9 @@
         </div>
     </div>
 {% endif %}
+
+
+
     <ul class="navigationMain" style="">
 
        <nav class="navigation">   
@@ -51,16 +54,29 @@
                 <li id="logout" style="float:right; cursor: pointer; margin-left:100px;"><a>Log-Out</a></li>
             {%else%}
                 <li style="margin-left:100px;"><a href="{% url 'index' %}">Log-In</a></li>
-            {% endif %}
+            {% endif %}  
        </nav>
 
+       
+
     </ul>
- 
+
+
     <div class="logoHolder"> 
       
     
     </div>
-
+    {% if is_premium %}
+        <!-- Premium banner -->
+        <div class="app-banner" id="premiumBanner" role="status" aria-live="polite" style="background:transparent; backdrop-filter:none; color:#3484ca; ">
+            <div class="container2" style="position:relative; margin:90px 1000px 0 auto; width:auto; background: transparent; padding:8px 12px; display:flex; align-items:center; gap:8px; border-radius:12px;">
+            
+            
+                <div class="app-banner__text" style="font-size:14px; color:#3484ca; margin:0; z-index: 999;">🌟 Premium 🌟 You have x days left</div>
+                
+            </div>
+        </div>
+    {%endif%}
     <img src = "{% static 'images/My.png' %}" class="logo">
 
     <!-- Overlay -->
@@ -72,6 +88,7 @@
                 <h1 id="popup-title">If you log-out while you are a guest your account will be deleted!</h1>
             </div>
 
+     
             <p>Your temporary account will be removed.</p>
 
             <div class="choice-buttons" style="">
@@ -99,6 +116,8 @@
             log_out.addEventListener("click", click)
         </script>
     </div>
+    
+   
 
     <div class="Headline" style=""> 
         <h2 style="font-size: 52px; opacity: 0.5;">
@@ -120,7 +139,7 @@
         Instantly transfer links, videos, and images between your devices—effortlessly.
 
     </h2>
-
+    
     <h2 style="font-size: 22px; margin-top: 15px; color: #3484ca;">
         Customize your board to match your style or keep it private—your creativity, your rules.
         
