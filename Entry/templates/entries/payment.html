@@ -12,19 +12,38 @@
 
 
 <body>
-  <!-- NAV -->
-  <ul class="navigationMain">
-    <nav class="navigation">
-      <li><a href="{% url 'home' %}">Home</a></li>
-      <li><a href="{% url 'home' %}#FAQ">FAQ</a></li>
-      <li><a href="{% url 'home' %}#Monetize">Pricing</a></li>
-      <li><a href="{% url 'index' %}">Get Started</a></li>
-      <li style="margin-left:100px;"><a href="{% url 'index' %}">Log-In</a></li>
-    </nav>
-  </ul>
+  
+   <div class="" style="display: flex;">
+      <div class="userProfileHolder" style="align-items: center; justify-content: center;">
+          <div class="container userProf" style="position: fixed;">
 
-  <div class="logoHolder"></div>
-  <img src="{% static 'images/My.png' %}" class="logo" alt="MyBoard logo" />
+
+          </div>
+      </div>
+      <div class="container userProf" style="position: fixed;  align-items: center; justify-content: center;">
+
+
+      </div>
+
+      <ul class="navigationMain" style="">
+          <nav class="navigation">   
+                  <li> <a href="">Home</a> </li>
+                  <li> <a href="#FAQ">FAQ</a> </li>
+                  <li> <a href="#Monetize">Pricing</a> </li>
+                  <li> <a href="{% url 'choice' %}">Get Started</a> </li>
+                  {% if user.is_authenticated %}
+                      <li id="logout" style="float:right; cursor: pointer; margin-left:100px;"><a>Log-Out</a></li>
+                  {%else%}
+                      <li style="margin-left:100px;"><a href="{% url 'index' %}">Log-In</a></li>
+                  {% endif %}  
+          </nav>
+
+
+
+      </ul>
+
+    </div>
+
 
   <div class="container2" style="margin-top: 105px; margin-bottom: -165px;">
       <h2 class="accent lpbtn lpbtn-primary">Unlimited Plan</h2>

@@ -1,5 +1,5 @@
 
-# Update Logs(Development Build V.7.2)
+# Update Logs(Development Build V.7.3)
 
 # Hello! This is an old project being reworked, everything is under construction so no pull requests at this time. (previous Commits 39+)
 
@@ -88,6 +88,11 @@ to compensate I'll adjust everyones storage so guests keep 25 and everyone else 
 
 --(7.2) Quick Visual Changes to let user know they are already premium, will adopt on all pages soon.
 
+--(7.3) Users profiles are now shown on the homepage, this will now lead into a menu that allows you to update account features etc
+
+--(7.3) Made user profile icon a bit more robust, it was really small and a lot of images were looking weird. I have some testing to do but I accounted for the changes
+on the board, seperated a lot of the css so it won't mess with the main functionality. (revamping it soon)
+
 
 # Bugs that need fixing / Things being worked on:
 
@@ -122,7 +127,7 @@ to compensate I'll adjust everyones storage so guests keep 25 and everyone else 
 
 - finish updating cache, so user timer doesn't reset.
 
-- instead of having a manage account button, I'll create a profile dropdown menu for all users so they can edit avatars, manage subscriptions, customize etc. 
+- instead of having a manage account button, I'll create a profile dropdown menu for all users so they can edit avatars, manage subscriptions, customize etc. (25%)
 
 # Board Updates (Coming Soon)
 
