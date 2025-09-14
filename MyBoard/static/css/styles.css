@@ -235,7 +235,7 @@ h2 {
     overflow: hidden;
     top: 0;
     position: fixed;
-    z-index: 1030;
+    z-index: 2;
 
 }
 
@@ -251,7 +251,7 @@ h2 {
 
     top: 0;
     left: 0;
-    z-index: 1030;
+   
 
 }
 
@@ -267,7 +267,7 @@ h2 {
     border-radius: 10px;
     opacity: 0.5;
     cursor: pointer; 
-    z-index: 1030;
+  
   
     object-fit: contain;
     box-shadow: 0 0 10px #0f0f0f

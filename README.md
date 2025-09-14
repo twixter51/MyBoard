@@ -93,6 +93,8 @@ to compensate I'll adjust everyones storage so guests keep 25 and everyone else 
 --(7.3) Made user profile icon a bit more robust, it was really small and a lot of images were looking weird. I have some testing to do but I accounted for the changes
 on the board, seperated a lot of the css so it won't mess with the main functionality. (revamping it soon)
 
+--(7.3) Profile home page menu added
+
 
 # Bugs that need fixing / Things being worked on:
 
