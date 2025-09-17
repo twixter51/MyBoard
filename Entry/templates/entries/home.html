@@ -175,9 +175,24 @@
             };
             log_out.addEventListener("click", click)
         </script>
+
     </div>
+
+
+    {%if is_authenticated %}
+        <div class="Headline">
+            <h2 style="font-size:52px; opacity:.5;">Hello, {{ username }}</h2>
+        </div>
+
+
+        <h2 style="font-size:52px; margin-top:-84px;">Hello, {{ username }}</h2>
+
+
     
-   
+
+    {%endif%}
+    
+
 
     <div class="Headline " style=""> 
         <h2 style="font-size: 52px; opacity: 0.5;">

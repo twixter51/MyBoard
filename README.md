@@ -1,5 +1,5 @@
 
-# Update Logs(Development Build V.7.3)
+# Update Logs(Development Build V.7.4)
 
 # Hello! This is an old project being reworked, everything is under construction so no pull requests at this time. (previous Commits 39+)
 
@@ -96,6 +96,9 @@ on the board, seperated a lot of the css so it won't mess with the main function
 --(7.3) Profile home page menu added
 
 
+--(7.4) new account page added, along with homepage QOL (no buttons should work as of righ now)
+
+
 # Bugs that need fixing / Things being worked on:
 
 - add guest feature (100%) 
@@ -129,7 +132,7 @@ on the board, seperated a lot of the css so it won't mess with the main function
 
 - finish updating cache, so user timer doesn't reset.
 
-- instead of having a manage account button, I'll create a profile dropdown menu for all users so they can edit avatars, manage subscriptions, customize etc. (25%)
+- instead of having a manage account button, I'll create a profile dropdown menu for all users so they can edit avatars, manage subscriptions, customize etc. (45%)
 
 # Board Updates (Coming Soon)
 

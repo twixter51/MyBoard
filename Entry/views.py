@@ -354,6 +354,36 @@ def choice_view(request):
     return HttpResponse(template.render(context, request))
 
 
+
+
+@never_cache
+def account_view(request):
+    template = loader.get_template("entries/account.html")
+
+    userAuth = request.user.is_authenticated
+    guest_cd = 0
+    is_guest = False
+    username = "Anon"
+    is_expired = False
+    if userAuth:
+        guest_cd = getCD(request, "guest_cd")
+        is_guest = request.user.users.is_guest
+        username = request.user.users.user.username
+        is_expired = is_guest and request.user.users.is_expired
+    print(guest_cd)
+    context = {
+        'is_authenticated': userAuth,
+        'guest_cd': guest_cd,
+        'is_guest': is_guest,
+        'username': username,
+        'is_expired': is_expired,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+
+
+
      
 def home(request):
     context = {
@@ -362,11 +392,14 @@ def home(request):
 
     if request.user.is_authenticated:
         profile = request.user.users
-        
+        is_authenticated = request.user.is_authenticated
+    
         if profile.is_expired and profile.is_guest:
             context["is_expired"] = profile.is_expired
 
         context["is_premium"] = profile.is_premium
+        context["is_authenticated"] = is_authenticated
+        context["username"] = profile.user.username
     template = loader.get_template("entries/home.html")
 
     return HttpResponse(template.render(context, request))
