@@ -75,44 +75,7 @@
 
     </div>
 
-    <div  class="userProf pill" style="position: fixed; right: 0; margin-right: 25px; margin-top: 25px;   object-position: center; padding: 0;">
-        <img id="home_profile" class=""src="{% static 'images/test1.jpg' %}" alt=""
-        style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; cursor: pointer;">
-
-          
-        <ul id="home_menu" class="navigationMain hidden" style="right: 0; flex-direction: column; display; flex;   align-items: flex-start; ">
-            <nav class="navigation" style="">   
-                    
-                
-                    {% if user.is_authenticated %}
-                        <li style=" float: none;"> <a href="">Edit Profile</a> </li>
-                        <li id="logout" style="float:none; cursor: pointer; "><a>Manage Account</a></li>
-                    {%else%}
-        
-                        <li style="margin-left:100px;"><a href="{% url 'index' %}">Log-In</a></li>
-                    {% endif %}  
-                    <li style=" float: none;"> <a href="{% url 'choice' %}">Settings</a> </li>
-            </nav>
-
-    
-    
-        </ul>
-
-
-        <script>
-
-            let home = document.getElementById("home_profile");
-            let menu = document.getElementById("home_menu");
-            home.addEventListener("mouseenter", () => {
-                menu.classList.remove("hidden");
-
-                menu.addEventListener("mouseleave", () => {
-                    menu.classList.add("hidden");
-                });
-            });
-
-        </script>
-    </div>
+ 
 
 
    
@@ -138,6 +101,76 @@
         </div>
     {%endif%}
    
+
+
+    {%if is_authenticated %}
+        
+
+
+
+
+        <div  class="userProf pill" style="position: fixed; right: 0; margin-right: 25px; margin-top: 25px;   object-position: center; padding: 0;">
+            <img id="home_profile" class=""src="{% static 'images/test1.jpg' %}" alt=""
+            style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; cursor: pointer;">
+
+                
+            <ul id="home_menu" class="navigationMain hidden" style="right: 0; flex-direction: column; display; flex;   align-items: flex-start; ">
+                <nav class="navigation" style="">   
+                        
+                    
+                        {% if user.is_authenticated %}
+                            <li style=" float: none;"> <a href="{% url 'account' %}">Manage Account</a> </li>
+                        
+                        {%else%}
+            
+                            <li style="margin-left:100px;"><a href="{% url 'index' %}">Log-In</a></li>
+                        {% endif %}  
+                        <li style=" float: none;"> <a href="{% url 'choice' %}">Settings</a> </li>
+                </nav>
+
+
+
+            </ul>
+
+
+            <script>
+
+                let home = document.getElementById("home_profile");
+                let menu = document.getElementById("home_menu");
+                home.addEventListener("mouseenter", () => {
+                    menu.classList.remove("hidden");
+
+                    menu.addEventListener("mouseleave", () => {
+                        menu.classList.add("hidden");
+                    });
+                });
+
+            </script>
+        </div>
+
+        <div class="Headline">
+            <h2 style="font-size:52px; opacity:.5;">Hello, {{ username }}</h2>
+        </div>
+
+
+        <h2 style="font-size:52px; margin-top:-84px;">Hello, {{ username }}</h2>
+
+
+
+    {%endif%}
+    
+
+
+
+
+
+
+
+
+
+
+
+
 
     <!-- Overlay -->
     <div id="overlay" class="">
@@ -179,18 +212,6 @@
     </div>
 
 
-    {%if is_authenticated %}
-        <div class="Headline">
-            <h2 style="font-size:52px; opacity:.5;">Hello, {{ username }}</h2>
-        </div>
-
-
-        <h2 style="font-size:52px; margin-top:-84px;">Hello, {{ username }}</h2>
-
-
-    
-
-    {%endif%}
     
 
 
