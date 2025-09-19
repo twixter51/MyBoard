@@ -58,7 +58,7 @@
 
        <ul class="navigationMain" style="">
             <nav class="navigation">   
-                    <li> <a href="">Home</a> </li>
+                    <li> <a href="{% url 'home' %}">Home</a> </li>
                     <li> <a href="#FAQ">FAQ</a> </li>
                     <li> <a href="#Monetize">Pricing</a> </li>
                     <li> <a href="{% url 'choice' %}">Get Started</a> </li>
@@ -171,46 +171,49 @@
 
 
 
-
-    <!-- Overlay -->
-    <div id="overlay" class="">
-    <!-- Modal -->
-        <div id="popup" class="container4" style="margin-left: 5px;" role="dialog" aria-modal="true" aria-labelledby="popup-title">
-           
-            <div class="header">
-                <h1 id="popup-title">If you log-out while you are a guest your account will be deleted!</h1>
-            </div>
-
-     
-            <p>Your temporary account will be removed.</p>
-
-            <div class="choice-buttons" style="">
-                <button id="keep-data" class="lpbtn lpbtn-ghost exits">Nevermind</button>
-                <button id="remove-all" class="lpbtn lpbtn-primary exits" onclick="window.location.href='{% url 'logout' %}'">Delete Data</button>
-               
-            </div>
-        </div>
+    {% if is_guest%}
+        <!-- Overlay -->
+        <div id="overlay" class="">
+        <!-- Modal -->
+            <div id="popup" class="container4" style="margin-left: 5px;" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+            
+                <div class="header">
+                    <h1 id="popup-title">If you log-out while you are a guest your account will be deleted!</h1>
+                </div>
 
         
-        <script>
-            let log_out = document.getElementById("logout");
-            let overlay = document.getElementById("overlay");
-            let close = document.getElementById("keep-data");
-            let click = () => {
+                <p>Your temporary account will be removed.</p>
 
-                //here add a check to make sure they are guests
+                <div class="choice-buttons" style="">
+                    <button id="keep-data" class="lpbtn lpbtn-ghost exits">Nevermind</button>
+                    <button id="remove-all" class="lpbtn lpbtn-primary exits" onclick="window.location.href='{% url 'logout' %}'">Delete Data</button>
                 
-                overlay.classList.add("active")
+                </div>
+            </div>
 
-                close.addEventListener("click", function () {
-                    overlay.classList.remove("active")
-                });
-            };
-            log_out.addEventListener("click", click)
-        </script>
+            
+            <script>
+                let log_out = document.getElementById("logout");
+                let overlay = document.getElementById("overlay");
+                let close = document.getElementById("keep-data");
+                let click = () => {
 
-    </div>
+                    //here add a check to make sure they are guests
+                    
+                    overlay.classList.add("active")
 
+                    close.addEventListener("click", function () {
+                        overlay.classList.remove("active")
+                    });
+                };
+                log_out.addEventListener("click", click)
+            </script>
+
+        </div>
+
+
+    {%endif%}
+ 
 
     
 

@@ -27,9 +27,9 @@
 
       <ul class="navigationMain" style="">
           <nav class="navigation">   
-                  <li> <a href="">Home</a> </li>
-                  <li> <a href="#FAQ">FAQ</a> </li>
-                  <li> <a href="#Monetize">Pricing</a> </li>
+                  <li> <a href="{% url 'home' %}">Home</a> </li>
+                  <li> <a href="{% url 'home' %}#FAQ">FAQ</a> </li>
+                  <li> <a href="{% url 'home' %}#Monetize">Pricing</a> </li>
                   <li> <a href="{% url 'choice' %}">Get Started</a> </li>
                   {% if user.is_authenticated %}
                       <li id="logout" style="float:right; cursor: pointer; margin-left:100px;"><a>Log-Out</a></li>

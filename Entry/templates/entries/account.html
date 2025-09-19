@@ -99,7 +99,7 @@
 
     <ul class="navigationMain" style="">
         <nav class="navigation">   
-                <li> <a href="">Home</a> </li>
+                <li> <a href="{% url 'home' %}">Home</a> </li>
                 <li> <a href="{% url 'home' %}#FAQ">FAQ</a> </li>
                 <li> <a href="{% url 'home' %}#Monetize">Pricing</a> </li>
                 <li> <a href="{% url 'choice' %}">Get Started</a> </li>
@@ -144,7 +144,7 @@
 
 
 <div class="box-element center" style="width: 95%; height: 92%;  outline: none; cursor: pointer;  -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; z-index: -1;">
-  <div  class="userProf pill" style="position: fixed; margin 0 auto;  object-position: center; padding: 0; width: 200px; height: 200px; margin-top: 350px; margin-left: 50px;  z-index: -1;">
+  <div  class="userProf pill" style=" margin 0 auto;  object-position: center; padding: 0; width: 200px; height: 200px; margin-top: 100px; margin-left: 80px;  z-index: -1;">
       <img id="home_profile" class=""src="{% static 'images/test1.jpg' %}" alt=""
       style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; cursor: pointer;">
   </div>
@@ -153,14 +153,14 @@
 </div>
 
 
- <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'index' %}'"> Change Avatar </button>
+ <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block;" onclick="window.location.href='{% url 'index' %}'"> Change Avatar </button>
 
  <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'index' %}'"> Change Username </button>
 
  <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'index' %}'"> Change Password </button>
 
 
- <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 245px;  background-color: #c50000;" onclick="window.location.href='{% url 'index' %}'"> Delete Account </button>
+ <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block;   background-color: #c50000;" onclick="window.location.href='{% url 'index' %}'"> Delete Account </button>
 
 
 
