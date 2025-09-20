@@ -159,8 +159,29 @@
 
  <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'index' %}'"> Change Password </button>
 
+  <h2 class="pitch-line" style="margin-top: 45px;">
+      <span class="icon">🌟 </span>
+      <strong class="accent">🌟 Premium 🌟</strong>
+      <span class="icon">🌟 </span>
+      <br>
+     
+     
 
- <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block;   background-color: #c50000;" onclick="window.location.href='{% url 'index' %}'"> Delete Account </button>
+      
+      {% if is_premium %}
+        <strong class="pill">You have x days left</strong>
+        <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'index' %}'">Unsubscribe</button>
+      {% else %}
+
+        <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'index' %}'">Subscribe</button>
+      {%endif%}
+    
+  </h2>
+
+
+
+
+ <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block;  margin-top: 45px; background-color: #c50000;" onclick="window.location.href='{% url 'index' %}'"> Delete Account </button>
 
 
 

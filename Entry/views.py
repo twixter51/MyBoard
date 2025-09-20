@@ -370,6 +370,7 @@ def account_view(request):
         is_guest = request.user.users.is_guest
         username = request.user.users.user.username
         is_expired = is_guest and request.user.users.is_expired
+        is_premium =  request.user.users.is_premium
     print(guest_cd)
     context = {
         'is_authenticated': userAuth,
@@ -377,6 +378,7 @@ def account_view(request):
         'is_guest': is_guest,
         'username': username,
         'is_expired': is_expired,
+        'is_premium': is_premium
     }
     return HttpResponse(template.render(context, request))
 
