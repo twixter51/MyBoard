@@ -34,6 +34,7 @@ class users(models.Model):
 
     guest_expires_at = models.DateTimeField(null=True, blank=True)
 
+    premium_expires_at = models.DateTimeField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if not self.uniLink:

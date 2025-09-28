@@ -170,7 +170,47 @@
       
       {% if is_premium %}
         <strong class="pill">You have x days left</strong>
-        <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'index' %}'">Unsubscribe</button>
+        <button class="lpbtn lpbtn-primary" id="unsubscribe"style="margin: 0 auto; display: block; margin-top: 45px;">Unsubscribe</button>
+
+
+          <!-- Overlay -->
+          <div id="overlay" class="">
+          <!-- Modal -->
+              <div id="popup" class="container4" style="margin-left: 5px;" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+              
+                  <div class="header">
+                      <h1 id="popup-title">Are you sure?</h1>
+                  </div>
+
+          
+                  <p>You have x days left on your subscription, if you cancel now you will have your benefits for x days. You will not be able to reubscribe until this current period ends.</p>
+
+                  <div class="choice-buttons" style="">
+                      <button id="keep-data" class="lpbtn lpbtn-ghost exits">Nevermind</button>
+                      <button id="remove-all" class="lpbtn lpbtn-primary exits" onclick="window.location.href='{% url 'cancel_sub' %}'">Unsubscribe</button>
+                  
+                  </div>
+              </div>
+
+              
+              <script>
+                  let unsubscribe = document.getElementById("unsubscribe");
+                  let overlay = document.getElementById("overlay");
+                  let close = document.getElementById("keep-data");
+                  let click = () => {
+
+                      //here add a check to make sure they are guests
+                      
+                      overlay.classList.add("active")
+
+                      close.addEventListener("click", function () {
+                          overlay.classList.remove("active")
+                      });
+                  };
+                  unsubscribe.addEventListener("click", click)
+              </script>
+
+          </div>
       {% else %}
 
         <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'index' %}'">Subscribe</button>

@@ -468,21 +468,50 @@ def create_checkout_session(request):
   
     return JsonResponse({"url": url})
 
+from dateutil.relativedelta import relativedelta
 
 def checkout_success(request): 
     profile = request.user.users
     profile.is_premium = True
-    profile.save(update_fields=["is_premium"])
+    profile.premium_expires_at = timezone.now() + relativedelta(months=1)
     profile.storage = 1e9
-    profile.save(update_fields=["storage"])
+    profile.save()
+
+    # to show user that they are premium now, to update their intermediate view that redirects them
+    userAuth = False
+    is_guest = False
+    is_premium = False
+    if request.user.is_authenticated:
+
+        userAuth = request.user.is_authenticated and not request.user.users.is_guest
+
+        is_guest = request.user.users.is_guest
+
+        is_premium = request.user.users.is_premium
+
     template = loader.get_template("entries/payment.html")
-    print(profile.user.username)
+ 
     context = {
        'sale_complete': True,
-       'sale_name':profile.user.username 
+       'sale_name':profile.user.username,
+       'is_authenticated': userAuth,
+       'is_guest': is_guest,
+       'is_premium': is_premium,
     }
 
     return HttpResponse(template.render(context, request))
 
+
+
+def cancel_sub(request):
+    profile = request.user.users
+    print(profile.is_premium)
+    if profile.is_premium:
+        #cancel subscription here later implement time.
+        profile.is_premium = False
+        profile.storage = 25*1024
+        profile.save()
+    return redirect('home')
+    
 def checkout_cancel(request):  
     return HttpResponse("❌ Canceled.")
