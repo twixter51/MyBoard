@@ -95,7 +95,7 @@
             <div class="container2" style="position:relative; margin:90px 1000px 0 auto; width:auto; background: transparent; padding:8px 12px; display:flex; align-items:center; gap:8px; border-radius:12px; z-index: -1;">
             
             
-                <div class="app-banner__text" style="font-size:14px; color:#3484ca; margin:0; z-index: 999;">🌟 Premium 🌟 You have x days left</div>
+                <div class="app-banner__text" style="font-size:14px; color:#3484ca; margin:0; z-index: 999;">🌟 Premium 🌟 You have {{days_left.days}} days left</div>
                 
             </div>
         </div>
@@ -255,7 +255,7 @@
    
  
 
-    <div class="showCont">
+    <div class="showCont" >
         <div class="contentwrapper">
             <div class="image-container">
                 <img src="{% static 'images/MyShowcase.png' %}" alt="Showcase">
@@ -475,9 +475,7 @@
         <div class="text-content"
             style="flex:1 1 440px;margin:0;text-align:left;">
             <h3 style="margin:0 0 10px;font-size:28px;">Delete your account anytime</h3>
-            <p style="margin:0 0 12px;color:#3484ca;font-size:18px;">
-                Soon to be added, a button to quickly delete your account. Otherwise you can request a deletion.
-            </p>
+         
 
             <div style="display:flex;gap:2px;flex-wrap:wrap;">
                 <button class="lpbtn lpbtn-primary"style="">Manage Account</button>

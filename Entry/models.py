@@ -54,16 +54,21 @@ class users(models.Model):
         return self.is_guest and self.guest_expires_at <= timezone.now()
     
     def time_left_dictionary(self):
-        if not self.is_guest: 
+        if not self.is_guest and not self.is_premium: 
             return None
         else:
-            seconds = (self.guest_expires_at - timezone.now()).total_seconds()
+            if self.is_premium and not self.is_guest:
+                seconds = (self.premium_expires_at - timezone.now()).total_seconds()
+            else:
+                seconds = (self.guest_expires_at - timezone.now()).total_seconds()
             
             minutes = seconds / 60
 
             hours = minutes / 60
             
-            time = {"seconds":int(seconds % 60), "minutes":int(minutes % 60), "hours": int(hours)}
+            days = hours / 24
+
+            time = {"seconds":int(seconds % 60), "minutes":int(minutes % 60), "hours": int(hours), "days":int(days)}
 
             return time
       

@@ -161,7 +161,7 @@ def Main(request, boardLink):
         and request.user.id == owner_profile.user_id
     )
     is_guest =  request.user.is_authenticated and owner_profile.is_guest
-
+    
    
     
 
@@ -208,6 +208,8 @@ def Main(request, boardLink):
 
     if owner_profile.is_guest:
         time_left = owner_profile.time_left_dictionary
+    if viewer_profile.is_premium:
+        time_left = viewer_profile.time_left_dictionary
     else:
         time_left = {"seconds":1, "minutes":1, "hours": 1}
     context = {
@@ -398,10 +400,14 @@ def home(request):
     
         if profile.is_expired and profile.is_guest:
             context["is_expired"] = profile.is_expired
+        if profile.is_premium and profile.premium_expires_at:
+            context["days_left"] = profile.time_left_dictionary
 
         context["is_premium"] = profile.is_premium
         context["is_authenticated"] = is_authenticated
         context["username"] = profile.user.username
+        
+        
     template = loader.get_template("entries/home.html")
 
     return HttpResponse(template.render(context, request))

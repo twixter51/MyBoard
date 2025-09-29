@@ -1,5 +1,5 @@
 
-# Update Logs(Development Build V.7.5)
+# Update Logs(Development Build V.7.55)
 
 # Hello! This is an old project being reworked, everything is under construction so no pull requests at this time. (previous Commits 39+)
 
@@ -8,7 +8,7 @@
 
 
 --(7.5) I am back for my hiatus, with that being said todays update brought in more finalizations to subscription payment features. You can now cancel your subscription, implemented
-a date time feature to indicate the expiration of your current subscription. More QOL to make the website sophisticated. I also cleaned up the read me because we had a millions version changes on one page, Im gonna keep it short and simple and only announce major changes as I am finally nearing the end of development. 
+a date time feature to indicate the expiration of your current subscription. More QOL to make the website sophisticated. I also cleaned up the read me because we had a lot of version changes on one page, Im gonna keep it short and simple and only announce major changes as I am finally nearing the end of development. 
 
 
 
