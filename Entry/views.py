@@ -367,6 +367,7 @@ def account_view(request):
     is_guest = False
     username = "Anon"
     is_expired = False
+    time_left =  request.user.users.time_left_dictionary
     if userAuth:
         guest_cd = getCD(request, "guest_cd")
         is_guest = request.user.users.is_guest
@@ -380,7 +381,8 @@ def account_view(request):
         'is_guest': is_guest,
         'username': username,
         'is_expired': is_expired,
-        'is_premium': is_premium
+        'is_premium': is_premium,
+        'time_left': time_left,
     }
     return HttpResponse(template.render(context, request))
 
@@ -401,7 +403,7 @@ def home(request):
         if profile.is_expired and profile.is_guest:
             context["is_expired"] = profile.is_expired
         if profile.is_premium and profile.premium_expires_at:
-            context["days_left"] = profile.time_left_dictionary
+            context["time_left"] = profile.time_left_dictionary
 
         context["is_premium"] = profile.is_premium
         context["is_authenticated"] = is_authenticated
@@ -437,6 +439,7 @@ def premium_sale(request):
     userAuth = False
     is_guest = False
     is_premium = False
+    time_left = False
     if request.user.is_authenticated:
 
         userAuth = request.user.is_authenticated and not request.user.users.is_guest
@@ -445,10 +448,13 @@ def premium_sale(request):
 
         is_premium = request.user.users.is_premium
 
+        time_left = request.user.users.time_left_dictionary
+
     context = {
         'is_authenticated': userAuth,
         'is_guest': is_guest,
         'is_premium': is_premium,
+        'time_left': time_left,
     }
     return HttpResponse(template.render(context, request))
 

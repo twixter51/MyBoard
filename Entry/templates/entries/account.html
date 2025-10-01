@@ -159,6 +159,23 @@
 
  <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'index' %}'"> Change Password </button>
 
+
+
+ 
+    {% if is_premium %}
+        <!-- Premium banner -->
+        <div class="app-banner" id="premiumBanner" role="status" aria-live="polite" style="background:transparent; backdrop-filter:none; color:#3484ca;  z-index: -1;">
+            <div class="container2" style="position:relative; margin:90px 1000px 0 auto; width:auto; background: transparent; padding:8px 12px; display:flex; align-items:center; gap:8px; border-radius:12px; z-index: -1;">
+            
+            
+                <div class="app-banner__text" style="font-size:14px; color:#3484ca; margin:0; z-index: 999;">🌟 Premium 🌟 You have {{time_left.days}} days left</div>
+                
+            </div>
+        </div>
+    {%endif%}
+   
+
+
   <h2 class="pitch-line" style="margin-top: 45px;">
       <span class="icon">🌟 </span>
       <strong class="accent">🌟 Premium 🌟</strong>
@@ -169,10 +186,11 @@
 
       
       {% if is_premium %}
-        <strong class="pill">You have x days left</strong>
+       
         <button class="lpbtn lpbtn-primary" id="unsubscribe"style="margin: 0 auto; display: block; margin-top: 45px;">Unsubscribe</button>
 
-
+                
+       
           <!-- Overlay -->
           <div id="overlay" class="">
           <!-- Modal -->
@@ -183,7 +201,7 @@
                   </div>
 
           
-                  <p>You have x days left on your subscription, if you cancel now you will have your benefits for x days. You will not be able to reubscribe until this current period ends.</p>
+                  <p>You have <strong class="accent">  {{time_left.days}}  </strong>  days left on your subscription, You will not be able to reubscribe until this current period ends.</p>
 
                   <div class="choice-buttons" style="">
                       <button id="keep-data" class="lpbtn lpbtn-ghost exits">Nevermind</button>
@@ -211,6 +229,9 @@
               </script>
 
           </div>
+
+
+          
       {% else %}
 
         <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'index' %}'">Subscribe</button>

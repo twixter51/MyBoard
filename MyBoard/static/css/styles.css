@@ -1,4 +1,10 @@
-/* CSS for the entries app */
+/* CSS for entire app */
+
+
+/* Misc */
+body::-webkit-scrollbar {
+    display: none;
+}
 
 /* Center elements */
 .center {

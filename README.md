@@ -1,5 +1,5 @@
 
-# Update Logs(Development Build V.7.55)
+# Update Logs(Development Build V.7.6)
 
 # Hello! This is an old project being reworked, everything is under construction so no pull requests at this time. (previous Commits 39+)
 
@@ -8,13 +8,23 @@
 
 
 --(7.5) I am back for my hiatus, with that being said todays update brought in more finalizations to subscription payment features. You can now cancel your subscription, implemented
-a date time feature to indicate the expiration of your current subscription. More QOL to make the website sophisticated. I also cleaned up the read me because we had a lot of version changes on one page, Im gonna keep it short and simple and only announce major changes as I am finally nearing the end of development. 
+a date time feature to indicate the expiration of your current subscription. More QOL to make the website sophisticated. I also cleaned up the read me because we had a lot of version changes on one page, Im gonna keep it short and simple and only announce major changes as I am finally nearing the end of development.
+
+--(7.6) Overall improvements to the web pages, the time you have left now displays on all pages. Shows in full on board page (temporary)
 
 
 
 
 
 
+
+
+
+# Next Update 7.7
+
+- Implement a go to board button..(remove get started for logged in users/guests)
+
+- Finish up subscription, link Stripe for checks if user is subscribed (currently only front-end checks if is_premium var is true)
 
 # URGENT
 - N̶e̶x̶t̶ ̶I̶'̶l̶l̶ ̶f̶o̶c̶u̶s̶ ̶o̶n̶ ̶t̶h̶e̶ ̶f̶r̶o̶n̶t̶-̶e̶n̶d̶ ̶i̶n̶ ̶t̶e̶r̶m̶s̶ ̶o̶f̶ ̶d̶i̶s̶p̶l̶a̶y̶ ̶i̶s̶s̶u̶e̶s̶,̶ ̶s̶o̶ ̶i̶'̶l̶l̶ ̶f̶i̶x̶ ̶b̶e̶i̶n̶g̶ ̶a̶b̶l̶e̶ ̶t̶o̶ ̶c̶r̶e̶a̶t̶e̶ ̶g̶u̶e̶s̶t̶ ̶w̶h̶i̶l̶e̶ ̶y̶o̶u̶'̶r̶e̶ ̶l̶o̶g̶g̶e̶d̶ ̶i̶n̶,̶ ̶a̶n̶d̶ ̶a̶l̶s̶o̶ ̶m̶a̶k̶e̶ ̶i̶t̶ ̶s̶o̶ ̶y̶o̶u̶ ̶c̶a̶n̶ ̶O̶N̶L̶Y̶ ̶p̶a̶y̶ ̶f̶o̶r̶ ̶p̶r̶e̶m̶i̶u̶m̶ ̶i̶f̶ ̶y̶o̶u̶ ̶d̶o̶ ̶h̶a̶v̶e̶ ̶a̶n̶ ̶a̶c̶c̶o̶u̶n̶t̶ ̶a̶n̶d̶ ̶a̶r̶e̶n̶'̶t̶ ̶a̶ ̶g̶u̶e̶s̶t̶. 
@@ -38,6 +48,8 @@ a date time feature to indicate the expiration of your current subscription. Mor
 - Link subscription time to back-end (stripes time)
 
 - rewrite front home page, some things are placeholders but I don't nearing the end of development so gotta make everything look sophisticated.
+
+- Fix storage issues (shows negative on unlimited plan, visual bug)
 
 
 
