@@ -147,6 +147,8 @@
 
         <h2 style="font-size:52px; margin-top:-84px;">Hello, {{ username }}</h2>
 
+        <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;"onclick="window.location.href='{% url 'Main' boardLink=username %}'"> Go To Board </button>
+
 
 
     {%endif%}
@@ -235,16 +237,27 @@
         Customize your board to match your style or keep it private—your creativity, your rules.
         
     </h2>
-    <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;"onclick="window.location.href='{% url 'choice' %}'"> Get Started For Free </button>
-    <div class="or-divider" aria-hidden="true"><span>or</span></div>
-    <h2 style="font-size: 22px; margin-top: 15px; color: #3484ca;">
-        Already have an account with us?
+
+    {% if not user.is_authenticated %}
+
+        <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;"onclick="window.location.href='{% url 'choice' %}'"> Get Started For Free </button>
+        <div class="or-divider" aria-hidden="true"><span>or</span></div>
+
+
+        <h2 style="font-size: 22px; margin-top: 15px; color: #3484ca;">
+            Already have an account with us?
         
-    </h2>
-    <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'index' %}'"> Log-In </button>
+        </h2>
+
+        <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'index' %}'"> Log-In </button>
+    {%endif%}
+   
+    
+    
+
+    
    
 
-   
  
 
     <div class="showCont" >

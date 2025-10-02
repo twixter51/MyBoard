@@ -728,6 +728,7 @@ h1 {
 .lpbtn-primary{
   background: var(--bg); color: var(--fg);
   box-shadow: 0 8px 20px rgba(52,132,202,.25);
+  cursor: pointer;
 }
 .lpbtn-primary:hover{ transform: translateY(-1px) scale(1.02); box-shadow: 0 12px 28px rgba(52,132,202,.32); }
 
