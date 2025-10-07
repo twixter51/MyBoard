@@ -36,6 +36,9 @@ class users(models.Model):
 
     premium_expires_at = models.DateTimeField(null=True, blank=True)
 
+    #stripe_customer_id = models.CharField(max_length=64, null=True, blank=True, db_index=True)
+    #stripe_subscription_id = models.CharField(max_length=64, null=True, blank=True, db_index=True)
+
     def save(self, *args, **kwargs):
         if not self.uniLink:
             base = self.user.username or f"guest_{secrets.token_hex(3)}"

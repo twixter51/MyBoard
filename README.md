@@ -17,9 +17,6 @@ a date time feature to indicate the expiration of your current subscription. Mor
 
 
 
-
-
-
 # Next Update 7.7
 
 - Implement a go to board button..(remove get started for logged in users/guests)

@@ -15,6 +15,7 @@ urlpatterns = [
     path("success/", views.checkout_success, name="checkout_success"),
     path("cancel/", views.checkout_cancel, name="checkout_cancel"),
     path("cancel_sub/", views.cancel_sub, name="cancel_sub"),
+    path("stripe/webhook/", views.stripe_webhook, name="stripe_webhook"),
     
     # change main path based on uniLink?
     path("board/<slug:boardLink>", views.Main, name="Main"),

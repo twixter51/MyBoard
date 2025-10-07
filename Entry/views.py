@@ -390,7 +390,7 @@ def account_view(request):
 
 
 
-     
+#reference this for rest of the functions in the future when cleaning up     
 def home(request):
     context = {
         
@@ -525,5 +525,25 @@ def cancel_sub(request):
         profile.save()
     return redirect('home')
     
+
+
 def checkout_cancel(request):  
     return HttpResponse("❌ Canceled.")
+
+
+
+#webhook for payments
+@csrf_exempt
+def stripe_webhook(request):
+    payload = request.body
+    event = None
+    sig_header = request.META.get("HTTP_STRIPE_SIGNATURE")
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, endpoint_secret = settings.SECRET_KEY
+        )
+    except stripe.error.SignatureVerificationError as e:
+        print('⚠️  Webhook signature verification failed.' + str(e))
+
+        return HttpResponse(status=400)
+
