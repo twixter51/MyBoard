@@ -19,6 +19,9 @@ myenv/
 .vs/
 *.code-workspace
 
+#EXTRA
+MyBoard/stripe_hook.exe
+
 # OS
 .DS_Store
 Thumbs.db

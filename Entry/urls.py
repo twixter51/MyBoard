@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .models import users, userMedia, userTexts
+from .models import profile, userMedia, userTexts
 
 urlpatterns = [
     path("login/", views.index, name="index"),

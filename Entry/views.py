@@ -12,14 +12,14 @@ from django.conf import settings
 from django.http import JsonResponse, HttpResponse, HttpResponseBadRequest
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
-
+import logging
 #test
 from .cd import createCD, getCD
 
 from urllib.parse import urlencode
 
 from django.contrib.auth.decorators import login_required
-from .models import users, userMedia, userTexts
+from .models import profile, userMedia, userTexts
 from django.views.decorators.csrf import csrf_exempt
 ####################################################
 
@@ -27,7 +27,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.template import loader
 from django.views.decorators.cache import never_cache
 
-#FIX
+
 
 @login_required
 def upload_media(request):
@@ -35,7 +35,7 @@ def upload_media(request):
     
         file = request.FILES.get('image') or request.FILES.get('video')
         print(file)
-        profile = request.user.users
+        profile = request.user.profile
 
         if request.FILES.get('image'):
             content = "image";  
@@ -87,7 +87,7 @@ def upload_text(request):
     if request.method == 'POST':
         try:
 
-            profile = request.user.users
+            profile = request.user.profile
             messageCont = request.POST.get('text')
             
           
@@ -122,7 +122,7 @@ def upload_text(request):
 def remove_content(request):
 
     if request.method == "POST":
-        profile = request.user.users
+        profile = request.user.profile
         content_id = request.POST.get("file") or request.POST.get("text")
         file = None
         if content_id == request.POST.get("file"):
@@ -136,7 +136,7 @@ def remove_content(request):
             return JsonResponse({'success': False})
         
         size = round(file.file_size / (1024 * 1024), 2)
-        updateSTOR = users.objects.get(user=profile.user)
+        updateSTOR = profile.objects.get(user=profile.user)
       
         updateSTOR.storage += size
       
@@ -154,8 +154,8 @@ def Main(request, boardLink):
 
     
     
-    owner_profile = get_object_or_404(users, uniLink=boardLink)
-    viewer_profile = request.user.users if request.user.is_authenticated else None
+    owner_profile = get_object_or_404(profile, uniLink=boardLink)
+    viewer_profile = request.user.profile if request.user.is_authenticated else None
     is_owner = (
         request.user.is_authenticated
         and request.user.id == owner_profile.user_id
@@ -261,7 +261,7 @@ def create_guest(request):
     guestName =  f"guest_{secrets.token_hex(3)}"
     guestUser = User.objects.create_user(username=guestName, password=secrets.token_urlsafe(16))
 
-    p = guestUser.users
+    p = guestUser.profile
 
     p.is_guest = True
 
@@ -295,23 +295,24 @@ def signup(request):
             context['error'] = "All fields are required."
             return render(request, 'entries/signup.html', context)
         
+        #this creates a user in my database "profile" wit only USERNAME while "User" djangos model has email/
         createduser = User.objects.create_user(username = username, email = email, password = password)
+        createduser.email = email
         if request.user.is_authenticated:
-            if request.user.users.is_guest:
+            if request.user.profile.is_guest:
                 guest_user  = request.user
-                userMedia.objects.filter(profile=request.user.users).update(profile=createduser.users)
+                userMedia.objects.filter(profile=request.user.profile).update(profile=createduser.profile)
 
-                userTexts.objects.filter(profile=request.user.users).update(profile=createduser.users)
+                userTexts.objects.filter(profile=request.user.profile).update(profile=createduser.profile)
 
-                createduser.users.storage = request.user.users.storage
+                createduser.profile.storage = request.user.profile.storage
                 
                 login(request, createduser)
                 guest_user.delete()
    
         return redirect('/signup/?success=1')
         
-    # In theory, we are getting the success paramater from our url, this way if it does exist pass it through context so html can read it and show us basically our success message
-    # leverages the query paramater aka the words after ? in url
+  
     success = request.GET.get('success')
     if success:
         context['success'] = success
@@ -323,7 +324,7 @@ def signup(request):
 
 def log_out_view(request):
    
-    profile = request.user.users
+    profile = request.user.profile
 
     if profile.is_guest:
         profile.delete()
@@ -342,9 +343,9 @@ def choice_view(request):
     is_expired = False
     if userAuth:
         guest_cd = getCD(request, "guest_cd")
-        is_guest = request.user.users.is_guest
-        username = request.user.users.user.username
-        is_expired = is_guest and request.user.users.is_expired
+        is_guest = request.user.profile.is_guest
+        username = request.user.profile.user.username
+        is_expired = is_guest and request.user.profile.is_expired
     print(guest_cd)
     context = {
         'is_authenticated': userAuth,
@@ -367,13 +368,13 @@ def account_view(request):
     is_guest = False
     username = "Anon"
     is_expired = False
-    time_left =  request.user.users.time_left_dictionary
+    time_left =  request.user.profile.time_left_dictionary
     if userAuth:
         guest_cd = getCD(request, "guest_cd")
-        is_guest = request.user.users.is_guest
-        username = request.user.users.user.username
-        is_expired = is_guest and request.user.users.is_expired
-        is_premium =  request.user.users.is_premium
+        is_guest = request.user.profile.is_guest
+        username = request.user.profile.user.username
+        is_expired = is_guest and request.user.profile.is_expired
+        is_premium =  request.user.profile.is_premium
     print(guest_cd)
     context = {
         'is_authenticated': userAuth,
@@ -397,7 +398,7 @@ def home(request):
     }
 
     if request.user.is_authenticated:
-        profile = request.user.users
+        profile = request.user.profile
         is_authenticated = request.user.is_authenticated
     
         if profile.is_expired and profile.is_guest:
@@ -420,7 +421,7 @@ def home(request):
 def update_user(request):
     print("POST payload:", request.POST)
     if request.method == "POST":
-        profile = request.user.users
+        profile = request.user.profile
        
         if request.POST.get("update_storage"):
             profile.storage = request.POST["update_storage"]
@@ -442,13 +443,13 @@ def premium_sale(request):
     time_left = False
     if request.user.is_authenticated:
 
-        userAuth = request.user.is_authenticated and not request.user.users.is_guest
+        userAuth = request.user.is_authenticated and not request.user.profile.is_guest
 
-        is_guest = request.user.users.is_guest
+        is_guest = request.user.profile.is_guest
 
-        is_premium = request.user.users.is_premium
+        is_premium = request.user.profile.is_premium
 
-        time_left = request.user.users.time_left_dictionary
+        time_left = request.user.profile.time_left_dictionary
 
     context = {
         'is_authenticated': userAuth,
@@ -459,35 +460,34 @@ def premium_sale(request):
     return HttpResponse(template.render(context, request))
 
 
-@require_POST
+
 @csrf_exempt
 def create_checkout_session(request):
     """
-    Creates a Stripe Checkout Session and returns its URL as JSON.
+    Creates a Stripe Checkout Session 
     Post 'amount' in dollars (string or number). Ex: "0.99"
     """
-   
-    email = request.POST.get("email").strip()
+    
+    user_id = str(request.user.id)
 
-   
-    params = {}
-    if email:
-        params["prefilled_email"] = email # prefill email on Stripe page  
-    url = "https://buy.stripe.com/test_7sYaEY7Ilh1daWF2OueIw01" + ("?" + urlencode(params) if params else "")
+    session = stripe.checkout.Session.create(
+        mode="subscription",
+        line_items=[{
+            "price": "price_1S59MeJJVQIXKbuJlR5LHHDy",  # replace with your Price ID
+            "quantity": 1,
+        }],
+        success_url=settings.STRIPE_SUCCESS_URL,
+        cancel_url=settings.STRIPE_CANCEL_URL,
+        customer_email=request.user.email,
+        client_reference_id=user_id,   # ✅ ties session to Django user
+    )
 
-
-
-  
-    return JsonResponse({"url": url})
+    return redirect(session.url)
 
 from dateutil.relativedelta import relativedelta
 
 def checkout_success(request): 
-    profile = request.user.users
-    profile.is_premium = True
-    profile.premium_expires_at = timezone.now() + relativedelta(months=1)
-    profile.storage = 1e9
-    profile.save()
+
 
     # to show user that they are premium now, to update their intermediate view that redirects them
     userAuth = False
@@ -495,17 +495,17 @@ def checkout_success(request):
     is_premium = False
     if request.user.is_authenticated:
 
-        userAuth = request.user.is_authenticated and not request.user.users.is_guest
+        userAuth = request.user.is_authenticated and not request.user.profile.is_guest
 
-        is_guest = request.user.users.is_guest
+        is_guest = request.user.profile.is_guest
 
-        is_premium = request.user.users.is_premium
+        is_premium = request.user.profile.is_premium
 
     template = loader.get_template("entries/payment.html")
  
     context = {
        'sale_complete': True,
-       'sale_name':profile.user.username,
+       'sale_name':request.user,
        'is_authenticated': userAuth,
        'is_guest': is_guest,
        'is_premium': is_premium,
@@ -516,7 +516,7 @@ def checkout_success(request):
 
 
 def cancel_sub(request):
-    profile = request.user.users
+    profile = request.user.profile
     print(profile.is_premium)
     if profile.is_premium:
         #cancel subscription here later implement time.
@@ -531,19 +531,114 @@ def checkout_cancel(request):
     return HttpResponse("❌ Canceled.")
 
 
-
+stripe.api_key = settings.STRIPE_API_KEY
+logger = logging.getLogger(__name__)
 #webhook for payments
 @csrf_exempt
 def stripe_webhook(request):
     payload = request.body
     event = None
+    sub_ID = None
+    cus_ID = None
+    profile1 = None
     sig_header = request.META.get("HTTP_STRIPE_SIGNATURE")
     try:
         event = stripe.Webhook.construct_event(
-            payload, sig_header, endpoint_secret = settings.SECRET_KEY
+            payload, sig_header, settings.STRIPE_WEBHOOK_SECRET
         )
     except stripe.error.SignatureVerificationError as e:
         print('⚠️  Webhook signature verification failed.' + str(e))
 
         return HttpResponse(status=400)
+    eventType = event.get("type")
+    obj = (event.get("data") or {}).get("object") or {}
 
+ 
+
+    if eventType == "checkout.session.completed":
+        #complete checkout
+
+
+        
+
+        if obj.get("mode") != "subscription":
+            logger.warning("Mode error: %s",  obj.get("mode"))
+            return HttpResponse(status=200)
+        sub_id = obj.get("subscription")
+        if not sub_id:
+            logger.warning("id error: %s",  obj.get(obj.get("subscription")))
+            return HttpResponse(status=200)
+
+        sub = stripe.Subscription.retrieve(sub_id)
+
+        
+        user_id = obj.get("client_reference_id")
+
+        user = User.objects.filter(id=user_id).first()
+
+
+
+        profile1 = user.profile 
+        profile1.stripe_subscription_id = sub_id
+        profile1.stripe_customer_id = obj["customer"]
+
+       
+
+    elif eventType == "invoice.payment_succeeded":
+        #complete billing cycle
+
+
+        cus_ID = obj.get("customer")
+        sub_ID = obj.get("subscription")
+
+        if not sub_ID:
+            logger.warning("no sub%s", sub_ID)
+
+            subs = stripe.Subscription.list(customer=cus_ID, status="all", limit=1)
+
+            if subs.data:
+                sub_ID = subs.data[0].id
+            else:
+                logger.warning("No subscription found for customer=%s", cus_ID)
+                return HttpResponse(status=200)
+        try:
+            sub = stripe.Subscription.retrieve(sub_ID)
+        except Exception as e:
+
+            logger.warning("can't retreive sub %s", sub)
+            return HttpResponse(status=200)
+        
+      
+
+        current_period_end = sub.get("current_period_end")
+        if not current_period_end:
+            logger.warning("curr period end errorr %s",  sub.get("current_period_end"))
+
+            current_period_end = obj["lines"]["data"][0]["period"]["end"]
+    
+        
+        profile1 = profile.objects.filter(stripe_customer_id=cus_ID).first()
+
+        profile1.is_premium = True
+        profile1.premium_expires_at = datetime.datetime.fromtimestamp(current_period_end, tz=datetime.timezone.utc)
+        profile1.storage = 1e9
+        
+
+        if profile1.stripe_subscription_id == sub_ID:
+            profile1.premium_expires_at = datetime.datetime.fromtimestamp(current_period_end, tz=datetime.timezone.utc)    
+
+    elif eventType == "customer.subscription.deleted":
+        #complete removed subscription
+        cus_ID = obj["customer"]
+        profile1 = profile.objects.filter(stripe_customer_id=cus_ID).first()
+
+
+        if profile1:
+            profile1.is_premium = False
+            profile1.premium_expires_at = None
+            profile1.storage = 25*1024
+            
+
+    if profile1:
+        profile1.save(update_fields=["is_premium", "premium_expires_at", "storage", "stripe_subscription_id", "stripe_customer_id"])
+    return HttpResponse(status=200)

@@ -17,7 +17,7 @@ def userFiles(instance, filename):
 
 #
 
-class users(models.Model):
+class profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     
@@ -36,8 +36,10 @@ class users(models.Model):
 
     premium_expires_at = models.DateTimeField(null=True, blank=True)
 
-    #stripe_customer_id = models.CharField(max_length=64, null=True, blank=True, db_index=True)
-    #stripe_subscription_id = models.CharField(max_length=64, null=True, blank=True, db_index=True)
+    stripe_customer_id = models.CharField(max_length=64, null=True, blank=True, db_index=True)
+    
+    stripe_subscription_id = models.CharField(max_length=64, null=True, blank=True, db_index=True)
+    
 
     def save(self, *args, **kwargs):
         if not self.uniLink:
@@ -91,7 +93,7 @@ class users(models.Model):
 #FIX
 class userMedia(models.Model):
 
-    profile = models.ForeignKey(users, related_name='files', on_delete=models.CASCADE)
+    profile = models.ForeignKey(profile, related_name='files', on_delete=models.CASCADE)
     file = models.FileField(upload_to=userFiles, null=True, blank=True)
     content_type = models.CharField(max_length=10)
     uploaded_at = models.DateTimeField(auto_now_add=True)
@@ -120,7 +122,7 @@ class userMedia(models.Model):
 
 
 class userTexts(models.Model):
-    profile = models.ForeignKey(users, related_name='messages', on_delete=models.CASCADE)
+    profile = models.ForeignKey(profile, related_name='messages', on_delete=models.CASCADE)
     message = models.TextField()
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
@@ -150,11 +152,11 @@ class userTexts(models.Model):
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        users.objects.create(user=instance)
+       profile.objects.create(user=instance)
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
-    instance.users.save()
+    instance.profile.save()
 
 
 

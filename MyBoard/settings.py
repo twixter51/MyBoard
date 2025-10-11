@@ -23,8 +23,8 @@ import os
 # Optional: fallback URLs (works in dev)
 STRIPE_SUCCESS_URL = os.getenv("STRIPE_SUCCESS_URL", "http://127.0.0.1:8000/success/")
 STRIPE_CANCEL_URL  = os.getenv("STRIPE_CANCEL_URL",  "http://127.0.0.1:8000/cancel/")
-
-
+STRIPE_WEBHOOK_SECRET = "whsec_ccdac1135685bdf277b9d7484ff0208cc67e7f5ebffa4eedec19e80a0d224562"
+STRIPE_API_KEY = "sk_test_51RzmoLJJVQIXKbuJKWjzgrI2QqwitjkiE020IPZkSFDk2LpxcaZmCMCjW1hS5mvd3YwQGag7GV0c8TGy3flvIOdA00pzr724ID"
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -131,6 +131,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
 
 
 # Internationalization
