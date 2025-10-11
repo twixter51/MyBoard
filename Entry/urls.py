@@ -8,7 +8,6 @@ urlpatterns = [
     path("logout/", views.log_out_view, name = "logout"),
     path("choice/", views.choice_view, name="choice"),
     path("account/", views.account_view, name="account"),
-    path("premium_sale/",  views.premium_sale, name="premium_sale"),
 
     #payment
     path("checkout/", views.create_checkout_session, name="create_checkout_session"),
@@ -16,6 +15,7 @@ urlpatterns = [
     path("cancel/", views.checkout_cancel, name="checkout_cancel"),
     path("cancel_sub/", views.cancel_sub, name="cancel_sub"),
     path("stripe/webhook/", views.stripe_webhook, name="stripe_webhook"),
+    path("sale_page/",  views.sale_page, name="sale_page"),
     
     # change main path based on uniLink?
     path("board/<slug:boardLink>", views.Main, name="Main"),

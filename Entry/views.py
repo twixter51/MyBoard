@@ -12,8 +12,9 @@ from django.conf import settings
 from django.http import JsonResponse, HttpResponse, HttpResponseBadRequest
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
-import logging
-#test
+
+
+
 from .cd import createCD, getCD
 
 from urllib.parse import urlencode
@@ -27,6 +28,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.template import loader
 from django.views.decorators.cache import never_cache
 
+# for stripe
+import logging
+stripe.api_key = settings.STRIPE_API_KEY
+logger = logging.getLogger(__name__)
 
 
 @login_required
@@ -375,6 +380,7 @@ def account_view(request):
         username = request.user.profile.user.username
         is_expired = is_guest and request.user.profile.is_expired
         is_premium =  request.user.profile.is_premium
+        ending_premium = request.user.profile.ending_premium
     print(guest_cd)
     context = {
         'is_authenticated': userAuth,
@@ -384,6 +390,7 @@ def account_view(request):
         'is_expired': is_expired,
         'is_premium': is_premium,
         'time_left': time_left,
+        'ending_premium': ending_premium,
     }
     return HttpResponse(template.render(context, request))
 
@@ -435,7 +442,8 @@ def update_user(request):
 
 #sales
 
-def premium_sale(request):
+@never_cache
+def sale_page(request):
     template = loader.get_template("entries/payment.html")
     userAuth = False
     is_guest = False
@@ -479,7 +487,7 @@ def create_checkout_session(request):
         success_url=settings.STRIPE_SUCCESS_URL,
         cancel_url=settings.STRIPE_CANCEL_URL,
         customer_email=request.user.email,
-        client_reference_id=user_id,   # ✅ ties session to Django user
+        client_reference_id=user_id,   # ties session to Django user
     )
 
     return redirect(session.url)
@@ -517,13 +525,15 @@ def checkout_success(request):
 
 def cancel_sub(request):
     profile = request.user.profile
-    print(profile.is_premium)
-    if profile.is_premium:
-        #cancel subscription here later implement time.
-        profile.is_premium = False
-        profile.storage = 25*1024
+   
+    if profile.is_premium and profile.stripe_subscription_id:
+        sub = profile.stripe_subscription_id
+        stripe.Subscription.modify(sub, cancel_at_period_end=True)
+        profile.ending_premium = True
+
         profile.save()
     return redirect('home')
+
     
 
 
@@ -531,8 +541,6 @@ def checkout_cancel(request):
     return HttpResponse("❌ Canceled.")
 
 
-stripe.api_key = settings.STRIPE_API_KEY
-logger = logging.getLogger(__name__)
 #webhook for payments
 @csrf_exempt
 def stripe_webhook(request):
@@ -637,7 +645,8 @@ def stripe_webhook(request):
             profile1.is_premium = False
             profile1.premium_expires_at = None
             profile1.storage = 25*1024
-            
+            if profile1.ending_premium:
+                profile1.ending_premium = False
 
     if profile1:
         profile1.save(update_fields=["is_premium", "premium_expires_at", "storage", "stripe_subscription_id", "stripe_customer_id"])

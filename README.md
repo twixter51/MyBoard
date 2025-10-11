@@ -25,7 +25,6 @@ of debugging because I just could not find out why my webhook was exiting early.
 
 
 
-- (complete patch 2 of 4 next)
 
 
 # Next Update 7.8

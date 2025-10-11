@@ -45,9 +45,9 @@
 
 
 
-  <div  class="userProf pill" style="position: fixed; right: 0; margin-right: 25px; margin-top: 25px;   object-position: center; padding: 0;">
+  <div  class="userProf pill" style="position: fixed; right: 0; margin-right: 25px; margin-top: 25px; object-position: center; padding: 0; z-index: 100;">
       <img id="home_profile" class=""src="{% static 'images/test1.jpg' %}" alt=""
-      style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; cursor: pointer;">
+      style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; cursor: pointer; z-index: 100;">
 
         
         <ul id="home_menu" class="navigationMain hidden" style="right: 0; flex-direction: column; display; flex;   align-items: flex-start; ">
@@ -185,7 +185,7 @@
      
 
       
-      {% if is_premium %}
+       {% if is_premium and not ending_premium %}
        
         <button class="lpbtn lpbtn-primary" id="unsubscribe"style="margin: 0 auto; display: block; margin-top: 45px;">Unsubscribe</button>
 
@@ -230,12 +230,17 @@
 
           </div>
 
+       {% elif is_premium and ending_premium %}  
+          
+      
+        <div class="app-banner__text" style="font-size:14px; color:#3484ca; margin:0; z-index: 999;">Scheduled to end in {{time_left.days}} days</div>
+
 
           
-      {% else %}
+       {% else %}
 
-        <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'index' %}'">Subscribe</button>
-      {%endif%}
+        <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'sale_page' %}'">Subscribe</button>
+       {%endif%}
     
   </h2>
 

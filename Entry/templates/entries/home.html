@@ -98,12 +98,9 @@
     {%if is_authenticated %}
         
 
-
-
-
-        <div  class="userProf pill" style="position: fixed; right: 0; margin-right: 25px; margin-top: 25px;   object-position: center; padding: 0;">
+        <div  class="userProf pill" style="position: fixed; right: 0; margin-right: 25px; margin-top: 25px;   object-position: center; padding: 0; z-index: 100;">
             <img id="home_profile" class=""src="{% static 'images/test1.jpg' %}" alt=""
-            style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; cursor: pointer;">
+            style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; cursor: pointer; z-index: 100;">
 
                 
             <ul id="home_menu" class="navigationMain hidden" style="right: 0; flex-direction: column; display; flex;   align-items: flex-start; ">
@@ -338,7 +335,7 @@
                 <h2 style="color:rgb(255, 255, 255); font-size: 25px;" > $2.06</h2>
 
             </div>
-            <button class="lpbtn lpbtn-primary highlight-loop"style="margin: 0 auto; display: flex; margin-top: -150px;" onclick="window.location.href='{% url 'premium_sale' %}'">🌟 Try Premium 🌟</button>
+            <button class="lpbtn lpbtn-primary highlight-loop"style="margin: 0 auto; display: flex; margin-top: -150px;" onclick="window.location.href='{% url 'sale_page' %}'">🌟 Try Premium 🌟</button>
         </div>
 
       

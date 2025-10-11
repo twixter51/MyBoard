@@ -40,6 +40,7 @@ class profile(models.Model):
     
     stripe_subscription_id = models.CharField(max_length=64, null=True, blank=True, db_index=True)
     
+    ending_premium = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         if not self.uniLink:
