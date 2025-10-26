@@ -95,10 +95,10 @@
     {%if guest_cd <= 0  and not is_authenticated %}
       <h2 class="pitch-line">
        
-        <strong class="accent">Try the Demo</strong>
+        <strong class="accent">Demo</strong>
         <span class="pill">24-hour limit</span>
         <span class="pill">25&nbsp;GB</span>
-        <span class="muted">no email required</span>
+        
 
        
         <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'create_guest' %}'"> Try Demo </button>
@@ -141,12 +141,13 @@
 
       <h2 class="pitch-line">
           
-          <strong class="accent">Go Unlimited</strong>
+          <strong class="accent">Sign Up</strong>
+          <span class="pill">free account</span>
           <span class="pill">32&nbsp;GB</span>
-          <span class="pill pill--light">free account</span>
-          <span class="muted">keep board forever</span>
+          
+         
 
-          <hr>
+        
           <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'signup' %}'"> SignUp </button>
       </h2>
 

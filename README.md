@@ -1,5 +1,5 @@
 
-# Update Logs(Development Build V.7.75)
+# Update Logs(Development Build V.7.76)
 
 # Hello! This is an old project being reworked, everything is under construction so no pull requests at this time. (previous Commits 39+)
 
@@ -24,6 +24,8 @@ a date time feature to indicate the expiration of your current subscription. Mor
 of debugging because I just could not find out why my webhook was exiting early. Now it works and not i'll be on my haitus for a few days lol (day 2)
 
 
+
+--(7.76) Cleaned up back-end code
 
 
 
