@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from .models import profile, userMedia, userTexts
+from .models import Profile, userMedia, userTexts
 
 # This class shows images in a table format inside the user's profile page in admin
 class userImagesInline(admin.TabularInline):
@@ -19,7 +19,7 @@ class userImagesInline(admin.TabularInline):
     image_preview.short_description = 'Preview'  # Label for the preview column
 
 # This sets up how the user uploads page looks in admin
-@admin.register(profile)
+@admin.register(Profile)
 class profileAdmin(admin.ModelAdmin):
     # Show these columns: username, when uploaded, how many images
     list_display = ('user', 'uploaded_at', 'get_image_count')
@@ -43,7 +43,7 @@ class userMediaAdmin(admin.ModelAdmin):
     
     # Get the username of who uploaded the image
     def user_name(self, obj):
-        return obj.profile.user.username
+        return obj.Profile.user.username
     user_name.short_description = 'User'
     
     # Show a tiny preview of the image in the list
@@ -66,5 +66,5 @@ class userTextAdmin(admin.ModelAdmin):
   
      # Get the username of who uploaded the image
     def user_name(self, obj):
-        return obj.profile.user.username
+        return obj.Profile.user.username
     user_name.short_description = 'User'

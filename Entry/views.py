@@ -7,9 +7,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.template import loader
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
-
+import json
 # models
-from .models import profile, userMedia, userTexts, User
+from .models import Profile, userMedia, userTexts, User
 
 
 ####################################################
@@ -94,12 +94,24 @@ def signup(request):
 
         if not username or not password or not email:
             # If any field is missing, pass an error message back to the template
-            context['error'] = "All fields are required."
+
+            fields = []
+            context['error'] = "ERROR! missing fields"
+            if not username:
+                fields.append("username")
+            if not password:
+                fields.append("password")
+            if not email:
+                fields.append("email")
+              
+            context['fields'] = json.dumps(fields)
             return render(request, 'entries/signup.html', context)
         
-        #this creates a user in my database "profile" wit only USERNAME while "User" djangos model has email/
+        #this creates a user in my database "Profile" wit only USERNAME while "User" djangos model has email/
         createduser = User.objects.create_user(username = username, email = email, password = password)
         createduser.email = email
+
+        #if user was guest before signing up
         if request.user.is_authenticated:
             if request.user.profile.is_guest:
                 guest_user  = request.user
@@ -111,7 +123,11 @@ def signup(request):
                 
                 login(request, createduser)
                 guest_user.delete()
-   
+
+        #log in if not already
+        if not request.user.is_authenticated:
+            login(request, createduser)
+
         return redirect('/signup/?success=1')
         
   
@@ -399,7 +415,7 @@ def stripe_webhook(request):
             current_period_end = obj["lines"]["data"][0]["period"]["end"]
     
         
-        profile1 = profile.objects.filter(stripe_customer_id=cus_ID).first()
+        profile1 = Profile.objects.filter(stripe_customer_id=cus_ID).first()
 
         profile1.is_premium = True
         profile1.premium_expires_at = datetime.datetime.fromtimestamp(current_period_end, tz=datetime.timezone.utc)
@@ -412,7 +428,7 @@ def stripe_webhook(request):
     elif eventType == "customer.subscription.deleted":
         #complete removed subscription
         cus_ID = obj["customer"]
-        profile1 = profile.objects.filter(stripe_customer_id=cus_ID).first()
+        profile1 = Profile.objects.filter(stripe_customer_id=cus_ID).first()
 
 
         if profile1:
@@ -435,7 +451,7 @@ def stripe_webhook(request):
 def Main(request, boardLink):
 
 
-    owner_profile = get_object_or_404(profile, uniLink=boardLink)
+    owner_profile = get_object_or_404(Profile, uniLink=boardLink)
     viewer_profile = request.user.profile if request.user.is_authenticated else None
     is_owner = (
         request.user.is_authenticated
@@ -618,7 +634,7 @@ def remove_content(request):
             return JsonResponse({'success': False})
         
         size = round(file.file_size / (1024 * 1024), 2)
-        updateSTOR = profile.objects.get(user=profile.user)
+        updateSTOR = profile
       
         updateSTOR.storage += size
       
