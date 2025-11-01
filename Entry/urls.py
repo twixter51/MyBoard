@@ -3,7 +3,7 @@ from . import views
 from .models import Profile, userMedia, userTexts
 
 urlpatterns = [
-    path("login/", views.index, name="index"),
+    path("login/", views.log_in, name="login"),
     path("signup/", views.signup, name = "signup"),
     path("logout/", views.log_out_view, name = "logout"),
     path("choice/", views.choice_view, name="choice"),

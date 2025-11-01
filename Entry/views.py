@@ -59,8 +59,8 @@ def home(request):
     return HttpResponse(template.render(context, request))
 
 
-def index(request):
-    template = loader.get_template("entries/index.html")
+def log_in(request):
+    template = loader.get_template("entries/login.html")
     context = {}  
 
 
@@ -72,11 +72,11 @@ def index(request):
         user = authenticate(request, username=username, password=password1)
 
         if user is not None:
-             login(request, user)
-             return render(request, 'entries/home.html', {'username': username})
+            login(request, user) 
+            return redirect('home')
         else:
-            context['error'] ="ah"
-            return render(request, 'entries/index.html', context)
+            context['error'] ="wrong credentials!"
+            return render(request, 'entries/login.html', context)
 
     return HttpResponse(template.render(context, request))
 

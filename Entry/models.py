@@ -12,7 +12,7 @@ import secrets
 
 def userFiles(instance, filename):
     
-    return f'userfolder/user_{instance.Profile.user.id}/{filename}'
+    return f'userfolder/user_{instance.profile.user.id}/{filename}'
 
 
 #

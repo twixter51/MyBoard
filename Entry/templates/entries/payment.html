@@ -34,7 +34,7 @@
                   {% if user.is_authenticated %}
                       <li id="logout" style="float:right; cursor: pointer; margin-left:100px;"><a>Log-Out</a></li>
                   {%else%}
-                      <li style="margin-left:100px;"><a href="{% url 'index' %}">Log-In</a></li>
+                      <li style="margin-left:100px;"><a href="{% url 'login' %}">Log-In</a></li>
                   {% endif %}  
           </nav>
 

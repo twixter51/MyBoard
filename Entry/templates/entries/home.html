@@ -65,7 +65,7 @@
                     {% if user.is_authenticated %}
                         <li id="logout" style="float:right; cursor: pointer; margin-left:100px;"><a href="{% url 'logout' %}">Log-Out</a></li>
                     {%else%}
-                        <li style="margin-left:100px;"><a href="{% url 'index' %}">Log-In</a></li>
+                        <li style="margin-left:100px;"><a href="{% url 'login' %}">Log-In</a></li>
                     {% endif %}  
             </nav>
 
@@ -112,7 +112,7 @@
                         
                         {%else%}
             
-                            <li style="margin-left:100px;"><a href="{% url 'index' %}">Log-In</a></li>
+                            <li style="margin-left:100px;"><a href="{% url 'login' %}">Log-In</a></li>
                         {% endif %}  
                         <li style=" float: none;"> <a href="{% url 'choice' %}">Settings</a> </li>
                 </nav>
@@ -246,7 +246,7 @@
         
         </h2>
 
-        <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'index' %}'"> Log-In </button>
+        <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;" onclick="window.location.href='{% url 'login' %}'"> Log-In </button>
     {%endif%}
    
     

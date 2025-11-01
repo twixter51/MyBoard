@@ -12,8 +12,12 @@ of debugging because I just could not find out why my webhook was exiting early.
 --(7.76) Cleaned up back-end code
 
 --(7.78) Fixed bugs on the back-end, new sign-up page
-    - fixed errors on my end in terms of names and syntax for my models
-    - you are logged in after signing up now
+
+- fixed errors on my end in terms of names and syntax for my models
+
+- you are logged in after signing up now
+
+- (7.78) log in page now works, new page.
 
 
 

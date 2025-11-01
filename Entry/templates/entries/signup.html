@@ -58,7 +58,7 @@
                     {% if user.is_authenticated %}
                         <li id="logout" style="float:right; cursor: pointer; margin-left:100px;"><a href="{% url 'logout' %}">Log-Out</a></li>
                     {%else%}
-                        <li style="margin-left:100px;"><a href="{% url 'index' %}">Log-In</a></li>
+                        <li style="margin-left:100px;"><a href="{% url 'login' %}">Log-In</a></li>
                     {% endif %}  
             </nav>
 
@@ -156,7 +156,7 @@
             document.getElementById("submit-id").style.display = "none";
             setTimeout(() => {
                 successMessage.style.display = "none";
-                window.location.href = "{% url 'index' %}"; 
+                window.location.href = "{% url 'login' %}"; 
             }, 3000); // Hides the message after 3 seconds
         }
       
