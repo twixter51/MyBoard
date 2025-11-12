@@ -43,20 +43,25 @@
     {% endif %}
 
 
-    <div class="" style="display: flex;">
 
-        <div class="userProfileHolder lpbtn-secondary" style="align-items: center; justify-content: center;">
-            <div class="container userProf " style="position: fixed;">
-
-
+    {% if is_premium %}
+        <!-- Premium banner -->
+        <div class="app-banner" id="premiumBanner" role="status" aria-live="polite" style="background:transparent; backdrop-filter:none; color:#3484ca;  z-index: -1;">
+            <div class="container2" id="" style="position:relative; margin:90px 1000px 0 auto; width:auto; background: transparent; padding:8px 12px; display:flex; align-items:center; gap:8px; border-radius:12px; z-index: -1;">
+            
+            
+                <div class="app-banner__text" id="" style="font-size:14px; color:#3484ca; margin:0; z-index: 999;">🌟 Premium 🌟 You have {{time_left.days}} days left</div>
+                
             </div>
         </div>
-        <div class="container userProf" style="position: fixed;  align-items: center; justify-content: center;">
+    {%endif%}
 
 
-        </div>
+    <div class="" style="display: flex;">
 
-       <ul class="navigationMain" style="">
+        
+
+       <ul class="navigationMain" id="navigationMain" style="">
             <nav class="navigation">   
                     <li> <a href="{% url 'home' %}">Home</a> </li>
                     <li> <a href="#FAQ">FAQ</a> </li>
@@ -72,26 +77,32 @@
        
        
         </ul>
+        
+        <script>
+            let lastScrollY = window.scrollY;
+            const navbar = document.getElementById("navigationMain")
+            const navbar2 = document.getElementsByClassName("app-banner")
+
+            window.addEventListener("scroll", () => {
+            if (window.scrollY > lastScrollY && window.scrollY > 1) {
+                navbar.classList.add("hidden");
+                navbar2[0].classList.add("hidden"); 
+            } else {
+                navbar.classList.remove("hidden");
+                navbar2[0].classList.remove("hidden"); 
+            }
+            lastScrollY = window.scrollY;
+            });
+
+        </script>
 
     </div>
 
  
 
 
-   
 
-  
-    {% if is_premium %}
-        <!-- Premium banner -->
-        <div class="app-banner" id="premiumBanner" role="status" aria-live="polite" style="background:transparent; backdrop-filter:none; color:#3484ca;  z-index: -1;">
-            <div class="container2" style="position:relative; margin:90px 1000px 0 auto; width:auto; background: transparent; padding:8px 12px; display:flex; align-items:center; gap:8px; border-radius:12px; z-index: -1;">
-            
-            
-                <div class="app-banner__text" style="font-size:14px; color:#3484ca; margin:0; z-index: 999;">🌟 Premium 🌟 You have {{time_left.days}} days left</div>
-                
-            </div>
-        </div>
-    {%endif%}
+ 
    
 
 
@@ -207,7 +218,8 @@
  
 
     
-
+    
+  
 
     <div class="Headline " style=""> 
         <h2 style="font-size: 52px; opacity: 0.5;">

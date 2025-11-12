@@ -19,6 +19,7 @@ of debugging because I just could not find out why my webhook was exiting early.
 
 - (7.78) log in page now works, new page.
 
+- (7.78) changed nav bar, now hides when user scrolls. Also removed unnecessary elements for a cleaner look.
 
 
 

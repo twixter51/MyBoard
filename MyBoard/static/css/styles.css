@@ -11,8 +11,40 @@ body::-webkit-scrollbar {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50vh; /* Adjust as needed */
+    height: 50vh; 
 }
+
+/* nav bar */
+
+.navigationMain {
+    background-color: #3484ca; 
+    padding: 20px;
+    height: fit-content;
+    width:fit-content;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 3px rgb(0, 0, 0);
+    opacity: 0.9;
+    transform: translateY(0);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.1s ease;
+    backdrop-filter: blur(12px);
+    list-style-type: none;
+    margin-top: 0px;
+    overflow: hidden;
+    top: 0;
+    position: fixed;
+    z-index: 9999;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+   
+
+}
+
+
+.navigationMain.hidden{
+  transform: translateY(50%);
+  opacity: 0;
+}
+
 
 
 /* Style the container */
@@ -20,7 +52,7 @@ body::-webkit-scrollbar {
     background-color: #ffffff; 
     padding: 0px;
     border-radius: 8px;
-    box-shadow: 0 0 10px #ffffff;
+    box-shadow: 0 0 3px #000000;
     max-width: 600px;
   
     text-align: center;
@@ -36,7 +68,7 @@ body::-webkit-scrollbar {
     background-color: #ffffff; 
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 0 10px #000000;
+    box-shadow: 0 0 3px #000000;
     max-width: 600px;
   
     text-align: center;
@@ -55,12 +87,12 @@ body::-webkit-scrollbar {
     content: "";
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.356);
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.356);
     background-color: #3484ca;
     left: 450px;
     top: 300px;
     height: 400px;
-    width: 250px; /* Adjust as needed */
+    width: 250px; 
     padding: 10px; 
     margin: 100px;
     z-index: 1;
@@ -85,10 +117,10 @@ body::-webkit-scrollbar {
     
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgb(0, 0, 0);
+    box-shadow: 0 0 3px rgb(0, 0, 0);
     
     height: 500px;
-    width:  1350px; /* Adjust as needed */
+    width:  1350px;
     opacity: 0.1;
     margin: 0 auto;
     margin-top: 450px;
@@ -225,71 +257,6 @@ h2 {
 }
 
 
-.navigationMain {
-    background-color: #3484ca; 
-    padding: 20px;
-    height: fit-content;
-    width:fit-content;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 0 10px rgb(0, 0, 0);
-    margin-left: 145px;
-    opacity: 0.9;
-    border-radius: 10px;
-    list-style-type: none;
-    margin-top: 0px;
-    overflow: hidden;
-    top: 0;
-    position: fixed;
-    z-index: 2;
-
-}
-
-.logo{
-
-   
-    position: fixed;
-    height: 150px;
-    width: auto;
-    margin-top: -50px;
-    margin-left: -42px;
-    object-fit: contain;
-
-    top: 0;
-    left: 0;
-   
-
-}
-
-
-.userProfileHolder{
-    position: fixed;
-    top: 0;
-    left: 0;
-    padding: 20px;
-    
-    width: 100px;
-    height:43px;
-    border-radius: 10px;
-    opacity: 0.5;
-    cursor: pointer; 
-  
-  
-    object-fit: contain;
-    box-shadow: 0 0 10px #0f0f0f
-
-    
-}
-
-
-
-
-.navigation a{
-    flex-direction: row;
-}
-
-
-
 .container2 {
     background-color: #ffffff; 
     padding: 5px;
@@ -298,13 +265,13 @@ h2 {
     display: block;
     justify-content: center;
     align-items: center;
-    width: 50%; /* Adjust as needed */
+    width: 50%; 
     margin-bottom: 20px;
     margin: 0 auto;
 }
 
 .box-element {
-    background-color: transparent; /* Make background transparent */
+    background-color: transparent; 
     border-radius: 4px;
     padding: 10px;
 }
@@ -447,8 +414,8 @@ body {
     background-color: #1d78c2; 
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgb(0, 0, 0);
-    width: 15; /* Adjust as needed */
+    box-shadow: 0 0 3px rgb(0, 0, 0);
+    width: 15; 
     max-width: 450px;
     text-align: center;
     display: inline-table;
@@ -461,8 +428,8 @@ body {
     background-color: #ffffff; 
     padding: 50px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgb(0, 0, 0);
-    width: 15; /* Adjust as needed */
+    box-shadow: 0 0 3px rgb(0, 0, 0);
+    width: 15; 
     max-width: 600px;
    
     display: inline-table;
@@ -573,8 +540,7 @@ h1 {
     text-align: initial; 
     align-items: normal; 
     white-space: nowrap;
-    margin-bottom: 35px;
-    margin-left: 25px; margin-top: 10px
+    margin-left: 60px; margin-top: 35px
 
 }
 
@@ -585,7 +551,7 @@ h1 {
     background-color: #3484ca;
     border-radius: 50%;
     display: inline-block;
-    vertical-align: middle;
+    
     margin-bottom: 35px;
  
 
@@ -661,6 +627,7 @@ h1 {
   backdrop-filter: saturate(140%) blur(6px);
 }
 
+
 .app-banner__inner{
   max-width: 1100px;
   margin: 0 auto;
@@ -674,6 +641,7 @@ h1 {
 
 .app-banner__text{
   font: 500 14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+
 }
 
 .app-banner__link{
