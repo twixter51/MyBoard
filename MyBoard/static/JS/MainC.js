@@ -29,7 +29,7 @@ async function Create(event,file,files,main,currRemoveButs){
                 profElement.dataset.id = data.id;
                 main.appendChild(profElement);
 
-                event.target.value = ""; // Clear the input field
+                event.target.value = ""; // Clear Fieldd
                 
             }else{
                 console.error("Error: " + data.error);
@@ -42,16 +42,9 @@ async function Create(event,file,files,main,currRemoveButs){
     
     }
 
-    //exit if no file chosen
-    console.log("Length of waiting files: " + files.length)
-    if(!file){
-        console.warn("Texting...");
-    
-    }
 
-    //*************WARN**************************************************
-    console.warn("Trying to upload files if there are any");
-    //***********************************************************
+   
+    // Upload media other than text if there is any..
     const waitingImages = document.querySelectorAll(".waitingImages");
     console.warn("TEST IMAGES: " + waitingImages.length);
     const storeFile = Array.from(document.querySelectorAll(".waitingImages"));

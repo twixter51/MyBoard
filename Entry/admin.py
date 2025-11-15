@@ -66,5 +66,5 @@ class userTextAdmin(admin.ModelAdmin):
   
      # Get the username of who uploaded the image
     def user_name(self, obj):
-        return obj.Profile.user.username
+        return obj.profile.user.username
     user_name.short_description = 'User'

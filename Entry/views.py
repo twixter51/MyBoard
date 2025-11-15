@@ -15,11 +15,11 @@ from .models import Profile, userMedia, userTexts, User
 ####################################################
 
 
-# extra (guest cooldown checks)
+# extra (guest cooldown checks) (caches)
 from .cd import createCD, getCD
 import secrets
 from django.conf import settings
-
+from django.core.cache import cache
 # time
 import datetime
 from django.utils import timezone
@@ -32,6 +32,15 @@ stripe.api_key = settings.STRIPE_API_KEY
 logger = logging.getLogger(__name__)
 
 
+
+#cache
+def user_cache(key, request):
+    profile = cache.get(key)
+
+    if not profile:
+        profile = request.user.profile
+        cache.set(key, profile, timeout=60)
+    return profile
 
 
 ######################## web page views    # reference this for rest of the functions in the future when cleaning up    --web page views    
@@ -450,11 +459,12 @@ def stripe_webhook(request):
 ############################################# MAIN APP
 def Main(request, boardLink):
 
-
+    cache_key = f"profile_{request.user.id}"
     owner_profile = get_object_or_404(Profile, uniLink=boardLink)
-    viewer_profile = request.user.profile if request.user.is_authenticated else None
+    
+    viewer_profile = user_cache(cache_key, request) if request.user.is_authenticated else None
     is_owner = (
-        request.user.is_authenticated
+        request.user.is_authenticated 
         and request.user.id == owner_profile.user_id
     )
     is_guest =  request.user.is_authenticated and owner_profile.is_guest
@@ -532,8 +542,8 @@ def upload_media(request):
     if request.method == 'POST':
     
         file = request.FILES.get('image') or request.FILES.get('video')
-        print(file)
-        profile = request.user.profile
+        cache_key = f"profile_{request.user.id}"
+        profile = user_cache(cache_key, request)
 
         if request.FILES.get('image'):
             content = "image";  
@@ -584,14 +594,17 @@ def upload_text(request):
     
     if request.method == 'POST':
         try:
+            
 
-            profile = request.user.profile
+            cache_key = f"profile_{request.user.id}"
+            profile = user_cache(cache_key, request)
+
             messageCont = request.POST.get('text')
             
           
             if messageCont:
                 textCont = userTexts.objects.create(profile=profile, message=messageCont)
-
+                cache.set(cache_key, profile, timeout=60)
                 return JsonResponse({
                     'success': True,
                     'id': textCont.id,
@@ -620,7 +633,8 @@ def upload_text(request):
 def remove_content(request):
 
     if request.method == "POST":
-        profile = request.user.profile
+        cache_key = f"profile_{request.user.id}"
+        profile = user_cache(cache_key, request)
         content_id = request.POST.get("file") or request.POST.get("text")
         file = None
         if content_id == request.POST.get("file"):
@@ -640,6 +654,7 @@ def remove_content(request):
       
         updateSTOR.save()
         file.delete()
+        cache.set(cache_key, profile, timeout=60)
         return JsonResponse({'success': True, 'storage_left':updateSTOR.storage})
 
 
@@ -656,16 +671,20 @@ def remove_content(request):
 def update_user(request):
     print("POST payload:", request.POST)
     if request.method == "POST":
-        profile = request.user.profile
+        cache_key = f"profile_{request.user.id}"
+        profile = user_cache(cache_key, request)
        
         if request.POST.get("update_storage"):
             profile.storage = request.POST["update_storage"]
             profile.save(update_fields=["storage"])
+            cache.set(cache_key, profile, timeout=60)
             return JsonResponse({'success': True, 'storage_left':profile.storage})
         return JsonResponse({"success": False, "error": "No value provided"})
 
     
     return JsonResponse({"success": False, "error": "Wrong method"})
+
+
 
 ########### end extra
 

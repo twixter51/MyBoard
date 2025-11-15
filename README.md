@@ -21,6 +21,8 @@ of debugging because I just could not find out why my webhook was exiting early.
 
 - (7.78) changed nav bar, now hides when user scrolls. Also removed unnecessary elements for a cleaner look.
 
+- (7.78) Added Caching to user message uploads, as well as when user first loads into the board. Performance 32.8% faster
+
 
 
 
