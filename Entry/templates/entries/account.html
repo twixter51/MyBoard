@@ -20,10 +20,11 @@
 <!--Haven't Found real alternative for the images shown on the websites pages but will figure it out this is just a small portion of what i actually envision-->
 
 <body>
-  {% if is_expired %}
-    <div id="overlay" class="active">
+    
+    {% if is_expired %}
+      <div id="overlay" class="active">
           <!-- Modal -->
-          <div id="popup" class="container4" style="margin-left: 5px;" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+          <div id="popup" class="container4 " style="margin-left: 5px;" role="dialog" aria-modal="true" aria-labelledby="popup-title">
               
                   <div class="header">
                       <h1 id="popup-title">Your guest session has expired</h1>
@@ -32,89 +33,112 @@
                   <p>Your temporary account will be removed.</p>
 
                   <div class="choice-buttons" style="">
-                    <button id="keep-data" class="lpbtn lpbtn-ghost exits" style="cursor: pointer;" onclick="window.location.href='{% url 'signup' %}'">Create an account</button>
-                    <button id="remove-all" class="lpbtn lpbtn-primary exits" style="cursor: pointer;" onclick="window.location.href='{% url 'logout' %}'">Delete Data</button>
+                      <button id="keep-data" class="lpbtn lpbtn-ghost exits" style="cursor: pointer;" onclick="window.location.href='{% url 'signup' %}'">Create an account</button>
+                      <button id="remove-all" class="lpbtn lpbtn-primary exits" style="cursor: pointer;" onclick="window.location.href='{% url 'logout' %}'">Delete Data</button>
                   
                   </div>
               </div>
 
           </div>
       </div>
-  {% endif %}
+    {% endif %}
 
 
 
-
-  <div  class="userProf pill" style="position: fixed; right: 0; margin-right: 25px; margin-top: 25px; object-position: center; padding: 0; z-index: 100;">
-      <img id="home_profile" class=""src="{% static 'images/test1.jpg' %}" alt=""
-      style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; cursor: pointer; z-index: 100;">
-
-        
-        <ul id="home_menu" class="navigationMain hidden" style="right: 0; flex-direction: column; display; flex;   align-items: flex-start; ">
-          <nav class="navigation" style="">   
-                  
+    {% if is_premium %}
+          <!-- Premium banner -->
+          <div class="app-banner" id="premiumBanner" role="status" aria-live="polite" style="background:transparent; backdrop-filter:none; color:#3484ca;  z-index: -1;">
+              <div class="container2" id="" style="position:relative; margin:90px 1000px 0 auto; width:auto; background: transparent; padding:8px 12px; display:flex; align-items:center; gap:8px; border-radius:12px; z-index: -1;">
               
-                  {% if user.is_authenticated %}
-                      <li style=" float: none;"> <a href="{% url 'account' %}">Manage Account</a> </li>
-                  {%else%}
-      
-                      <li style="margin-left:100px;"><a href="{% url 'login' %}">Log-In</a></li>
-                  {% endif %}  
-                  <li style=" float: none;"> <a href="{% url 'choice' %}">Settings</a> </li>
-          </nav>
+              
+                  <div class="app-banner__text" id="" style="font-size:14px; color:#3484ca; margin:0; z-index: 999;">🌟 Premium 🌟 You have {{time_left.days}} days left</div>
+                  
+              </div>
+          </div>
+    {%endif%}
 
-  
-  
+
+    <div class="" style="display: flex;">
+        <ul class="navigationMain" id="navigationMain" style="">
+          <nav class="navigation">   
+                  <li> <a href="{% url 'home' %}">Home</a> </li>
+                  <li> <a href="#FAQ">FAQ</a> </li>
+                  <li> <a href="#Monetize">Pricing</a> </li>
+                  <li> <a href="{% url 'choice' %}">Get Started</a> </li> 
+          </nav>
+        </ul>
+      
+        <!-- navigation scroll on hide script removed -->
+
+    </div>
+
+    <div  class="userProf pill" style="position: fixed; right: 0; margin-right: 25px; margin-top: 25px;   object-position: center; padding: 0; z-index: 100;">
+        <img id="home_profile" class=""src="{% static 'images/test1.jpg' %}" alt=""
+        style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; cursor: pointer; z-index: 100;">
+
+            
+        <ul id="home_menu" class="navigationMain hidden" style="right: 0; flex-direction: column; display; flex;   align-items: flex-start; ">
+            <nav class="navigation" style="">   
+                    
+                
+                    {% if user.is_authenticated %}
+                        <li style=" float: none;"> <a href="{% url 'account' %}">Manage Account</a> </li>
+                        <li style=" float: none;"> <a href="{% url 'choice' %}">Settings</a> </li>
+                        <li id="logout" style="float: none; cursor: pointer;"><a href="{% url 'logout' %}">Log-Out</a></li>
+                    {%else%}
+        
+                        <li style=""><a href="{% url 'login' %}">Log-In</a></li>
+                    {% endif %}  
+                    
+            </nav>
+
+
+
         </ul>
 
 
-        <script>
+         <script>
 
-            let home = document.getElementById("home_profile");
-            let menu = document.getElementById("home_menu");
-            home.addEventListener("mouseenter", () => {
-                menu.classList.remove("hidden");
+              let home = document.getElementById("home_profile");
+              let menu = document.getElementById("home_menu");
+              home.addEventListener("mouseenter", () => {
+                  menu.classList.remove("hidden");
 
-                menu.addEventListener("mouseleave", () => {
-                    menu.classList.add("hidden");
-                });
-            });
+                  menu.addEventListener("mouseleave", () => {
+                      menu.classList.add("hidden");
+                  });
+              });
 
-        </script>
+            const isAuth = {{ user.is_authenticated|lower }};
+            
+            if(!isAuth){
+              home.src = false
+            }else{
+              home.src = "{% static 'images/test1.jpg' %}"
+            }
+
+          </script>
     </div>
-  
-
-  <div class="" style="display: flex;">
-
-    <div class="userProfileHolder" style="align-items: center; justify-content: center;">
-        <div class="container userProf" style="position: fixed;">
 
 
-        </div>
-    </div>
-    <div class="container userProf" style="position: fixed;  align-items: center; justify-content: center;">
 
 
-  </div>
 
-    <ul class="navigationMain" style="">
-        <nav class="navigation">   
-                <li> <a href="{% url 'home' %}">Home</a> </li>
-                <li> <a href="{% url 'home' %}#FAQ">FAQ</a> </li>
-                <li> <a href="{% url 'home' %}#Monetize">Pricing</a> </li>
-                <li> <a href="{% url 'choice' %}">Get Started</a> </li>
-                {% if user.is_authenticated %}
-                    <li id="logout" style="float:right; cursor: pointer; margin-left:100px;"><a>Log-Out</a></li>
-                {%else%}
-                    <li style="margin-left:100px;"><a href="{% url 'login' %}">Log-In</a></li>
-                {% endif %}  
-        </nav>
 
-    
-    
-    </ul>
 
-  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -155,17 +179,6 @@
 
 
  
-    {% if is_premium %}
-        <!-- Premium banner -->
-        <div class="app-banner" id="premiumBanner" role="status" aria-live="polite" style="background:transparent; backdrop-filter:none; color:#3484ca;  z-index: -1;">
-            <div class="container2" style="position:relative; margin:90px 1000px 0 auto; width:auto; background: transparent; padding:8px 12px; display:flex; align-items:center; gap:8px; border-radius:12px; z-index: -1;">
-            
-            
-                <div class="app-banner__text" style="font-size:14px; color:#3484ca; margin:0; z-index: 999;">🌟 Premium 🌟 You have {{time_left.days}} days left</div>
-                
-            </div>
-        </div>
-    {%endif%}
    
 
 

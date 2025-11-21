@@ -12,64 +12,141 @@
 
 
 <body>
-    <!-- just in case -->
-    {% if is_expired %}
-        <div id="overlay" class="active">
-            <!-- Modal -->
-            <div id="popup" class="container4 " style="margin-left: 5px;" role="dialog" aria-modal="true" aria-labelledby="popup-title">
-                
-                    <div class="header">
-                        <h1 id="popup-title">Your guest session has expired</h1>
-                    </div>
 
-                    <p>Your temporary account will be removed.</p>
 
-                    <div class="choice-buttons" style="">
-                        <button id="keep-data" class="lpbtn lpbtn-ghost exits" style="cursor: pointer;" onclick="window.location.href='{% url 'signup' %}'">Create an account</button>
-                        <button id="remove-all" class="lpbtn lpbtn-primary exits" style="cursor: pointer;" onclick="window.location.href='{% url 'logout' %}'">Delete Data</button>
-                    
-                    </div>
+  {% if is_expired %}
+    <div id="overlay" class="active">
+        <!-- Modal -->
+        <div id="popup" class="container4 " style="margin-left: 5px;" role="dialog" aria-modal="true" aria-labelledby="popup-title">
+            
+                <div class="header">
+                    <h1 id="popup-title">Your guest session has expired</h1>
                 </div>
 
+                <p>Your temporary account will be removed.</p>
+
+                <div class="choice-buttons" style="">
+                    <button id="keep-data" class="lpbtn lpbtn-ghost exits" style="cursor: pointer;" onclick="window.location.href='{% url 'signup' %}'">Create an account</button>
+                    <button id="remove-all" class="lpbtn lpbtn-primary exits" style="cursor: pointer;" onclick="window.location.href='{% url 'logout' %}'">Delete Data</button>
+                
+                </div>
             </div>
-        </div>
-    {% endif %}
-
-
-    <div class="" style="display: flex;">
-
-        <div class="userProfileHolder lpbtn-secondary" style="align-items: center; justify-content: center;">
-            <div class="container userProf " style="position: fixed;">
-
-
-            </div>
-        </div>
-        <div class="container userProf" style="position: fixed;  align-items: center; justify-content: center;">
-
 
         </div>
+    </div>
+  {% endif %}
 
-       <ul class="navigationMain" style="">
-            <nav class="navigation">   
-                    <li> <a href="{% url 'home' %}">Home</a> </li>
-                    <li> <a href="#FAQ">FAQ</a> </li>
-                    <li> <a href="#Monetize">Pricing</a> </li>
-                    <li> <a href="{% url 'choice' %}">Get Started</a> </li>
-                    {% if user.is_authenticated %}
-                        <li id="logout" style="float:right; cursor: pointer; margin-left:100px;"><a href="{% url 'logout' %}">Log-Out</a></li>
-                    {%else%}
-                        <li style="margin-left:100px;"><a href="{% url 'login' %}">Log-In</a></li>
-                    {% endif %}  
-            </nav>
 
-       
-       
-        </ul>
 
+
+
+  <div class="" style="display: flex;">
+
+    
+
+    <ul class="navigationMain" id="navigationMain" style="">
+        <nav class="navigation">   
+                <li> <a href="{% url 'home' %}">Home</a> </li>
+                <li> <a href="#FAQ">FAQ</a> </li>
+                <li> <a href="#Monetize">Pricing</a> </li>
+                <li> <a href="{% url 'choice' %}">Get Started</a> </li>
+              
+        </nav>
+
+    
+    
+    </ul>
+    
+    <script>
+        let lastScrollY = window.scrollY;
+        const navbar = document.getElementById("navigationMain")
+        const navbar2 = document.getElementsByClassName("app-banner")
+
+        window.addEventListener("scroll", () => {
+        if (window.scrollY > lastScrollY && window.scrollY > 1) {
+            navbar.classList.add("hidden");
+            navbar2[0].classList.add("hidden"); 
+        } else {
+            navbar.classList.remove("hidden");
+            navbar2[0].classList.remove("hidden"); 
+        }
+        lastScrollY = window.scrollY;
+        });
+
+    </script>
+
+  </div>
+
+    <div  class="userProf pill" style="position: fixed; right: 0; margin-right: 25px; margin-top: 25px;   object-position: center; padding: 0; z-index: 100;">
+      <img id="home_profile" class=""src="{% static 'images/test1.jpg' %}" alt=""
+      style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; cursor: pointer; z-index: 100;">
+
+          
+      <ul id="home_menu" class="navigationMain hidden" style="right: 0; flex-direction: column; display; flex;   align-items: flex-start; ">
+          <nav class="navigation" style="">   
+                  
+              
+                  {% if user.is_authenticated %}
+                      <li style=" float: none;"> <a href="{% url 'account' %}">Manage Account</a> </li>
+                      <li style=" float: none;"> <a href="{% url 'choice' %}">Settings</a> </li>
+                      <li id="logout" style="float: none; cursor: pointer;"><a href="{% url 'logout' %}">Log-Out</a></li>
+                  {%else%}
+      
+                      <li style="float: none;"><a href="{% url 'login' %}">Log-In</a></li>
+                  {% endif %}  
+                  
+          </nav>
+
+
+
+      </ul>
+
+
+        <script>
+
+            let home = document.getElementById("home_profile");
+            let menu = document.getElementById("home_menu");
+            home.addEventListener("mouseenter", () => {
+                menu.classList.remove("hidden");
+
+                menu.addEventListener("mouseleave", () => {
+                    menu.classList.add("hidden");
+                });
+            });
+
+            const isAuth = {{ user.is_authenticated|lower }};
+            
+            if(!isAuth){
+                home.src = false
+            }else{
+                home.src = "{% static 'images/test1.jpg' %}"
+            }
+
+        </script>
     </div>
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     <!--This is basically the entry form div where users can input information login centered box-->
     <div class="box-element center">
         

@@ -1,35 +1,21 @@
 
-# Update Logs(Development Build V.7.78)
+# Update Logs(Development Build V.7.79)
 
 # Hello! This is an old project being reworked, everything is under construction so no pull requests at this time. (previous Commits 39+)
 
 # Recent update-logs
 
 
---(7.75) Stripe WebHook now fully works and now each user will have unique id's towards their subscription to prevent confusion, no more email checks. This took around 3-4 hours
-of debugging because I just could not find out why my webhook was exiting early. Now it works and not i'll be on my haitus for a few days lol (day 2)
 
---(7.76) Cleaned up back-end code
-
---(7.78) Fixed bugs on the back-end, new sign-up page
-
-- fixed errors on my end in terms of names and syntax for my models
-
-- you are logged in after signing up now
-
-- (7.78) log in page now works, new page.
-
-- (7.78) changed nav bar, now hides when user scrolls. Also removed unnecessary elements for a cleaner look.
 
 - (7.78) Added Caching to user message uploads, as well as when user first loads into the board. Performance 32.8% faster
 
 
+- (7.79) Pages are all consistent, profile picture now checks whether you are logged in now. More fixes done to pages.
+
 
 
 # URGENT
-
-
-- remove log out button, move it to profile drop down.
 
 - finish updating cache, so user timer doesn't reset.
 

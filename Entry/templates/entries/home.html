@@ -20,7 +20,7 @@
 
 <body>
 
-  {% if is_expired %}
+    {% if is_expired %}
         <div id="overlay" class="active">
             <!-- Modal -->
             <div id="popup" class="container4 " style="margin-left: 5px;" role="dialog" aria-modal="true" aria-labelledby="popup-title">
@@ -67,11 +67,7 @@
                     <li> <a href="#FAQ">FAQ</a> </li>
                     <li> <a href="#Monetize">Pricing</a> </li>
                     <li> <a href="{% url 'choice' %}">Get Started</a> </li>
-                    {% if user.is_authenticated %}
-                        <li id="logout" style="float:right; cursor: pointer; margin-left:100px;"><a href="{% url 'logout' %}">Log-Out</a></li>
-                    {%else%}
-                        <li style="margin-left:100px;"><a href="{% url 'login' %}">Log-In</a></li>
-                    {% endif %}  
+                  
             </nav>
 
        
@@ -106,7 +102,7 @@
    
 
 
-    {%if is_authenticated %}
+    
         
 
         <div  class="userProf pill" style="position: fixed; right: 0; margin-right: 25px; margin-top: 25px;   object-position: center; padding: 0; z-index: 100;">
@@ -120,12 +116,13 @@
                     
                         {% if user.is_authenticated %}
                             <li style=" float: none;"> <a href="{% url 'account' %}">Manage Account</a> </li>
-                        
+                            <li style=" float: none;"> <a href="{% url 'choice' %}">Settings</a> </li>
+                            <li id="logout" style="float: none; cursor: pointer;"><a href="{% url 'logout' %}">Log-Out</a></li>
                         {%else%}
             
-                            <li style="margin-left:100px;"><a href="{% url 'login' %}">Log-In</a></li>
+                            <li style="float: none;"><a href="{% url 'login' %}">Log-In</a></li>
                         {% endif %}  
-                        <li style=" float: none;"> <a href="{% url 'choice' %}">Settings</a> </li>
+                        
                 </nav>
 
 
@@ -133,21 +130,34 @@
             </ul>
 
 
+           
             <script>
 
-                let home = document.getElementById("home_profile");
-                let menu = document.getElementById("home_menu");
-                home.addEventListener("mouseenter", () => {
-                    menu.classList.remove("hidden");
+                    let home = document.getElementById("home_profile");
+                    let menu = document.getElementById("home_menu");
+                    home.addEventListener("mouseenter", () => {
+                        menu.classList.remove("hidden");
 
-                    menu.addEventListener("mouseleave", () => {
-                        menu.classList.add("hidden");
+                        menu.addEventListener("mouseleave", () => {
+                            menu.classList.add("hidden");
+                        });
                     });
-                });
+
+                const isAuth = {{ user.is_authenticated|lower }};
+                
+                if(!isAuth){
+                    home.src = false
+                }else{
+                    home.src = "{% static 'images/test1.jpg' %}"
+                }
 
             </script>
         </div>
 
+
+
+
+    {% if user.is_authenticated %}
         <div class="Headline">
             <h2 style="font-size:52px; opacity:.5;">Hello, {{ username }}</h2>
         </div>
@@ -156,21 +166,7 @@
         <h2 style="font-size:52px; margin-top:-84px;">Hello, {{ username }}</h2>
 
         <button class="lpbtn lpbtn-primary"style="margin: 0 auto; display: block; margin-top: 45px;"onclick="window.location.href='{% url 'Main' boardLink=username %}'"> Go To Board </button>
-
-
-
     {%endif%}
-    
-
-
-
-
-
-
-
-
-
-
 
 
     {% if is_guest%}
@@ -223,7 +219,7 @@
 
     <div class="Headline " style=""> 
         <h2 style="font-size: 52px; opacity: 0.5;">
-            Your links. Your media. Your rules. Move them how you want
+            Transfer your files, save precious moments, show off..
                
         </h2>
     
@@ -232,20 +228,16 @@
     </div>
     <h2 class="" style="font-size: 52px; margin-top: -145px;">
 
-        Your links. Your media. Your rules. Move them how you want
+        Transfer your files, save precious moments, show off..
        
        
     </h2>
 
-    <h2 style="font-size: 22px; margin-top: 50px;">
-        Instantly transfer links, videos, and images between your devices—effortlessly.
-
-    </h2>
-    
-    <h2 style="font-size: 22px; margin-top: 15px; color: #3484ca;">
-        Customize your board to match your style or keep it private—your creativity, your rules.
+    <h2 class=""style="font-size: 22px; margin-top: 35px; color: #3484ca;">
+        Let your creativity flourish
         
     </h2>
+   
 
     {% if not user.is_authenticated %}
 
@@ -356,7 +348,6 @@
 
 
     
-
 
     <h2 id="FAQ" style="font-size: 52px; margin-top: 450px; margin-bottom: 70px; color: #3484ca;">
 
@@ -492,7 +483,11 @@
          
 
             <div style="display:flex;gap:2px;flex-wrap:wrap;">
-                <button class="lpbtn lpbtn-primary"style="">Manage Account</button>
+                {%if user.is_authenticated %}
+                    <button class="lpbtn lpbtn-primary"style="">Manage Account</button>
+        
+                {%endif%}
+         
             </div>
 
             <small style="display:block;margin-top:10px;color:#6fa4d3;">*Note: your files will be removed, your data is never saved once it's deleted</small>
