@@ -1,7 +1,7 @@
 
 # Update Logs(Development Build V.7.79)
 
-# Hello! This is an old project being reworked, everything is under construction so no pull requests at this time. (previous Commits 39+)
+# Hello this is the source code for my old project, I have been slowly refactoring some features to deploy for future launch
 
 # Recent update-logs
 
