@@ -1,3 +1,5 @@
+<img width="1093" height="912" alt="yeyaeyaya" src="https://github.com/user-attachments/assets/31131999-160e-4602-8b14-384b534a25fe" />
+<img width="1906" height="727" alt="yeahhh" src="https://github.com/user-attachments/assets/6f72b09a-d399-4d58-9f1f-0652caa71a20" />
 
 # Update Logs(Development Build V.7.79)
 
